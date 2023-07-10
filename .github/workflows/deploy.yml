@@ -3,7 +3,7 @@ name: Deploy-React.js
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   build:
     runs-on: ubuntu-22.04

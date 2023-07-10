@@ -58,11 +58,11 @@ const Sidebar = ({ data, onNodeClick }) => {
 
     return (
         <aside className="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l">
-            <a href="#">
+            <a href="#!">
                 <img
                     className="w-auto h-20"
                     src="https://www.visang.com/images/visang_og.jpg"
-                    alt=""
+                    alt="비상교육"
                 />
             </a>
 

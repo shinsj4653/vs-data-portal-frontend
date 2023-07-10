@@ -13,9 +13,9 @@ jobs:
       - name: Check Node v 
         run: node -v
       - name: Install Dependencies 
-        run: yarn install --frozen-lockfile
+        run: npm install --frozen-lockfile
       - name: Build 
-        run: yarn build
+        run: npm build
       - name: zip create
         run: zip -qq -r ./vs_dp_web_build.zip . 
         shell: bash

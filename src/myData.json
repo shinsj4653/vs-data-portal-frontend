@@ -1,0 +1,324 @@
+{
+    "name": "비상교육",
+    "color": "hsl(30, 10%, 10%)",
+    "children": [
+      {
+        "name": "러닝 Company",
+        "color": "hsl(254, 70%, 50%)",
+        "children": [
+          {
+            "name": "피어나다",
+            "color": "hsl(347, 70%, 50%)",
+            "children": [
+              {
+                "name": "cchart",
+                "color": "hsl(264, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "xAxis",
+                "color": "hsl(351, 70%, 50%)",
+                "loc": 2
+              },
+              {
+                "name": "yAxis",
+                "color": "hsl(225, 70%, 50%)",
+                "loc": 3
+              },
+              {
+                "name": "layers",
+                "color": "hsl(224, 70%, 50%)",
+                "loc": 1
+              }
+            ]
+          },
+          {
+            "name": "온리원",
+            "color": "hsl(347, 70%, 50%)",
+            "children": [
+              {
+                "name": "키즈",
+                "color": "hsl(264, 70%, 50%)",
+                "children": [
+                  {
+                    "name": "학생",
+                    "color": "hsl(264, 70%, 50%)",
+                    "loc": 2
+                  },
+                  {
+                    "name": "선생님",
+                    "color": "hsl(351, 70%, 50%)",
+                    "loc": 3
+                  }
+                ]
+              },
+              {
+                "name": "초등",
+                "color": "hsl(351, 70%, 50%)",
+                "children": [
+                  {
+                    "name": "학생",
+                    "color": "hsl(264, 70%, 50%)",
+                    "loc": 1
+                  },
+                  {
+                    "name": "선생님",
+                    "color": "hsl(351, 70%, 50%)",
+                    "loc": 1
+                  }
+                ]
+              },
+              {
+                "name": "중등",
+                "color": "hsl(225, 70%, 50%)",
+                "children": [
+                  {
+                    "name": "키즈",
+                    "color": "hsl(264, 70%, 50%)",
+                    "loc": 2
+                  },
+                  {
+                    "name": "초등",
+                    "color": "hsl(351, 70%, 50%)",
+                    "loc": 2
+                  }
+                ]
+              }              
+            ]
+          }
+        ]
+      },
+      {
+        "name": "출판 Company",
+        "color": "hsl(254, 70%, 50%)",
+        "children": [
+          {
+            "name": "비바샘",
+            "color": "hsl(347, 70%, 50%)",
+            "children": [
+              {
+                "name": "cchart",
+                "color": "hsl(264, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "xAxis",
+                "color": "hsl(351, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "yAxis",
+                "color": "hsl(225, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "layers",
+                "color": "hsl(224, 70%, 50%)",
+                "loc": 1
+              }
+            ]
+          },
+          {
+            "name": "기출탭탭",
+            "color": "hsl(347, 70%, 50%)",
+            "children": [
+              {
+                "name": "cchart",
+                "color": "hsl(264, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "xAxis",
+                "color": "hsl(351, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "yAxis",
+                "color": "hsl(225, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "layers",
+                "color": "hsl(224, 70%, 50%)",
+                "loc": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "티칭 Company",
+        "color": "hsl(254, 70%, 50%)",
+        "children": [
+          {
+            "name": "수학플러스러닝",
+            "color": "hsl(347, 70%, 50%)",
+            "children": [
+              {
+                "name": "cchart",
+                "color": "hsl(264, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "xAxis",
+                "color": "hsl(351, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "yAxis",
+                "color": "hsl(225, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "layers",
+                "color": "hsl(224, 70%, 50%)",
+                "loc": 1
+              }
+            ]
+          },
+          {
+            "name": "잉글리시아이",
+            "color": "hsl(347, 70%, 50%)",
+            "children": [
+              {
+                "name": "cchart",
+                "color": "hsl(264, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "xAxis",
+                "color": "hsl(351, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "yAxis",
+                "color": "hsl(225, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "layers",
+                "color": "hsl(224, 70%, 50%)",
+                "loc": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "글로벌 Company",
+        "color": "hsl(254, 70%, 50%)",
+        "children": [
+          {
+            "name": "올비아",
+            "color": "hsl(347, 70%, 50%)",
+            "children": [
+              {
+                "name": "cchart",
+                "color": "hsl(264, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "xAxis",
+                "color": "hsl(351, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "yAxis",
+                "color": "hsl(225, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "layers",
+                "color": "hsl(224, 70%, 50%)",
+                "loc": 1
+              }
+            ]
+          },
+          {
+            "name": "온리원",
+            "color": "hsl(347, 70%, 50%)",
+            "children": [
+              {
+                "name": "cchart",
+                "color": "hsl(264, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "xAxis",
+                "color": "hsl(351, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "yAxis",
+                "color": "hsl(225, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "layers",
+                "color": "hsl(224, 70%, 50%)",
+                "loc": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "러닝 Company",
+        "color": "hsl(254, 70%, 50%)",
+        "children": [
+          {
+            "name": "피어나다",
+            "color": "hsl(347, 70%, 50%)",
+            "children": [
+              {
+                "name": "cchart",
+                "color": "hsl(264, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "xAxis",
+                "color": "hsl(351, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "yAxis",
+                "color": "hsl(225, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "layers",
+                "color": "hsl(224, 70%, 50%)",
+                "loc": 1
+              }
+            ]
+          },
+          {
+            "name": "온리원",
+            "color": "hsl(347, 70%, 50%)",
+            "children": [
+              {
+                "name": "cchart",
+                "color": "hsl(264, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "xAxis",
+                "color": "hsl(351, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "yAxis",
+                "color": "hsl(225, 70%, 50%)",
+                "loc": 1
+              },
+              {
+                "name": "layers",
+                "color": "hsl(224, 70%, 50%)",
+                "loc": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }

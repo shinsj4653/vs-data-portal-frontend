@@ -1,0 +1,428 @@
+{
+  "name": "비상교육",
+  "color": "#00b2e2",
+  "id": "node-1",
+  "children": [
+    {
+      "name": "러닝 Company",
+      "color": "#94e8ff",
+      "id": "node-2",
+      "children": [
+        {
+          "name": "피어나다",
+          "color": "#a366fe",
+          "id": "node-3",
+          "children": [
+            {
+              "name": "상품",
+              "color": "#d3b6ff",
+              "id": "node-4",
+              "children": [
+                {
+                  "name": "콘텐츠",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-5"
+                },
+                {
+                  "name": "커리큘럼",
+                  "color": "#fee381",
+                  "loc": 2,
+                  "id": "node-6"
+                },
+                {
+                  "name": "결제",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-7"
+                },
+                {
+                  "name": "시스템 관리",
+                  "color": "#fee381",
+                  "loc": 2,
+                  "id": "node-8"
+                }
+              ]
+            },
+            {
+              "name": "시스템",
+              "color": "#8772a6",
+              "id": "node-9",
+              "children": [
+                {
+                  "name": "제휴 단체",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-10"
+                },
+                {
+                  "name": "시스템 로그",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-11"
+                },
+                {
+                  "name": "보안",
+                  "color": "#fee381",
+                  "loc": 2,
+                  "id": "node-12"
+                },
+                {
+                  "name": "인증번호",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-13"
+                },
+                {
+                  "name": "공통 코드",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-14"
+                },
+                {
+                  "name": "EDITOR파일",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-15"
+                },
+                {
+                  "name": "첨부파일",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-16"
+                },
+                {
+                  "name": "시스템 관리",
+                  "color": "#fee381",
+                  "loc": 3,
+                  "id": "node-17"
+                },
+                {
+                  "name": "History",
+                  "color": "#fee381",
+                  "loc": 2,
+                  "id": "node-18"
+                },
+                {
+                  "name": "Message",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-19"
+                },
+                {
+                  "name": "게시판",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-20"
+                }
+              ]
+            },
+            {
+              "name": "진단",
+              "color": "#804fc9",
+              "id": "node-21",
+              "children": [
+                {
+                  "name": "진단",
+                  "color": "#fee381",
+                  "loc": 10,
+                  "id": "node-22"
+                },
+                {
+                  "name": "시스템 관리",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-23"
+                }
+              ]
+            },
+            {
+              "name": "코치",
+              "color": "#d3b6ff",
+              "id": "node-24",
+              "children": [
+                {
+                  "name": "코치 Info",
+                  "color": "#fee381",
+                  "loc": 6,
+                  "id": "node-25"
+                }
+              ]
+            },
+            {
+              "name": "코칭",
+              "color": "#ebddff",
+              "id": "node-26",
+              "children": [
+                {
+                  "name": "모둠",
+                  "color": "#fee381",
+                  "loc": 8,
+                  "id": "node-27"
+                }
+              ]
+            },
+            {
+              "name": "홈페이지, 학생앱, 학부모앱",
+              "color": "#574472",
+              "id": "node-28",
+              "children": [
+                {
+                  "name": "앱 정보",
+                  "color": "#fee381",
+                  "loc": 9,
+                  "id": "node-29"
+                },
+                {
+                  "name": "배너",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-30"
+                },
+                {
+                  "name": "게시판",
+                  "color": "#fee381",
+                  "loc": 3,
+                  "id": "node-31"
+                },
+                {
+                  "name": "코치 지원",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-32"
+                },
+                {
+                  "name": "온라인상담",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-33"
+                },
+                {
+                  "name": "쿠폰",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-34"
+                },
+                {
+                  "name": "교육",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-35"
+                },
+                {
+                  "name": "이벤트",
+                  "color": "#fee381",
+                  "loc": 2,
+                  "id": "node-36"
+                },
+                {
+                  "name": "FAQ",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-37"
+                },
+                {
+                  "name": "시스템 관리",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-38"
+                },
+                {
+                  "name": "팝업",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-39"
+                },
+                {
+                  "name": "설문조사",
+                  "color": "#fee381",
+                  "loc": 5,
+                  "id": "node-40"
+                }
+              ]
+            },
+            {
+              "name": "회원,관리자",
+              "color": "#5150a8",
+              "id": "node-40_2",
+              "children": [
+                {
+                  "name": "보안",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-41"
+                },
+                {
+                  "name": "체험회원",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-42"
+                },
+                {
+                  "name": "피오 Info",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-43"
+                },
+                {
+                  "name": "시스템 관리",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-44"
+                },
+                {
+                  "name": "사용자",
+                  "color": "#fee381",
+                  "loc": 3,
+                  "id": "node-45"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "온리원",
+          "color": "#bbf1ff",
+          "id": "node-45_2",
+          "children": [
+            {
+              "name": "키즈",
+              "color": "#bbf1ff",
+              "loc": 55,
+              "id": "node-46"
+            },
+            {
+              "name": "초등",
+              "color": "#bbf1ff",
+              "loc": 30,
+              "id": "node-47"
+            },
+            {
+              "name": "중등",
+              "color": "#bbf1ff",
+              "loc": 55,
+              "id": "node-48"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "출판 Company",
+      "color": "#9aa7d9",
+      "id": "node-49",
+      "children": [
+        {
+          "name": "비바샘",
+          "color": "#bbf1ff",
+          "loc": 125,
+          "id": "node-50"
+        },
+        {
+          "name": "샘퀴즈",
+          "color": "#bbf1ff",
+          "loc": 115,
+          "id": "node-51"
+        },
+        {
+          "name": "맘앤톡",
+          "color": "#bbf1ff",
+          "loc": 97,
+          "id": "node-52"
+        },
+        {
+          "name": "비상교재",
+          "color": "#bbf1ff",
+          "loc": 93,
+          "id": "node-53"
+        },
+        {
+          "name": "비상교과서",
+          "color": "#bbf1ff",
+          "loc": 92,
+          "id": "node-54"
+        }
+      ]
+    },
+    {
+      "name": "티칭 Company",
+      "color": "#00b9c6",
+      "id": "node-55",
+      "children": [
+        {
+          "name": "비상아이비츠",
+          "color": "#bbf1ff",
+          "loc": 130,
+          "id": "node-56"
+        },
+        {
+          "name": "수학플러스러닝",
+          "color": "#bbf1ff",
+          "loc": 140,
+          "id": "node-57"
+        },
+        {
+          "name": "브이피트",
+          "color": "#bbf1ff",
+          "loc": 57,
+          "id": "node-58"
+        },
+        {
+          "name": "누리샘",
+          "color": "#bbf1ff",
+          "loc": 63,
+          "id": "node-59"
+        },
+        {
+          "name": "티키토키",
+          "color": "#bbf1ff",
+          "loc": 52,
+          "id": "node-60"
+        },
+        {
+          "name": "잉글리이 아이",
+          "color": "#bbf1ff",
+          "loc": 45,
+          "id": "node-61"
+        },
+        {
+          "name": "윙스",
+          "color": "#bbf1ff",
+          "loc": 69,
+          "id": "node-62"
+        }
+      ]
+    },
+    {
+      "name": "글로벌 Company",
+      "color": "#62abdc",
+      "id": "node-63",
+      "children": [
+        {
+          "name": "마스터K",
+          "color": "#bbf1ff",
+          "loc": 180,
+          "id": "node-64"
+        },
+        {
+          "name": "마스터 토픽",
+          "color": "#bbf1ff",
+          "loc": 85,
+          "id": "node-65"
+        },
+        {
+          "name": "KLASS",
+          "color": "#bbf1ff",
+          "loc": 90,
+          "id": "node-66"
+        },
+        {
+          "name": "올비아",
+          "color": "#bbf1ff",
+          "loc": 155,
+          "id": "node-67"
+        }
+      ]
+    }
+  ]
+}

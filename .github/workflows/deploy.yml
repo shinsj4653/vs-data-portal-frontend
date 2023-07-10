@@ -1,39 +1,36 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
-# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
-
 name: Deploy-React.js
 
-on: # CICD 이벤트 감지.
+on:
   push:
     branches:
-      - master # CI/CD를 동작하게 할 브랜치 이름. 즉 master 브랜치에 push가 일어나면 감지하여 다음과 같은 Jobs를 실행한다.
-jobs: # CI/CD 세부 동작 (Job) 설정.
+      - master
+jobs:
   build:
-    runs-on: ubuntu-22.04 # Ubuntu 니까 ubuntu 20.04로 설정.
+    runs-on: ubuntu-22.04 
     steps:
-      - name: Checkout source code. # 깃허브 레포지토리 체크.
+      - name: Checkout source code. 
         uses: actions/checkout@v2
-      - name: Check Node v # 노드 버전 확인.
+      - name: Check Node v 
         run: node -v
-      - name: Install Dependencies # 설치된 의존성 파일 설치.
+      - name: Install Dependencies 
         run: yarn install --frozen-lockfile
-      - name: Build # 빌드.
+      - name: Build 
         run: yarn build
-      - name: zip create # S3에 올릴 zip 파일 생성. (빌드한 프로젝트를 압축)
-        run: zip -qq -r ./vs_dp_web_build.zip . # 파일명은 자유, 대신 아래 workflow에 적을 파일명과 동일하게 맞춰줄 것.
+      - name: zip create
+        run: zip -qq -r ./vs_dp_web_build.zip . 
         shell: bash
-      - name: Configure AWS credentials # aws 인증 확인.
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }} # 깃허브 레포지토리 Secrets에 등록한 AWS_ACCESS_KEY.
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # 깃허브 레포지토리 Secrets에 등록한 AWS_SECRET_ACCESS_KEY.
-          aws-region: ${{ secrets.AWS_REGION }} # 깃허브 레포지토리 Secrets에 등록한 AWS_REGION.
-      - name: Upload to S3 # zip 파일을 S3에 업로드.
-        run: | # S3 버킷 이름.
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }} 
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
+          aws-region: ${{ secrets.AWS_REGION }} 
+      - name: Upload to S3 
+        run: | 
           aws s3 cp --region ap-northeast-2 ./vs_dp_web_build.zip s3://vs-dp-github-action-s3-bucket/build/vs_dp_web_build.zip
-      - name: Deploy # S3에 올라간 zip 파일을 CodeDeploy를 통해 가져온다..
+      - name: Deploy 
         run: aws deploy create-deployment
-          --application-name vs-dp-codedeploy-app # AWS의 Code Deploy 애플리케이션 이름.
-          --deployment-config-name CodeDeployDefault.AllAtOnce # Code Deploy에서 설정했던 Deploy 방식.
-          --deployment-group-name vs-dp-codedeploy-deployment-group # AWS의 Code Deploy 애플리케이션의 배포 그룹 이름.
-          --s3-location bucket=vs-dp-github-action-s3-bucket,bundleType=zip # Code Deploy가 S3에서 프로젝트를 찾을 수 있도록 경로 지정. (bucket=버킷 이름/test-build.zip)
+          --application-name vs-dp-codedeploy-app 
+          --deployment-config-name CodeDeployDefault.AllAtOnce 
+          --deployment-group-name vs-dp-codedeploy-deployment-group 
+          --s3-location bucket=vs-dp-github-action-s3-bucket,bundleType=zip 

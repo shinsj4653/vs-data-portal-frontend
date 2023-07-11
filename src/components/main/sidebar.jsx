@@ -58,7 +58,6 @@ const Sidebar = ({ data, onNodeClick }) => {
 
     return (
         <aside className="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l">
-            // eslint-disable-next-line 
             <a href="#!">
                 <img
                     className="w-auto h-20"

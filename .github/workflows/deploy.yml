@@ -29,8 +29,8 @@ jobs:
         run: | 
           aws s3 cp --region ap-northeast-2 ./vs_dp_web_build.zip s3://vs-dp-github-action-s3-bucket/vs_dp_web_build.zip
       - name: Deploy 
-        run: aws deploy create-deployment
-          --application-name vs-dp-codedeploy-app 
-          --deployment-config-name CodeDeployDefault.AllAtOnce 
-          --deployment-group-name vs-dp-codedeploy-deployment-group 
+        run: aws deploy create-deployment \
+          --application-name vs-dp-codedeploy-app \
+          --deployment-config-name CodeDeployDefault.AllAtOnce \
+          --deployment-group-name vs-dp-codedeploy-deployment-group \
           --s3-location bucket=vs-dp-github-action-s3-bucket,key=vs_dp_web_build.zip,bundleType=zip 

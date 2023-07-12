@@ -1,0 +1,114 @@
+{
+  "name": "비상교육",
+  "color": "#00b2e2",
+  "id": "node-1",
+  "children": [
+    {
+      "name": "러닝 Company",
+      "color": "#94e8ff",
+      "id": "node-2",
+      "children": [
+        {
+          "name": "피어나다",
+          "color": "#a366fe",
+          "id": "node-3",
+          "children": [
+            {
+              "name": "상품",
+              "color": "#d3b6ff",
+              "id": "node-4",
+              "children": [
+                {
+                  "name": "콘텐츠",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-5"
+                },
+                {
+                  "name": "커리큘럼",
+                  "color": "#fee381",
+                  "loc": 2,
+                  "id": "node-6"
+                },
+                {
+                  "name": "결제",
+                  "color": "#fee381",
+                  "loc": 1,
+                  "id": "node-7"
+                },
+                {
+                  "name": "시스템 관리",
+                  "color": "#fee381",
+                  "loc": 2,
+                  "id": "node-8"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "온리원",
+          "color": "#bbf1ff",
+          "id": "node-45_2",
+          "children": [
+            {
+              "name": "키즈",
+              "color": "#bbf1ff",
+              "loc": 55,
+              "id": "node-46"
+            },
+            {
+              "name": "초등",
+              "color": "#bbf1ff",
+              "loc": 30,
+              "id": "node-47"
+            },
+            {
+              "name": "중등",
+              "color": "#bbf1ff",
+              "loc": 55,
+              "id": "node-48"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "출판 Company",
+      "color": "#9aa7d9",
+      "id": "node-49",
+      "children": [
+        {
+          "name": "비바샘",
+          "color": "#bbf1ff",
+          "loc": 125,
+          "id": "node-50"
+        },
+        {
+          "name": "샘퀴즈",
+          "color": "#bbf1ff",
+          "loc": 115,
+          "id": "node-51"
+        },
+        {
+          "name": "맘앤톡",
+          "color": "#bbf1ff",
+          "loc": 97,
+          "id": "node-52"
+        },
+        {
+          "name": "비상교재",
+          "color": "#bbf1ff",
+          "loc": 93,
+          "id": "node-53"
+        },
+        {
+          "name": "비상교과서",
+          "color": "#bbf1ff",
+          "loc": 92,
+          "id": "node-54"
+        }
+      ]
+    }
+  ]
+}

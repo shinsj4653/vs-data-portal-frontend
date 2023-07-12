@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 const SidebarMenuItem = ({ item, onMenuClick }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -11,8 +12,9 @@ const SidebarMenuItem = ({ item, onMenuClick }) => {
     setIsHovered(false);
   };
 
-  const handleItemClick = (itemId) => {
+  const handleItemClick = (itemId, depth) => {
     onMenuClick(itemId);
+    if(depth < 2) setIsExpanded(!isExpanded);
   };
 
   return (
@@ -22,16 +24,16 @@ const SidebarMenuItem = ({ item, onMenuClick }) => {
         pl-4 py-2 text-xs font-semibold text-gray-800 uppercase transition-colors duration-300 cursor-pointer`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        onClick={() => handleItemClick(item.id)}
+        onClick={() => handleItemClick(item.id, item.depth)}        
       >
         {item.name}
       </div>
       {item.children && (
-        <div className="ml-8 mt-2">
+        <div className="ml-5 mt-2">
           {item.children
             .filter((child) => child.depth < 3)
             .map((child) => (
-              <SidebarMenuItem key={child.id} item={child} onMenuClick={handleItemClick} />
+                (child.depth == 1 || isExpanded) && <SidebarMenuItem key={child.id} item={child} onMenuClick={handleItemClick}/>
             ))}
         </div>
       )}

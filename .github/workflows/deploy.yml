@@ -4,6 +4,13 @@ on:
   push:
     branches:
       - main
+
+env:
+  AWS_REGION: ap-northeast-2
+  S3_BUCKET_NAME: vs-dp-github-action-s3-bucket
+  CODE_DEPLOY_APPLICATION_NAME: vs-dp-codedeploy-app
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: vs-dp-codedeploy-deployment-group
+
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -27,10 +34,10 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }} 
       - name: Upload to S3 
         run: | 
-          aws s3 cp --region ap-northeast-2 ./vs_dp_web_build.zip s3://vs-dp-github-action-s3-bucket/vs_dp_web_build.zip
+          aws s3 cp --region ap-northeast-2 ./vs_dp_web_build.zip s3://${{ env.S3_BUCKET_NAME }}/vs_dp_web_build.zip
       - name: Deploy 
         run: aws deploy create-deployment
-          --application-name vs-dp-codedeploy-app 
+          --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} 
           --deployment-config-name CodeDeployDefault.AllAtOnce 
-          --deployment-group-name vs-dp-codedeploy-deployment-group 
-          --s3-location bucket=vs-dp-github-action-s3-bucket,key=vs_dp_web_build.zip,bundleType=zip 
+          --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} 
+          --s3-location bucket=${{ env.S3_BUCKET_NAME }},key=vs_dp_web_build.zip,bundleType=zip 

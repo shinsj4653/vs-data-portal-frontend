@@ -1,19 +1,19 @@
-import React from 'react';
+import React from "react";
+import footer_logo from "../assets/visang_logo_footer.png"
 
 const Footer = () => {
-    return (
-        <>
-            <footer className="body-font bg-white">
-                <div>
-                    <div className="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
-                        <p className="text-gray-500 text-sm text-center sm:text-left">© 2023 비상교육 - Data Platform Cell</p>
-                        <span className="inline-flex sm:ml-auto sm:mt-0 mt-2 justify-center sm:justify-start">
-                        </span>
-                    </div>
-                </div>
-            </footer>
-        </>
-    );
+  return (
+    <>
+      <footer className="footer p-5 bg-base-200 ">
+        <div className="flex justify-start items-center">
+          <img src={footer_logo} className="h-10"/>
+          <p className="font-bold">
+           | Data Platform Cell 제공
+          </p>
+        </div>
+      </footer>
+    </>
+  );
 };
 
 export default Footer;

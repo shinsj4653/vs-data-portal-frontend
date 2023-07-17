@@ -1,24 +1,16 @@
-import React, { useState } from 'react';
-import Sidebar from '../components/main/sidebar';
-import vs_data from '../vs_dataset.json'
-import BrandCirclePackChart from '../components/main/brandCirclePackChart';
-import Layout from '../components/layout';
+import React, { useEffect } from "react";
+import Layout from "../components/layout";
+import DataPlatformMain from "../components/main/dataPlatformMain";
 
+// Main 화면 컴포넌트
 const Main = () => {
-    const [clickedNodeId, setClickedNodeId] = useState(null);
-
-    const handleNodeClick = (nodeId) => {
-        setClickedNodeId(nodeId);
-    };
-
-    return (
-        <>
-            <Layout>
-                <Sidebar data={vs_data} onNodeClick={handleNodeClick} />
-                <BrandCirclePackChart data={vs_data} clickedNodeId={clickedNodeId} onNodeClick={handleNodeClick} />
-            </Layout>
-        </>
-    );
+  return (
+    <>
+      <Layout>
+        <DataPlatformMain />
+      </Layout>
+    </>
+  );
 };
 
 export default Main;

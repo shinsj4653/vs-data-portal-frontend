@@ -1,5 +1,5 @@
-import React from 'react';
-import SidebarMenuItem from './sidebarMenuItem';
+import React from "react";
+import SidebarMenuItem from "./sidebarMenuItem";
 
 const transformData = (data, depth = 0) => {
   if (data.children) {

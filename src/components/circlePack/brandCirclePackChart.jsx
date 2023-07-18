@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { ResponsiveCirclePacking } from "@nivo/circle-packing";
 
+// json Data에 Depth 속성 추가
 const transformData = (data, depth = 0) => {
   if (data.children) {
     return {
@@ -15,6 +16,7 @@ const transformData = (data, depth = 0) => {
   };
 };
 
+// ID기반으로 Node를 검색하여 메뉴 클릭 시 맵핑
 const findNodeById = (node, targetId) => {
   if (node.id === targetId) {
     return node;
@@ -32,11 +34,13 @@ const findNodeById = (node, targetId) => {
   return undefined;
 };
 
+// Zoomable Circle Pack 차트 개발
 const BrandCirclePackChart = ({ data, clickedNodeId, onNodeClick }) => {
   const [zoomedId, setZoomedId] = useState(null);
   const [labelIdx, setLabelIdx] = useState(0);
   const transformedData = transformData(data);
 
+  // Zoom기능 설정
   useEffect(() => {
     if (clickedNodeId) {
       setZoomedId(clickedNodeId);
@@ -50,6 +54,7 @@ const BrandCirclePackChart = ({ data, clickedNodeId, onNodeClick }) => {
     onNodeClick(clickedNodeId);
   }, [clickedNodeId, transformedData]);
 
+  // Node 클릭 시 Zoom 및 label 레벨 설정
   const handleNodeClick = (node) => {
     if (zoomedId === node.id) {
       setZoomedId(null);
@@ -62,11 +67,12 @@ const BrandCirclePackChart = ({ data, clickedNodeId, onNodeClick }) => {
   };
 
   return (
-    <section>
-      <div style={{ marginLeft: "50px", width: "800px", height: "800px" }}>
-        <ResponsiveCirclePacking
+    <section className="">
+      <div className="h-screen w-screen max-w-screen-lg">
+        <ResponsiveCirclePacking          
           theme={{
             fontSize: 20,
+            background: "#fffbfa",
           }}
           zoomedId={zoomedId}
           motionConfig="slow"
@@ -89,10 +95,7 @@ const BrandCirclePackChart = ({ data, clickedNodeId, onNodeClick }) => {
             [labelIdx]
           )}
           labelsSkipRadius={5}
-          labelTextColor={{
-            from: "color",
-            modifiers: [["darker", 2]],
-          }}
+          labelTextColor="black"
           borderWidth={1}
           borderColor={{
             from: "color",

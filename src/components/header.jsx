@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/visang_logo.png";
+import logo from "../assets/logos/visang_logo.png";
 
 const Header = () => {
   const [theme, setTheme] = useState("pastel");
@@ -15,28 +15,28 @@ const Header = () => {
   return (
     <header className="bg-base-100">
       <div className="flex h-16 max-w-screen-xl items-center gap-4 px-2 sm:px-4 lg:px-6">
-        <a className="block" href="/">
+        <Link className="block" to="/">
           <span className="sr-only">Home</span>
           <img src={logo} className="h-16" />
-        </a>
+        </Link>
 
         <div className="flex flex-1 items-center justify-end lg:justify-between font-bold">
           <nav aria-label="Global" className="hidden lg:block">
             <ul className="flex items-center gap-6 text-sm">
               <li>
-                <a href="/">학(學),습(習) 데이터</a>
+                <Link to="/">학(學),습(習) 데이터</Link>
               </li>
 
               <li>
-                <a href="/">브랜드 데이터</a>
+                <Link to="/CirclePack">비상교육 데이터 맵</Link>
               </li>
 
               <li>
-                <a href="/">데이터 기반 조직도</a>
+                <Link to="/">데이터 기반 조직도</Link>
               </li>
 
               <li>
-                <a href="/">데이터 메타정보</a>
+                <Link to="/">데이터 메타정보</Link>
               </li>
             </ul>
           </nav>

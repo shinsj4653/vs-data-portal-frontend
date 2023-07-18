@@ -1,5 +1,5 @@
 import React from "react";
-import footer_logo from "../assets/visang_logo_footer.png"
+import footer_logo from "../assets/logos/visang_logo_footer.png"
 
 const Footer = () => {
   return (

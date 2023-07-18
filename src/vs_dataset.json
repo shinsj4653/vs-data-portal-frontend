@@ -1,16 +1,16 @@
 {
   "name": "비상교육",
-  "color": "#00b2e2",
+  "color": "#86cafe",
   "id": "node-1",
   "children": [
     {
       "name": "러닝 Company",
-      "color": "#94e8ff",
+      "color": "#e3c2ff",
       "id": "node-2",
       "children": [
         {
           "name": "피어나다",
-          "color": "#a366fe",
+          "color": "#cf9eff",
           "id": "node-3",
           "children": [
             {
@@ -282,24 +282,24 @@
         },
         {
           "name": "온리원",
-          "color": "#bbf1ff",
+          "color": "#e8eef8",
           "id": "node-45_2",
           "children": [
             {
               "name": "키즈",
-              "color": "#bbf1ff",
+              "color": "#e8eef8",
               "loc": 55,
               "id": "node-46"
             },
             {
               "name": "초등",
-              "color": "#bbf1ff",
+              "color": "#e8eef8",
               "loc": 30,
               "id": "node-47"
             },
             {
               "name": "중등",
-              "color": "#bbf1ff",
+              "color": "#e8eef8",
               "loc": 55,
               "id": "node-48"
             }
@@ -309,36 +309,36 @@
     },
     {
       "name": "출판 Company",
-      "color": "#9aa7d9",
+      "color": "#ffe59e",
       "id": "node-49",
       "children": [
         {
           "name": "비바샘",
-          "color": "#bbf1ff",
+          "color": "#e8eef8",
           "loc": 125,
           "id": "node-50"
         },
         {
           "name": "샘퀴즈",
-          "color": "#bbf1ff",
+          "color": "#e8eef8",
           "loc": 115,
           "id": "node-51"
         },
         {
           "name": "맘앤톡",
-          "color": "#bbf1ff",
+          "color": "#e8eef8",
           "loc": 97,
           "id": "node-52"
         },
         {
           "name": "비상교재",
-          "color": "#bbf1ff",
+          "color": "#e8eef8",
           "loc": 93,
           "id": "node-53"
         },
         {
           "name": "비상교과서",
-          "color": "#bbf1ff",
+          "color": "#e8eef8",
           "loc": 92,
           "id": "node-54"
         }
@@ -346,48 +346,48 @@
     },
     {
       "name": "티칭 Company",
-      "color": "#00b9c6",
+      "color": "#9cdb7b",
       "id": "node-55",
       "children": [
         {
           "name": "비상아이비츠",
-          "color": "#bbf1ff",
+          "color": "#e8eef8",
           "loc": 130,
           "id": "node-56"
         },
         {
           "name": "수학플러스러닝",
-          "color": "#bbf1ff",
+          "color": "#e8eef8",
           "loc": 140,
           "id": "node-57"
         },
         {
           "name": "브이피트",
-          "color": "#bbf1ff",
+          "color": "#e8eef8",
           "loc": 57,
           "id": "node-58"
         },
         {
           "name": "누리샘",
-          "color": "#bbf1ff",
+          "color": "#e8eef8",
           "loc": 63,
           "id": "node-59"
         },
         {
           "name": "티키토키",
-          "color": "#bbf1ff",
+          "color": "#e8eef8",
           "loc": 52,
           "id": "node-60"
         },
         {
           "name": "잉글리이 아이",
-          "color": "#bbf1ff",
+          "color": "#e8eef8",
           "loc": 45,
           "id": "node-61"
         },
         {
           "name": "윙스",
-          "color": "#bbf1ff",
+          "color": "#e8eef8",
           "loc": 69,
           "id": "node-62"
         }
@@ -395,30 +395,30 @@
     },
     {
       "name": "글로벌 Company",
-      "color": "#62abdc",
+      "color": "#9fc2f9",
       "id": "node-63",
       "children": [
         {
           "name": "마스터K",
-          "color": "#bbf1ff",
+          "color": "#e8eef8",
           "loc": 180,
           "id": "node-64"
         },
         {
           "name": "마스터 토픽",
-          "color": "#bbf1ff",
+          "color": "#e8eef8",
           "loc": 85,
           "id": "node-65"
         },
         {
           "name": "KLASS",
-          "color": "#bbf1ff",
+          "color": "#e8eef8",
           "loc": 90,
           "id": "node-66"
         },
         {
           "name": "올비아",
-          "color": "#bbf1ff",
+          "color": "#e8eef8",
           "loc": 155,
           "id": "node-67"
         }

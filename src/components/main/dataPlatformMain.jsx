@@ -1,12 +1,13 @@
 import React from "react";
 import MainSearchBar from "./mainSearchBar";
-import data_platform_img_light from "../../assets/data_platform_img_light.jpg";
-import lecture_icon from "../../assets/lecture_icon.png";
-import brand_icon from "../../assets/brand_icon.png"
-import org_icon from "../../assets/org_icon.png";
-import data_icon from "../../assets/data_icon.png"
-import system_info_icon from "../../assets/system_info_icon.png"
-import data_analytics_icon from "../../assets/data_analytics_icon.png"
+import data_platform_img_light from "../../assets/backgrounds/data_platform_img_light.jpg";
+import lecture_icon from "../../assets/icons/lecture_icon.png";
+import brand_icon from "../../assets/icons/brand_icon.png"
+import org_icon from "../../assets/icons/org_icon.png";
+import data_icon from "../../assets/icons/data_icon.png"
+import system_info_icon from "../../assets/icons/system_info_icon.png"
+import data_analytics_icon from "../../assets/icons/data_analytics_icon.png"
+import { Link } from "react-router-dom";
 
 const DataPlatformMain = () => {
   return (
@@ -46,17 +47,17 @@ const DataPlatformMain = () => {
               </div>
             </a>
 
-            <a className="card" href="/accountant">
+            <Link className="card" to="/CirclePack">
               <div className="card border-2 border-slate-600 bg-base-100 shadow-xl transition duration-150 ease-out hover:bg-slate-200">
                 <figure className="px-10 pt-10">
-                  <img src={brand_icon} alt="lecture" className="h-20" />
+                  <img src={brand_icon} alt="brand_icon" className="h-20" />
                 </figure>
                 <div className="card-body items-center text-center">
-                  <h2 className="card-title">비상교육 브랜드 데이터</h2>
+                  <h2 className="card-title">비상교육 데이터 맵</h2>
                   {/* <p>버블차트를 통해 비상의 전체 브랜드를 볼 수 있는 서비스</p> */}
                 </div>
               </div>
-            </a>
+            </Link>
 
             <a className="card" href="/accountant">
               <div className="card border-2 border-slate-600 bg-base-100 shadow-xl transition duration-150 ease-out hover:bg-slate-200">

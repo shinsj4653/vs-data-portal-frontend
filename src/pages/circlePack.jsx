@@ -33,7 +33,7 @@ const CirclePack = () => {
             </div>
           </div>
         </div>
-        <div className="flex h-screen bg-white">
+        <div className="flex bg-white">
           <Sidebar data={vs_data} onNodeClick={handleNodeClick} />
           <BrandCirclePackChart
             data={vs_data}

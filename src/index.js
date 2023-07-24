@@ -1,9 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import 'primereact/resources/themes/tailwind-light/theme.css';
-import 'primereact/resources/primereact.css';                       // core css
-import 'primeicons/primeicons.css';                                 // icons
-import 'primeflex/primeflex.css';          
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';

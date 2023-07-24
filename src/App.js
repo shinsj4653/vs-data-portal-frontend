@@ -10,7 +10,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/CirclePack" element={<CirclePack />} />
-            <Route path="/orgchart" element={<Orgchart />} />
+            <Route path="/Orgchart" element={<Orgchart />} />
           </Routes>
         </Router>
     </>

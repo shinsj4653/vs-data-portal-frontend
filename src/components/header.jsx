@@ -32,7 +32,7 @@ const Header = () => {
               </li>
 
               <li>
-                <Link to="/">데이터 기반 조직도</Link>
+                <Link to="/Orgchart">데이터 기반 조직도</Link>
               </li>
 
               <li>

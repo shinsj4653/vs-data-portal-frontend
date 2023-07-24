@@ -1,7 +1,7 @@
 {
   "name": "비상교육",
   "color": "#86cafe",
-  "id": "node-1",
+  "id": "node-1",  
   "children": [
     {
       "name": "러닝 Company",
@@ -244,37 +244,37 @@
             {
               "name": "회원,관리자",
               "color": "#5150a8",
-              "id": "node-40_2",
+              "id": "node-41",
               "children": [
                 {
                   "name": "보안",
                   "color": "#fee381",
                   "loc": 1,
-                  "id": "node-41"
+                  "id": "node-42"
                 },
                 {
                   "name": "체험회원",
                   "color": "#fee381",
                   "loc": 1,
-                  "id": "node-42"
+                  "id": "node-43"
                 },
                 {
                   "name": "피오 Info",
                   "color": "#fee381",
                   "loc": 1,
-                  "id": "node-43"
+                  "id": "node-44"
                 },
                 {
                   "name": "시스템 관리",
                   "color": "#fee381",
                   "loc": 1,
-                  "id": "node-44"
+                  "id": "node-45"
                 },
                 {
                   "name": "사용자",
                   "color": "#fee381",
                   "loc": 3,
-                  "id": "node-45"
+                  "id": "node-46"
                 }
               ]
             }
@@ -283,25 +283,25 @@
         {
           "name": "온리원",
           "color": "#e8eef8",
-          "id": "node-45_2",
+          "id": "node-47",
           "children": [
             {
               "name": "키즈",
               "color": "#e8eef8",
               "loc": 55,
-              "id": "node-46"
+              "id": "node-48"
             },
             {
               "name": "초등",
               "color": "#e8eef8",
               "loc": 30,
-              "id": "node-47"
+              "id": "node-49"
             },
             {
               "name": "중등",
               "color": "#e8eef8",
               "loc": 55,
-              "id": "node-48"
+              "id": "node-50"
             }
           ]
         }
@@ -310,117 +310,117 @@
     {
       "name": "출판 Company",
       "color": "#ffe59e",
-      "id": "node-49",
+      "id": "node-51",
       "children": [
         {
           "name": "비바샘",
           "color": "#e8eef8",
           "loc": 125,
-          "id": "node-50"
+          "id": "node-52"
         },
         {
           "name": "샘퀴즈",
           "color": "#e8eef8",
           "loc": 115,
-          "id": "node-51"
+          "id": "node-53"
         },
         {
           "name": "맘앤톡",
           "color": "#e8eef8",
           "loc": 97,
-          "id": "node-52"
+          "id": "node-54"
         },
         {
           "name": "비상교재",
           "color": "#e8eef8",
           "loc": 93,
-          "id": "node-53"
+          "id": "node-55"
         },
         {
           "name": "비상교과서",
           "color": "#e8eef8",
           "loc": 92,
-          "id": "node-54"
+          "id": "node-56"
         }
       ]
     },
     {
       "name": "티칭 Company",
       "color": "#9cdb7b",
-      "id": "node-55",
+      "id": "node-57",
       "children": [
         {
           "name": "비상아이비츠",
           "color": "#e8eef8",
           "loc": 130,
-          "id": "node-56"
+          "id": "node-58"
         },
         {
           "name": "수학플러스러닝",
           "color": "#e8eef8",
           "loc": 140,
-          "id": "node-57"
+          "id": "node-59"
         },
         {
           "name": "브이피트",
           "color": "#e8eef8",
           "loc": 57,
-          "id": "node-58"
+          "id": "node-60"
         },
         {
           "name": "누리샘",
           "color": "#e8eef8",
           "loc": 63,
-          "id": "node-59"
+          "id": "node-61"
         },
         {
           "name": "티키토키",
           "color": "#e8eef8",
           "loc": 52,
-          "id": "node-60"
+          "id": "node-62"
         },
         {
           "name": "잉글리이 아이",
           "color": "#e8eef8",
           "loc": 45,
-          "id": "node-61"
+          "id": "node-63"
         },
         {
           "name": "윙스",
           "color": "#e8eef8",
           "loc": 69,
-          "id": "node-62"
+          "id": "node-64"
         }
       ]
     },
     {
       "name": "글로벌 Company",
       "color": "#9fc2f9",
-      "id": "node-63",
+      "id": "node-65",
       "children": [
         {
           "name": "마스터K",
           "color": "#e8eef8",
           "loc": 180,
-          "id": "node-64"
+          "id": "node-66"
         },
         {
           "name": "마스터 토픽",
           "color": "#e8eef8",
           "loc": 85,
-          "id": "node-65"
+          "id": "node-67"
         },
         {
           "name": "KLASS",
           "color": "#e8eef8",
           "loc": 90,
-          "id": "node-66"
+          "id": "node-68"
         },
         {
           "name": "올비아",
           "color": "#e8eef8",
           "loc": 155,
-          "id": "node-67"
+          "id": "node-69"
         }
       ]
     }

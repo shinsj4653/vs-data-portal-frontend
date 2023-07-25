@@ -37,7 +37,7 @@ const DataPlatformMain = () => {
 					<div className="grid grid-cols-1 gap-5 sm:grid-cols-3 bg-sky-200 p-3 rounded-2xl justify- auto-cols-max">
 						<Link
 							className="card"
-							to="/CirclePack"
+							to="/DataMap"
 						>
 							<div className="card border-2 border-slate-600 bg-base-100 shadow-xl transition duration-150 ease-out hover:bg-slate-200">
 								<figure className="px-10 pt-10">

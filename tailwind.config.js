@@ -10,8 +10,8 @@ module.exports = {
 
   // daisyUI config (optional - here are the default values)
   daisyui: {
-    themes: ["pastel", "dracula"], // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
-    darkTheme: "dracula", // name of one of the included themes for dark mode
+    themes: ["pastel"], // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
+    darkTheme: "pastel", // name of one of the included themes for dark mode
     base: true, // applies background color and foreground color for root element by default
     styled: true, // include daisyUI colors and design decisions for all components
     utils: true, // adds responsive and modifier utility classes

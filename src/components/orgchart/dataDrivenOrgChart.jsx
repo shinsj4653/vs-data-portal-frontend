@@ -3,6 +3,7 @@ import ReactDOMServer from 'react-dom/server';
 import { OrgChart } from 'd3-org-chart';
 import CustomNodeContent from './customNodeContent';
 import CustomExpandButton from './customExpandedButton';
+import {GoZoomIn, GoZoomOut} from "react-icons/go"
 
 const transformData = (data, depth = 0) => {
 	const transformedData = [];
@@ -36,6 +37,7 @@ const transformData = (data, depth = 0) => {
 const DataDrivenOrgChart = (props) => {
 	const d3Container = useRef(null);
 	const data = transformData(props.data, 2);
+	data.forEach((d) => (d._expanded = true));
 	let chart = null;
 
 	useLayoutEffect(() => {
@@ -43,13 +45,12 @@ const DataDrivenOrgChart = (props) => {
 			chart = new OrgChart();
 		}
 		if (props.data && d3Container.current) {
-			chart						
-				.container(d3Container.current)							
+			chart
+				.container(d3Container.current)
 				.data(data)
-				.nodeWidth((d) => 330)
+				.nodeWidth((d) => 250)
 				.nodeHeight((d) => 150)
 				.compactMarginBetween((d) => 80)
-				.compact(0)
 				.buttonContent((node, state) => {
 					return ReactDOMServer.renderToStaticMarkup(
 						<CustomExpandButton {...node.node} />
@@ -60,35 +61,37 @@ const DataDrivenOrgChart = (props) => {
 						<CustomNodeContent {...d} />
 					);
 				})
-				
-				.render();
+				.render()
+				.fit();
 		}
 
-		chart.getChartState().svg.on("wheel.zoom", null);		
+		chart.getChartState().svg.on('wheel.zoom', null);
 	}, [props, props.data]);
 
 	return (
 		<div
-			className="bg-slate-100 w-full"
+			className="bg-slate-100 w-full relative"
 			ref={d3Container}
 		>
-			<button
-				onClick={() => {
-					chart.zoomOut();
-				}}
-				className="btn btn-action-button waves-effect waves-light"
-			>
-				<i className="fas fa-minus"></i> zoom out
-			</button>
-			<br />
-			<button
-				onClick={() => {
-					chart.zoomIn();
-				}}
-				className="btn btn-action-button waves-effect waves-light"
-			>
-				<i className="fas fa-plus"></i> zoom in
-			</button>
+			<div className='absolute top-0 left-0 flex flex-row'>
+				<button
+					onClick={() => {
+						chart.zoomOut();
+					}}
+					className="btn btn-action-button waves-effect waves-light"
+				>
+					<GoZoomOut/> zoom out
+				</button>
+				<br />
+				<button
+					onClick={() => {
+						chart.zoomIn();
+					}}
+					className="btn btn-action-button waves-effect waves-light"
+				>
+					<GoZoomIn/> zoom in
+				</button>
+			</div>
 		</div>
 	);
 };

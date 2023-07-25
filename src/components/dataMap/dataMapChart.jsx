@@ -35,7 +35,7 @@ const findNodeById = (node, targetId) => {
 };
 
 // Zoomable Circle Pack 차트 개발
-const BrandCirclePackChart = ({ data, clickedNodeId, onNodeClick }) => {
+const DataMapChart = ({ data, clickedNodeId, onNodeClick }) => {
   const [zoomedId, setZoomedId] = useState(null);
   const [labelIdx, setLabelIdx] = useState(0);
   const transformedData = transformData(data);
@@ -67,12 +67,12 @@ const BrandCirclePackChart = ({ data, clickedNodeId, onNodeClick }) => {
   };
 
   return (
-    <section className="">
+    <section>
       <div className="h-screen w-screen max-w-screen-lg">
         <ResponsiveCirclePacking          
           theme={{
             fontSize: 20,
-            background: "#fffbfa",
+            // background: "#fffbfa",
           }}
           zoomedId={zoomedId}
           motionConfig="slow"
@@ -81,8 +81,8 @@ const BrandCirclePackChart = ({ data, clickedNodeId, onNodeClick }) => {
           margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
           id="id"
           value="loc"
-          // colors={{ scheme: 'nivo' }}
-          colors={(node) => node.data.color}
+          colors={{ scheme: 'set3' }}
+          // colors={(node) => node.data.color}
           childColor={{
             from: "color",
             modifiers: [["brighter", 0.4]],
@@ -108,4 +108,4 @@ const BrandCirclePackChart = ({ data, clickedNodeId, onNodeClick }) => {
   );
 };
 
-export default BrandCirclePackChart;
+export default DataMapChart;

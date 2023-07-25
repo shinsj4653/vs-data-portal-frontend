@@ -11,8 +11,8 @@ const MainSearchBar = () => {
         <input
           type="text"
           id="Search"
-          placeholder="Search for..."
-          disabled="true"
+          placeholder="개발 예정"
+          disabled
           className="w-full rounded-md border-base-100 py-2.5 px-2 pe-10 shadow-sm sm:text-sm text-base-content bg-slate-100"
         />
 

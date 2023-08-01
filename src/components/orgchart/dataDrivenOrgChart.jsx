@@ -1,9 +1,10 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { OrgChart } from 'd3-org-chart';
 import CustomNodeContent from './customNodeContent';
 import CustomExpandButton from './customExpandedButton';
-import {GoZoomIn, GoZoomOut} from "react-icons/go"
+import { GoZoomIn, GoZoomOut } from 'react-icons/go';
+import ServiceDetailsCard from './serviceDetailsCard';
 
 const transformData = (data, depth = 0) => {
 	const transformedData = [];
@@ -14,7 +15,7 @@ const transformData = (data, depth = 0) => {
 		}
 
 		const transformedNode = {
-			id: node.id.replace('node-', ''),
+			id: node.id,
 			parentId,
 			name: node.name,
 			color: node.color,
@@ -35,16 +36,26 @@ const transformData = (data, depth = 0) => {
 };
 
 const DataDrivenOrgChart = (props) => {
+	const [cardShow, setCardShow] = useState(false);
 	const d3Container = useRef(null);
+
 	const data = transformData(props.data, 2);
 	data.forEach((d) => (d._expanded = true));
-	let chart = null;
+
+	const handleShow = (nodeId) => {
+		console.log(nodeId);
+		setCardShow(true);
+	};
+	const handleClose = () => setCardShow(false);
+
+	let chart = new OrgChart();
 
 	useLayoutEffect(() => {
-		if (!chart) {
-			chart = new OrgChart();
-		}
-		if (props.data && d3Container.current) {
+		const toggleDetailsCard = (nodeId) => {
+			handleShow(nodeId);
+		};
+
+		if (data && d3Container.current) {
 			chart
 				.container(d3Container.current)
 				.data(data)
@@ -61,26 +72,31 @@ const DataDrivenOrgChart = (props) => {
 						<CustomNodeContent {...d} />
 					);
 				})
+				.onNodeClick((d) => {
+					toggleDetailsCard(d);
+				})
 				.render()
 				.fit();
 		}
 
 		chart.getChartState().svg.on('wheel.zoom', null);
-	}, [props, props.data]);
+	}, []);
 
 	return (
-		<div
-			className="bg-slate-100 w-full relative"
-			ref={d3Container}
-		>
-			<div className='absolute top-0 left-0 flex flex-row'>
+		<>
+			<div
+				className="bg-slate-100 w-full relative"
+				ref={d3Container}
+			>
+				{cardShow && <ServiceDetailsCard handleClose={handleClose} />}
+				{/* <div className="absolute top-0 left-0 flex flex-row">
 				<button
 					onClick={() => {
 						chart.zoomOut();
 					}}
 					className="btn btn-action-button waves-effect waves-light"
 				>
-					<GoZoomOut/> zoom out
+					<GoZoomOut /> zoom out
 				</button>
 				<br />
 				<button
@@ -89,10 +105,11 @@ const DataDrivenOrgChart = (props) => {
 					}}
 					className="btn btn-action-button waves-effect waves-light"
 				>
-					<GoZoomIn/> zoom in
+					<GoZoomIn /> zoom in
 				</button>
+			</div> */}
 			</div>
-		</div>
+		</>
 	);
 };
 

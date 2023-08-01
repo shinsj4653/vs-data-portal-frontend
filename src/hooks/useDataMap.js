@@ -1,10 +1,14 @@
 import { useQuery } from 'react-query';
-import { fetchDataMapMain, fetchDataMapSub } from '../api/dataMapApi';
+import { fetchDataMapDataSet, fetchDataMapMain, fetchDataMapSub } from '../api/dataMapApi';
 
 export const useDataMapMain = () => {
-  return useQuery('dataMapsMain', fetchDataMapMain);
+	return useQuery('dataMapMain', fetchDataMapMain);
 };
 
 export const useDataMapSub = () => {
-    return useQuery('dataMapsSub', fetchDataMapSub);
-  };
+	return useQuery('dataMapSub', fetchDataMapSub);
+};
+
+export const useDataMapDataSet = () => {
+	return useQuery('dataMapDataSet', fetchDataMapDataSet);
+};

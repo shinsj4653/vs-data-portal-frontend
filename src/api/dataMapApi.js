@@ -19,3 +19,9 @@ export const fetchDataMapSub = async () => {
     console.log(response.data)
     return response.data;
 }
+
+export const fetchDataMapDataSet = async () => {
+    const response = await axios.get(`datamap/dataset`);
+    console.log(response.data)
+    return response.data;
+}

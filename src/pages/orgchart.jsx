@@ -1,9 +1,18 @@
 import React from 'react';
 import DataDrivenOrgChart from '../components/orgchart/dataDrivenOrgChart';
 import Layout from '../components/layout';
-import vs_data from '../vs_dataset.json';
+import { useOrgChartMain } from '../hooks/useOrgChart';
+import MainSearchBar from '../components/main/mainSearchBar';
 
 const Orgchart = () => {
+	const orgChartData = useOrgChartMain();
+
+	if (orgChartData.isLoading) {
+		return <div>Loading...</div>;
+	}
+
+	const data = orgChartData.data.data;
+
 	return (
 		<>
 			<Layout>
@@ -25,9 +34,13 @@ const Orgchart = () => {
 						</div>
 					</div>
 				</div>
-				<div className="flex">
+				<div className="flex flex-col justify-center items-center bg-slate-100 p-5">
 					{/* <Sidebar /> */}
-					<DataDrivenOrgChart data={vs_data} />
+					<div className='bg-slate-200 p-5 rounded-lg shadow-md items-center mb-1'>
+						<p className='pb-3'>DataSet 검색하기</p>
+						<MainSearchBar />
+					</div>
+					<DataDrivenOrgChart data={data} />
 				</div>
 			</Layout>
 		</>

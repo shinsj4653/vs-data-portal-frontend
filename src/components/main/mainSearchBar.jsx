@@ -13,7 +13,7 @@ const MainSearchBar = () => {
           id="Search"
           placeholder="개발 예정"
           disabled
-          className="w-full rounded-md border-base-100 py-2.5 px-2 pe-10 shadow-sm sm:text-sm text-base-content bg-slate-100"
+          className="w-full rounded-md border-base-100 py-2.5 px-2 pe-10 shadow-sm sm:text-sm text-base-content bg-white"
         />
 
         <span className="absolute inset-y-0 end-0 grid my-2 mx-0 place-content-center">

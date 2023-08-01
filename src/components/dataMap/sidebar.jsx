@@ -21,7 +21,7 @@ const Sidebar = ({ data, onNodeClick }) => {
   return (
     <>
       <div className=" py-6 border-e hidden md:block w-1/6 min-w-fit ">
-        <ul className="mt-3 space-y-1">
+        <ul className="mt-16 space-y-1">
           <SidebarMenuItem item={transformedData} onMenuClick={onNodeClick} />
         </ul>
       </div>

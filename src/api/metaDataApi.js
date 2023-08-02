@@ -8,14 +8,14 @@ axios.defaults.baseURL = "http://localhost:8080";
 
 axios.defaults.withCredentials = true; // withCredentials 전역 설정
 
-export const fetchOrgChartMain = async () => {
-    const response = await axios.get(`dataorg/allorginfo`);
+export const fetchMetaDataMainDataset = async (serviceName) => {
+    const response = await axios.get(`metadata/dataset/main?serviceName=${serviceName}`);
     console.log(response.data)
     return response.data;
 }
 
-export const fetchServiceInfo = async () => {
-    const response = await axios.get(`dataorg/service/systeminfo`);
+export const fetchMetaDataSubDataset = async (serviceName) => {
+    const response = await axios.get(`metadata/dataset/sub?serviceName=${serviceName}`);
     console.log(response.data)
     return response.data;
 }

@@ -89,25 +89,6 @@ const DataDrivenOrgChart = (props) => {
 				ref={d3Container}
 			>
 				{cardShow && <ServiceDetailsCard handleClose={handleClose} />}
-				{/* <div className="absolute top-0 left-0 flex flex-row">
-				<button
-					onClick={() => {
-						chart.zoomOut();
-					}}
-					className="btn btn-action-button waves-effect waves-light"
-				>
-					<GoZoomOut /> zoom out
-				</button>
-				<br />
-				<button
-					onClick={() => {
-						chart.zoomIn();
-					}}
-					className="btn btn-action-button waves-effect waves-light"
-				>
-					<GoZoomIn /> zoom in
-				</button>
-			</div> */}
 			</div>
 		</>
 	);

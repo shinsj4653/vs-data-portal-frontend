@@ -5,7 +5,7 @@ import DataMapChart from '../components/dataMap/dataMapChart';
 import Layout from '../components/layout';
 import circlepack_background from '../assets/backgrounds/circlePack_background.jpg';
 import {
-	useDataMapDataSet,
+	useDataMapAllDataset,
 	useDataMapMain,
 	useDataMapSub,
 } from '../hooks/useDataMap';
@@ -39,7 +39,7 @@ const DataMap = () => {
 
 	const mainDataQuery = useDataMapMain();
 	const subDataQuery = useDataMapSub();
-	const dataMapDatasetQuery = useDataMapDataSet();
+	const dataMapDatasetQuery = useDataMapAllDataset();
 
 	// useEffect를 사용하여 데이터를 동기적으로 처리
 	useEffect(() => {

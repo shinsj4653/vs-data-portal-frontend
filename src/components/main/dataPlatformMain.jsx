@@ -84,7 +84,7 @@ const DataPlatformMain = () => {
 								</figure>
 								<div className="card-body items-center text-center">
 									<h2 className="card-title">
-										학(學),습(習) 데이터 (개발 예정)
+										AI 현황맵 (개발 예정)
 									</h2>
 									{/* <p>비상교육의 학(學),습(習) 데이터를 볼 수 있는 서비스</p> */}
 								</div>
@@ -92,7 +92,9 @@ const DataPlatformMain = () => {
 						</div>
 					</div>
 					<div className="grid grid-cols-1 gap-5 sm:grid-cols-3 my-4 bg-indigo-100 p-3 rounded-2xl justify-between">
-						<div className="card">
+						<div
+							className="card"
+							to="/MetaDataInfo">
 							<div className="card border-2 border-slate-600 bg-base-100 shadow-xl transition duration-150 ease-out hover:bg-slate-200">
 								<figure className="px-10 pt-10">
 									<img
@@ -102,7 +104,7 @@ const DataPlatformMain = () => {
 									/>
 								</figure>
 								<div className="card-body items-center text-center">
-									<h2 className="card-title">메타데이터 정보 (개발 예정)</h2>
+									<h2 className="card-title">메타데이터 정보</h2>
 									{/* <p>
                     데이터셋, 데이터 사전, 테이블 목록 등 메타정보를 볼 수 있는
                     서비스

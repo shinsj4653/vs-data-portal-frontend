@@ -126,7 +126,8 @@ const DataMap = () => {
 						<div className="flex flex-row items-center">
 							<div className="flex justify-center p-5">
 								<div className="flex bg-slate-400 rounded-2xl p-3">
-									{dataSet.map((child) => (
+									{dataSet.map((child, idx) => (
+										idx < 7 &&
 										<button
 											className={`${
 												activeButton === child ? 'bg-red-400' : 'bg-white'

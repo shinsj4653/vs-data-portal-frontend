@@ -9,6 +9,7 @@ import {
 	useDataMapMain,
 	useDataMapSub,
 } from '../hooks/useDataMap';
+import Loading from '../components/loading';
 
 const colors = ['#A8D8EA', '#AA96DA', '#FCBAD3', '#FFFFD2'];
 // json Data에 Depth 속성 추가
@@ -93,7 +94,7 @@ const DataMap = () => {
 	};
 
 	if (!data) {
-		return <div>Loading...</div>;
+		return <Loading></Loading>;
 	}
 
 	return (
@@ -121,6 +122,7 @@ const DataMap = () => {
 					<Sidebar
 						data={data}
 						onNodeClick={handleNodeClick}
+						isMap={true}
 					/>
 					<div>
 						<div className="flex flex-row items-center">

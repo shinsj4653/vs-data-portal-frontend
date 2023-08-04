@@ -3,12 +3,13 @@ import DataDrivenOrgChart from '../components/orgchart/dataDrivenOrgChart';
 import Layout from '../components/layout';
 import { useOrgChartMain } from '../hooks/useOrgChart';
 import MainSearchBar from '../components/main/mainSearchBar';
+import Loading from '../components/loading';
 
 const Orgchart = () => {
 	const orgChartData = useOrgChartMain();
 
 	if (orgChartData.isLoading) {
-		return <div>Loading...</div>;
+		return <Loading></Loading>;
 	}
 
 	const data = orgChartData.data.data;

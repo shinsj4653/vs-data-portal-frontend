@@ -17,7 +17,7 @@ export const fetchMetaDataMainDataset = async (serviceName) => {
 }
 
 export const fetchMetaDataSubDataset = async (serviceName, mainCategoryName) => {
-    const response = await axios.post(`metadata/category/main`, {
+    const response = await axios.post(`metadata/dataset/sub`, {
         "service_name" : serviceName,
         "main_category_name" : mainCategoryName
     });
@@ -25,13 +25,11 @@ export const fetchMetaDataSubDataset = async (serviceName, mainCategoryName) => 
     return response.data;
 }
 
-export const fetchMetaDataTableInfo = async (serviceName, mainCategoryName, subCategoryName, amount, pageNo) => {
+export const fetchMetaDataTableInfo = async (serviceName, mainCategoryName, subCategoryName) => {
     const response = await axios.post(`metadata/category/sub`, {
         "service_name" : serviceName,
         "main_category_name" : mainCategoryName,
-        "sub_category_name" : subCategoryName,
-        "amount" : amount,
-        "page_no" : pageNo
+        "sub_category_name" : subCategoryName
     });
     console.log(response.data)
     return response.data;

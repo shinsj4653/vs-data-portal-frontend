@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import Sidebar from '../components/dataMap/sidebar';
 import Layout from '../components/layout';
 import { useOrgChartMain } from '../hooks/useOrgChart';
@@ -6,31 +6,50 @@ import { useMetadataMainDataSet, useMetadataSubDataSet, useMetadataTableInfo } f
 import metadata_background from '../assets/backgrounds/metadata_background.jpg';
 import Pagination from '../components/metaDataInfo/pagination';
 import Loading from '../components/loading';
+import { useLocation } from 'react-router-dom';
+
 
 const MetaDataInfo = () => {
 	
+	const location = useLocation();
+	console.log(location.state);
+
 	const [orgData, setOrgData] = useState(null);
     const [mainDataset, setMainDataset] = useState(null);
+	const mainDatasetRef = useRef(null);
+	
+	
     const [subDataset, setSubDataset] = useState(null);
+	const subDatasetRef = useRef(null);
 	
 	const [clickedNodeId, setClickedNodeId] = useState(null);
-	const [serviceName, setServiceName] = useState('피어나다');
-	const [mainCategoryName, setMainCategoryName] = useState('회원, 교사'); // ex) '회원, 교사'
-    const [subCategoryName, setSubCategoryName] = useState('코치'); // ex) '코치'
+	const [serviceName, setServiceName] = useState(location.state?.serviceName ?? '피어나다');
+
+	// 만약 mainCategory 있으면 그걸로, 없으면 '회원, 교사'로 초기화
+	const [mainCategoryName, setMainCategoryName] = useState(location.state?.mainCategoryName ?? '회원, 교사'); // ex) '회원, 교사'
+    const [subCategoryName, setSubCategoryName] = useState(location.state?.subCategoryName ?? '코치'); // ex) '코치'
 	const [tableInfoList, setTableInfoList] = useState([]);
 
 	const itemsPerPage = 15;
 	const [currentPage, setCurrentPage] = useState(1);
-	const totalPages = Math.ceil(tableInfoList.length / itemsPerPage);
+	const [totalPages, setTotalPages] = useState(0);
+
+	const [scrollPosition, setScrollPosition] = useState(0);
+
 
 	const handlePageChange = (pageNumber) => {
 		setCurrentPage(pageNumber);
+		console.log("길이 ", tableInfoList.length);
+		console.log("total ", totalPages);
+		console.log("현재 페이지 ", pageNumber);
 	};
-
+	
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const endIndex = startIndex + itemsPerPage;
 	const visibleItems = tableInfoList.slice(startIndex, endIndex);
-	
+
+	// const handleDatasetColorChange
+  
 	const colors = ['#A8D8EA', '#AA96DA', '#FCBAD3', '#FFFFD2'];
 	// json Data에 Depth 속성 추가
 	const transformData = (data, depth = 0) => {
@@ -49,94 +68,91 @@ const MetaDataInfo = () => {
 		};
 	};
 
-	const handleNodeClick =   (nodeId, nodeName, nodeDepth) => {
+	const handleNodeClick = (nodeId, nodeName, nodeDepth) => {
+		location.state = null;
 		setClickedNodeId(nodeId);
+		setCurrentPage(1);
 
 		if (nodeDepth === 2) {
 			console.log(nodeName);
 			setServiceName(nodeName);
-			fetchData("serviceChange");
 		}
 	
 	};
+	
 	const orgDataQuery = useOrgChartMain();
-    const mainDatasetDataQuery = useMetadataMainDataSet(serviceName);
-    const subDatasetDataQuery = useMetadataSubDataSet(serviceName, mainCategoryName);
-	const tableInfoDataQuery = useMetadataTableInfo(serviceName, mainCategoryName, subCategoryName, itemsPerPage, currentPage);
+    const mainDatasetDataQuery = useMetadataMainDataSet(location.state?.serviceName ?? serviceName);
+    const subDatasetDataQuery = useMetadataSubDataSet(location.state?.serviceName ?? serviceName, location.state?.mainCategoryName ?? mainCategoryName);
+	const tableInfoDataQuery = useMetadataTableInfo(location.state?.serviceName ?? serviceName, location.state?.mainCategoryName ?? mainCategoryName, location.state?.subCategoryName ?? subCategoryName);
 
 	const fetchData = async (param) => {
+
+		if (param === "init") {
+			const [orgData, mainDataset, subDataset, tableInfoData] = await Promise.all([
+				orgDataQuery.refetch(),
+				mainDatasetDataQuery.refetch(),
+				subDatasetDataQuery.refetch(),
+				tableInfoDataQuery.refetch(),
+			]);
+
+			if (!orgData.isLoading && !mainDataset.isLoading && !subDataset.isLoading && !tableInfoData.isLoading) {
+				
+				const transformedData = transformData(orgData.data.data);
+				setOrgData(transformedData);
+				setMainDataset(mainDataset.data.data);
+				setMainCategoryName(location.state?.mainCategoryName ?? mainDataset.data.data[0]);
+				
+				setSubDataset(subDataset.data.data);
+				setSubCategoryName(location.state?.subCategoryName ?? subDataset.data.data[0]);
+				setTableInfoList(tableInfoData.data.data);
+			}
+		} else if (param === "serviceChange") {
 			
-			if (param === "init") {
+			const [mainDataset, subDataset, tableInfoData]  = await Promise.all([
+				mainDatasetDataQuery.refetch(),
+				subDatasetDataQuery.refetch(),
+				tableInfoDataQuery.refetch()
+			]);
 
-				const [orgData, mainDataset, subDataset, tableInfoData] = await Promise.all([
-					orgDataQuery.refetch(),
-					mainDatasetDataQuery.refetch(),
-					subDatasetDataQuery.refetch(),
-					tableInfoDataQuery.refetch()
-				]);
-				
-				if (orgData.isSuccess && mainDataset.isSuccess && subDataset.isSuccess && tableInfoData.isSuccess &&
-					!orgData.isLoading && !mainDataset.isLoading && !subDataset.isLoading && !tableInfoData.isLoading) {
-					
-					const transformedData = transformData(orgData.data.data);
-					setOrgData(transformedData);
-					setMainDataset(mainDataset.data.data);
-					setMainCategoryName(mainDataset.data.data[0]);
+			if (!mainDataset.isLoading && !subDataset.isLoading && !tableInfoData.isLoading) { 
+				setMainDataset(mainDataset.data.data);
+				setMainCategoryName(location.state?.mainCategoryName ?? mainDataset.data.data[0]);
 
-					if (mainCategoryName != null && subCategoryName != null) {
-						setSubDataset(subDataset.data.data);
-						setSubCategoryName(subDataset.data.data[0].sub_category_name);
-						setTableInfoList(tableInfoData.data.data);
-					}
-				
+				// 피어나다와 온리원초등 사이에서 이동할 때 중분류 명 및 메타 테이블 정보가 한 번에 안 불러와지는 오류가 존재하여, 
+				// 한 번더 렌더링 시켜줌
+				const subDatasetDataRefetch = await subDatasetDataQuery.refetch();
+				if (!subDatasetDataRefetch.isLoading) {
+					setSubDataset(subDatasetDataRefetch.data.data);
+					setSubCategoryName(location.state?.subCategoryName ?? subDatasetDataRefetch.data.data[0]);
 				}
-			} else if (param === "serviceChange") {
-			
-				const [mainDataset, subDataset, tableInfoData]  = await Promise.all([
-					mainDatasetDataQuery.refetch(),
-					subDatasetDataQuery.refetch(),
-					tableInfoDataQuery.refetch()
-				]);
-				
-				
-				if (mainDataset.isSuccess && subDataset.isSuccess && tableInfoData.isSuccess
-					&& !mainDataset.isLoading && !subDataset.isLoading && !tableInfoData.isLoading) {
+				const tableInfoDataRefetch = await tableInfoDataQuery.refetch();
+					if (!tableInfoDataRefetch.isLoading)
+						setTableInfoList(tableInfoDataRefetch.data.data);
 
-					setMainDataset(mainDataset.data.data);
-					setMainCategoryName(mainDataset.data.data[0]);	
-					
-					if (mainCategoryName != null && subCategoryName != null){
-						setSubDataset(subDataset.data.data);
-						setSubCategoryName(subDataset.data.data[0].sub_category_name);
-						setTableInfoList(tableInfoData.data.data);
-					}
-				}
-					
-				
-			} else if(param === "mainCategoryChange") {
-
-				const [subDataset, tableInfoData]  = await Promise.all([
-					subDatasetDataQuery.refetch(),
-					tableInfoDataQuery.refetch()
-				]);
-				
-				if (!subDataset.isLoading && !tableInfoData.isLoading && subDataset.isSuccess && tableInfoData.isSuccess) {
-					
-					if (mainCategoryName != null && subCategoryName != null) {
-						setSubDataset(subDataset.data.data);
-						setSubCategoryName(subDataset.data.data[0].sub_category_name);
-						setTableInfoList(tableInfoData.data.data);
-					}
-					
-				} 
-			} else {
-				const tableInfoData = await tableInfoDataQuery.refetch();
-				if (!tableInfoData.isLoading && tableInfoData.isSuccess) 
-					setTableInfoList(tableInfoData.data.data);
 			}
 			
-        };
+		} else if(param === "mainCategoryChange") {
+			const [subDataset, tableInfoData]  = await Promise.all([
+				subDatasetDataQuery.refetch(),
+				tableInfoDataQuery.refetch()
+			]);
+			
+			if (!subDataset.isLoading && !tableInfoData.isLoading) {
+				setSubDataset(subDataset.data.data);
+				console.log(subDataset);
+				setSubCategoryName(location.state?.subCategoryName ?? subDataset.data.data[0]);
+				setTableInfoList(tableInfoData.data.data);
+				
+			} 
+		} else {
+			const tableInfoData = await tableInfoDataQuery.refetch();
+			if(!tableInfoData.isLoading)
+				setTableInfoList(tableInfoData.data.data);
+		}	
 
+    };
+
+	
     useEffect(() => {
         fetchData("init");
     }, []);
@@ -147,23 +163,52 @@ const MetaDataInfo = () => {
 
 	useEffect(() => {
 		fetchData("mainCategoryChange");
-	}, [mainCategoryName])
+	}, [mainCategoryName]);
 
 	useEffect(() => {
 		fetchData("subCategoryChange");
-	}, [subCategoryName, currentPage])
-	
-    const handleMainDatasetColorChange = (name) => {
-		setMainCategoryName(name);
-		fetchData("mainCategoryChange");
-	};
+	}, [subCategoryName]);
 
-	const handleSubDatasetColorChange = (name) => {
-		setSubCategoryName(name);
+    const handleMainDatasetColorChange = (child) => {
+		location.state = null;
+    	
+		setCurrentPage(1);
+		setMainCategoryName(child);
 		fetchData("subCategoryChange");
+		
+		const clickedButton = mainDatasetRef.current.querySelector(`button[data-child="${child}"]`);
+		if (clickedButton) {
+			// Scroll the view to the clicked element
+			  setScrollPosition(mainDatasetRef.current.scrollLeft); // Store the current scroll position
+			
+			clickedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+			//clickedButton.scrollLeft = mainDatasetRef.current.scrollLeft;
+		  }
+	};
+	
+
+	// const [clickedSub, setClickedSub] = useState([]);
+
+	const handleSubDatasetColorChange = (child) => {
+		location.state = null;
+		const clickedButton = subDatasetRef.current.querySelector(`button[data-child="${child}"]`);
+		// const allButtons = subDatasetRef.current.querySelector(`button`);
+
+		// 모든 버튼들을 배열에 추가합니다.
+		// const allButtonsArray = Array.from(allButtons).map((button) => button.getAttribute('data-child'));
+		// setClickedSub(allButtonsArray);
+
+    	if (clickedButton) {
+    	  // Scroll the view to the clicked element
+    	  clickedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+    	}
+		
+		setCurrentPage(1);
+		setSubCategoryName(child);
+
 	}
 
-    if (!orgData || orgDataQuery.isLoading || mainDatasetDataQuery.isLoading || subDatasetDataQuery.isLoading || tableInfoDataQuery.isLoading ) {
+    if (!orgData || orgDataQuery.isLoading || mainDatasetDataQuery.isLoading || subDatasetDataQuery.isLoading || tableInfoDataQuery.isLoading) {
 		return (
 			<Loading></Loading>
 		);
@@ -202,24 +247,43 @@ const MetaDataInfo = () => {
 					{Array.isArray(mainDataset) && mainDataset.length > 0 ? (
 
 						<div className="flex flex-col justify-top p-5 w-3/4">
-									<div className="flex flex-row bg-white rounded-2xl p-3">
-										<div className='flex items-center w-1/6'>
-											<p className='text-center' style={{color:"#94A3B8", fontWeight:"1000", fontSize:"17px", marginLeft:"33%"}}>상위 주제</p>
+									<div className="flex flex-row bg-white rounded-2xl pt-1 p-3">
+										<div className='flex flex-col items-center w-1/6 pt-3'>
+											{mainCategoryName ? (												
+												<p className='text-center' style={{color:"#94A3B8", fontWeight:"1000", fontSize:"17px"}}>상위 주제</p>
+												//marginLeft:"33%"
+											) : (
+												<p className='text-center' style={{
+													color: "#94A3B8",
+													fontWeight: "1000",
+													fontSize: "17px",
+													display: 'flex',
+													alignItems: 'center',
+													justifyContent: 'center',
+													height: '100%'	
+												}}>
+													상위 주제
+												</p>
+											)}
+											<p style={{ fontWeight: "1000",color : '#0091FA'}}>#{mainCategoryName}</p>
 										</div>
 										<div className="flex flex-col w-5/6">
-											<div className="flex max-w-full overflow-x-auto">
-												<div className="flex flex-row">
+											<div className="flex max-w-full">
+
+												<div className="flex flex-row overflow-x-auto scroll-smooth" ref={mainDatasetRef}>
 													{Array.isArray(mainDataset) && mainDataset.map((child) => (
 														<button
 															className={`${
 																mainCategoryName === child ? 'bg-blue-500' : 'bg-white'
 															}  shadow-md m-2 px-4 py-2 hover:bg-slate-100`}
+															
 															style={{
 																fontWeight: "700",
-																minWidth: '9.3rem',
+																minWidth: '9.5rem',
 																borderColor: mainCategoryName === child ? '#0091FA' : '#C0C0C0',
-																color: mainCategoryName === child ? '#FFFFFF' : '#C0C0C0'}}
+																color: mainCategoryName === child ? '#ffffff' : '#C0C0C0'}}
 															key={child}
+															data-child={child}
 															onClick={() => {
 																handleMainDatasetColorChange(child);
 															}}
@@ -234,35 +298,56 @@ const MetaDataInfo = () => {
 									</div>
 									<div><hr style={{height:"2px", backgroundColor:"#E5E7EB"}}></hr></div>
 									<div className="flex flex-row bg-white rounded-2xl p-3">
-										<div className='flex items-center w-1/6'>
-											<p className='text-center' style={{color:"#94A3B8", fontWeight:"1000", fontSize:"17px", marginLeft:"33%"}}>중위 주제</p>
+										<div className='flex flex-col items-center w-1/6 pt-1.5'>
+											
+										{subCategoryName ? (												
+												<p className='text-center' style={{color:"#94A3B8", fontWeight:"1000", fontSize:"17px"}}>중위 주제</p>
+												//marginLeft:"33%"
+											) : (
+												<p className='text-center' style={{
+													color: "#94A3B8",
+													fontWeight: "1000",
+													fontSize: "17px",
+													display: 'flex',
+													alignItems: 'center',
+													justifyContent: 'center',
+													height: '100%'	
+												}}>
+													중위 주제
+												</p>
+											)}
+											
+											<p style={{ fontWeight: "1000",color : '#0091FA'}}>#{subCategoryName}</p>
+									
 										</div>
 										<div className="flex flex-col w-5/6">
-											<div className="flex max-w-full overflow-x-auto">
-												<div className="flex flex-row">
+											<div className="flex max-w-full">
+												<div className="flex flex-row overflow-x-auto scroll-smooth" ref={subDatasetRef}>
 													{Array.isArray(subDataset) && subDataset.map((child) => (
 														<button
 															className={`${
-																subCategoryName === child.sub_category_name ? 'bg-blue-500' : 'bg-white'
+																subCategoryName === child ? 'bg-white text-blue border border-blue-500' : 'bg-white'
 															}  shadow-md m-2 px-4 py-2 hover:bg-slate-100`}
 															style={{
 																fontWeight: "700",
-																minWidth: '8rem',
-																borderColor: subCategoryName === child.sub_category_name ? '#0091FA' : '#C0C0C0',
-																color: subCategoryName === child.sub_category_name ? '#FFFFFF' : '#C0C0C0'}}
-															key={child.sub_category_name}
+																minWidth: '9.5rem',
+																borderColor: subCategoryName === child ? '#0091FA' : '#C0C0C0',
+																color: subCategoryName === child ? '#0091FA' : '#C0C0C0'
+															}}
+															key={child}
+															data-child={child}
 															onClick={() => {
-																handleSubDatasetColorChange(child.sub_category_name);
+																handleSubDatasetColorChange(child);
 															}}
 														>
-															#{child.sub_category_name}
+															#{child}
 														</button>
 													))}
 												</div>
 											</div>
 										</div>
 									</div>
-									<div><hr style={{height:"2px", backgroundColor:"#E5E7EB"}}></hr></div>
+									<div><hr style={{height:"7px", backgroundColor:"#E5E7EB"}}></hr></div>
 									<div className="flex flex-row p-3" style={{backgroundColor: '#F2F5F8'}}>
 										{["테이블ID", "테이블명", "테이블 설명", "하위 주제"].map((label) => (
 
@@ -273,21 +358,27 @@ const MetaDataInfo = () => {
 											</div>
 										))}
 									</div>
-									<div><hr style={{height:"4px", backgroundColor:"#E5E7EB"}}></hr></div>
-									<div className="flex flex-col p-3" style={{backgroundColor: '#F2F5F8'}}>
+									<div><hr style={{height:"3px", backgroundColor:"#E5E7EB"}}></hr></div>
+									<div className="flex flex-col pt-0 p-3" style={{backgroundColor: '#F2F5F8'}}>
 										{
-											Array.isArray(tableInfoList) && tableInfoList.map((tableInfo) => (
+											Array.isArray(visibleItems) && visibleItems.map((tableInfo) => (
 												<div>
-													<div className='flex flex-row w-full p-2 text-center'>
-														<div className='w-1/4 border-r items-center mb-1' style={{borderRigthColor:'#E5E7EB'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"15px"}}>{tableInfo.table_id}</p></div>
-														<div className='w-1/4 border-r items-center mb-1' style={{borderRigthColor:'#E5E7EB'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"15px"}}>{tableInfo.table_name}</p></div>
-														<div className='w-1/4 border-r items-center mb-1' style={{borderRigthColor:'#E5E7EB'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"15px"}}>{tableInfo.table_comment}</p></div>
-														<div className='w-1/4 border-r items-center mb-1' style={{borderRigthColor:'#E5E7EB'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"15px"}}>{tableInfo.small_clsf_name}</p></div>
+													<div className='flex flex-row w-full pt-5 pb-5 text-center items-center'>
+														<div className='w-1/4 border-r items-center' style={{borderRigthColor:'#E5E7EB', overflow: 'hidden'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px", overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>{tableInfo.table_id}</p></div>
+														<div className='w-1/4 border-r items-center' style={{borderRigthColor:'#E5E7EB'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}}>{tableInfo.table_name}</p></div>
+														<div className='w-1/4 border-r items-center' style={{borderRigthColor:'#E5E7EB'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}}>{tableInfo.table_comment}</p></div>
+														<div className='w-1/4 border-r items-center' style={{borderRigthColor:'#E5E7EB'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}}>{tableInfo.small_clsf_name}</p></div>
 													</div>
 													<div><hr style={{height:"1px", backgroundColor:"#E5E7EB"}}></hr></div>
 												</div>
 											))
 										}
+										<Pagination
+											currentPage={currentPage}
+											itemsPerPage={itemsPerPage}
+											tableInfoList={tableInfoList}
+											onPageChange={handlePageChange}>
+										</Pagination>
 									</div>
 						</div>
 					) : (

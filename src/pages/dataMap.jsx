@@ -13,19 +13,22 @@ import Loading from '../components/loading';
 
 const colors = ['#A8D8EA', '#AA96DA', '#FCBAD3', '#FFFFD2'];
 // json Data에 Depth 속성 추가
-const transformData = (data, depth = 0) => {
+const transformData = (data, depth = 0, parentList) => {
 	if (data.children) {
 		return {
 			...data,
 			depth,
+			parentList: parentList,
 			color: colors[depth % colors.length], // depth를 colors 배열의 인덱스로 사용하여 색상 할당
-			children: data.children.map((child) => transformData(child, depth + 1)),
+			children: data.children.map((child) => transformData(child, depth + 1, parentList.concat(data.name))),
 		};
 	}
 	return {
 		...data,
 		depth,
+		parentList: parentList,
 		color: colors[depth % colors.length], // depth를 colors 배열의 인덱스로 사용하여 색상 할당
+		
 	};
 };
 
@@ -56,7 +59,8 @@ const DataMap = () => {
 			if (mainData && subData && dataMapDataset) {
 				const datasets = dataMapDataset.data.data;
 				const result = filterCategory ? mainData.data.data : subData.data.data;
-				const transformedData = transformData(result);
+				const transformedData = transformData(result, 0, []);
+				console.log(transformedData);
 				setOriginData(transformedData);
 				setData(transformedData);
 				setDataSet(datasets);

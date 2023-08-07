@@ -2,7 +2,7 @@ import React from "react";
 import SidebarMenuItem from "./sidebarMenuItem";
 
 const transformData = (data, depth = 0) => {
-  console.log('data', data);
+  // console.log('data', data);
   if (data.children) {
     return {
       ...data,

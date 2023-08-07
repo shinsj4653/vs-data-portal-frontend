@@ -2,13 +2,19 @@ import { useQuery, useMutation } from 'react-query';
 import { fetchMetaDataMainDataset, fetchMetaDataSubDataset, fetchMetaDataTableInfo } from '../api/metaDataApi';
 
 export const useMetadataMainDataSet = (serviceName) => {
-	return useQuery(['metaDataMainDataSet', serviceName], () => fetchMetaDataMainDataset(serviceName)); 
+	return useQuery(['metaDataMainDataSet', serviceName], () => fetchMetaDataMainDataset(serviceName), {
+		staleTime: 1000 * 60 * 60 * 24, // 24시간 동안 유효
+	}); 
 };
 
 export const useMetadataSubDataSet = (serviceName, mainCategoryName) => {
-	return useQuery(['metaDataSubDataSet', mainCategoryName], () => fetchMetaDataSubDataset(serviceName, mainCategoryName));
+	return useQuery(['metaDataSubDataSet', mainCategoryName], () => fetchMetaDataSubDataset(serviceName, mainCategoryName), {
+		staleTime: 1000 * 60 * 60 * 24, // 24시간 동안 유효
+	});
 };
 
-export const useMetadataTableInfo = (serviceName, mainCategoryName, subCategoryName, amount, pageNo) => {
-	return useQuery(['metaDataTableInfo', subCategoryName, amount, pageNo], () => fetchMetaDataTableInfo(serviceName, mainCategoryName, subCategoryName, amount, pageNo));
+export const useMetadataTableInfo = (serviceName, mainCategoryName, subCategoryName) => {
+	return useQuery(['metaDataTableInfo', subCategoryName], () => fetchMetaDataTableInfo(serviceName, mainCategoryName, subCategoryName), {
+		staleTime: 1000 * 60 * 60 * 24, // 24시간 동안 유효
+	});
 };

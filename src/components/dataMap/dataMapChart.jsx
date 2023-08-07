@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { ResponsiveCirclePacking } from "@nivo/circle-packing";
+import { useNavigate } from 'react-router-dom';
 
 // ID기반으로 Node를 검색하여 메뉴 클릭 시 맵핑
 const findNodeById = (node, targetId) => {
@@ -25,6 +26,11 @@ const DataMapChart = ({ data, clickedNodeId, onNodeClick }) => {
   const [labelIdx, setLabelIdx] = useState(0);
   const [nodeColor, setNodeColor] = useState(false);
 
+  const [mainCategoryName, setMainCategoryName] = useState('');
+  const [subCategoryName, setSubCategoryName] = useState('');
+
+  const navigate = useNavigate();
+
   // Zoom기능 설정
   useEffect(() => {
     if (clickedNodeId) {
@@ -41,6 +47,34 @@ const DataMapChart = ({ data, clickedNodeId, onNodeClick }) => {
 
   // Node 클릭 시 Zoom 및 label 레벨 설정
   const handleNodeClick = (node) => {    
+
+    if(node.depth === 3) {
+      navigate('/metadataInfo', {
+        state: {
+          serviceName: node.data.parentList[2],
+          mainCategoryName : node.data.name,
+        }
+      })
+    } else if (node.depth === 4){
+      navigate('/metadataInfo', {
+        state: {
+          serviceName: node.data.parentList[2],
+          mainCategoryName : node.data.parentList[3],
+          subCategoryName : node.data.name,
+        }
+      })
+    }
+  
+    // if(node.depth === 3) { 
+    //   // node 이름 가지고 페이지 이동
+    //   navigate('/metadataInfo', {
+    //     state: {
+    //         mainCategoryName : node.data.name,
+    //       }
+    //   })
+      
+    // }
+
     // 색변경 
     // setNodeColor(false);
     if (zoomedId === node.id) {
@@ -51,6 +85,8 @@ const DataMapChart = ({ data, clickedNodeId, onNodeClick }) => {
       setLabelIdx(node.depth);
     }
     onNodeClick(node.id);
+
+    
   };
 
   return (

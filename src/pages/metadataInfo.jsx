@@ -15,19 +15,19 @@ const MetaDataInfo = () => {
 	console.log(location.state);
 
 	const [orgData, setOrgData] = useState(null);
-    const [mainDataset, setMainDataset] = useState(null);
 	const mainDatasetRef = useRef(null);
 	
 	
-    const [subDataset, setSubDataset] = useState(null);
+    const [mainDatasetList, setMainDatasetList] = useState([]);
+    const [subDatasetList, setSubDatasetList] = useState([]);
 	const subDatasetRef = useRef(null);
 	
 	const [clickedNodeId, setClickedNodeId] = useState(null);
 	const [serviceName, setServiceName] = useState(location.state?.serviceName ?? '피어나다');
 
 	// 만약 mainCategory 있으면 그걸로, 없으면 '회원, 교사'로 초기화
-	const [mainCategoryName, setMainCategoryName] = useState(location.state?.mainCategoryName ?? '회원, 교사'); // ex) '회원, 교사'
-    const [subCategoryName, setSubCategoryName] = useState(location.state?.subCategoryName ?? '코치'); // ex) '코치'
+	const [selectedMainDataset, setSelectedMainDataset] = useState(location.state?.selectedMainDataset ?? '회원, 교사'); // ex) '회원, 교사'
+    const [selectedSubDataset, setSelectedSubDataset] = useState(location.state?.selectedSubDataset ?? '코치'); // ex) '코치'
 	const [tableInfoList, setTableInfoList] = useState([]);
 
 	const itemsPerPage = 15;
@@ -82,8 +82,8 @@ const MetaDataInfo = () => {
 	
 	const orgDataQuery = useOrgChartMain();
     const mainDatasetDataQuery = useMetadataMainDataSet(location.state?.serviceName ?? serviceName);
-    const subDatasetDataQuery = useMetadataSubDataSet(location.state?.serviceName ?? serviceName, location.state?.mainCategoryName ?? mainCategoryName);
-	const tableInfoDataQuery = useMetadataTableInfo(location.state?.serviceName ?? serviceName, location.state?.mainCategoryName ?? mainCategoryName, location.state?.subCategoryName ?? subCategoryName);
+    const subDatasetDataQuery = useMetadataSubDataSet(location.state?.serviceName ?? serviceName, location.state?.selectedMainDataset ?? selectedMainDataset);
+	const tableInfoDataQuery = useMetadataTableInfo(location.state?.serviceName ?? serviceName, location.state?.selectedMainDataset ?? selectedMainDataset, location.state?.selectedSubDataset ?? selectedSubDataset);
 
 	const fetchData = async (param) => {
 
@@ -99,11 +99,11 @@ const MetaDataInfo = () => {
 				
 				const transformedData = transformData(orgData.data.data);
 				setOrgData(transformedData);
-				setMainDataset(mainDataset.data.data);
-				setMainCategoryName(location.state?.mainCategoryName ?? mainDataset.data.data[0]);
+				setMainDatasetList(mainDataset.data.data);
+				setSelectedMainDataset(location.state?.selectedMainDataset ?? mainDataset.data.data[0]);
 				
-				setSubDataset(subDataset.data.data);
-				setSubCategoryName(location.state?.subCategoryName ?? subDataset.data.data[0]);
+				setSubDatasetList(subDataset.data.data);
+				setSelectedSubDataset(location.state?.selectedSubDataset ?? subDataset.data.data[0]);
 				setTableInfoList(tableInfoData.data.data);
 			}
 		} else if (param === "serviceChange") {
@@ -115,15 +115,15 @@ const MetaDataInfo = () => {
 			]);
 
 			if (!mainDataset.isLoading && !subDataset.isLoading && !tableInfoData.isLoading) { 
-				setMainDataset(mainDataset.data.data);
-				setMainCategoryName(location.state?.mainCategoryName ?? mainDataset.data.data[0]);
+				setMainDatasetList(mainDataset.data.data);
+				setSelectedMainDataset(location.state?.selectedMainDataset ?? mainDataset.data.data[0]);
 
 				// 피어나다와 온리원초등 사이에서 이동할 때 중분류 명 및 메타 테이블 정보가 한 번에 안 불러와지는 오류가 존재하여, 
 				// 한 번더 렌더링 시켜줌
 				const subDatasetDataRefetch = await subDatasetDataQuery.refetch();
 				if (!subDatasetDataRefetch.isLoading) {
-					setSubDataset(subDatasetDataRefetch.data.data);
-					setSubCategoryName(location.state?.subCategoryName ?? subDatasetDataRefetch.data.data[0]);
+					setSubDatasetList(subDatasetDataRefetch.data.data);
+					setSelectedSubDataset(location.state?.selectedSubDataset ?? subDatasetDataRefetch.data.data[0]);
 				}
 				const tableInfoDataRefetch = await tableInfoDataQuery.refetch();
 					if (!tableInfoDataRefetch.isLoading)
@@ -138,9 +138,9 @@ const MetaDataInfo = () => {
 			]);
 			
 			if (!subDataset.isLoading && !tableInfoData.isLoading) {
-				setSubDataset(subDataset.data.data);
+				setSubDatasetList(subDataset.data.data);
 				console.log(subDataset);
-				setSubCategoryName(location.state?.subCategoryName ?? subDataset.data.data[0]);
+				setSelectedSubDataset(location.state?.selectedSubDataset ?? subDataset.data.data[0]);
 				setTableInfoList(tableInfoData.data.data);
 				
 			} 
@@ -163,17 +163,17 @@ const MetaDataInfo = () => {
 
 	useEffect(() => {
 		fetchData("mainCategoryChange");
-	}, [mainCategoryName]);
+	}, [selectedMainDataset]);
 
 	useEffect(() => {
 		fetchData("subCategoryChange");
-	}, [subCategoryName]);
+	}, [selectedSubDataset]);
 
     const handleMainDatasetColorChange = (child) => {
 		location.state = null;
     	
 		setCurrentPage(1);
-		setMainCategoryName(child);
+		setSelectedMainDataset(child);
 		fetchData("subCategoryChange");
 		
 		const clickedButton = mainDatasetRef.current.querySelector(`button[data-child="${child}"]`);
@@ -204,7 +204,7 @@ const MetaDataInfo = () => {
     	}
 		
 		setCurrentPage(1);
-		setSubCategoryName(child);
+		setSelectedSubDataset(child);
 
 	}
 
@@ -244,12 +244,12 @@ const MetaDataInfo = () => {
 						serviceName={serviceName}
 						isMap={false}
 					/>
-					{Array.isArray(mainDataset) && mainDataset.length > 0 ? (
+					{Array.isArray(mainDatasetList) && mainDatasetList.length > 0 ? (
 
 						<div className="flex flex-col justify-top p-5 w-3/4">
 									<div className="flex flex-row bg-white rounded-2xl pt-1 p-3">
 										<div className='flex flex-col items-center w-1/6 pt-3'>
-											{mainCategoryName ? (												
+											{selectedMainDataset ? (												
 												<p className='text-center' style={{color:"#94A3B8", fontWeight:"1000", fontSize:"17px"}}>상위 주제</p>
 												//marginLeft:"33%"
 											) : (
@@ -265,23 +265,23 @@ const MetaDataInfo = () => {
 													상위 주제
 												</p>
 											)}
-											<p style={{ fontWeight: "1000",color : '#0091FA'}}>#{mainCategoryName}</p>
+											<p style={{ fontWeight: "1000",color : '#0091FA'}}>#{selectedMainDataset}</p>
 										</div>
 										<div className="flex flex-col w-5/6">
 											<div className="flex max-w-full">
 
 												<div className="flex flex-row overflow-x-auto scroll-smooth" ref={mainDatasetRef}>
-													{Array.isArray(mainDataset) && mainDataset.map((child) => (
+													{Array.isArray(mainDatasetList) && mainDatasetList.map((child) => (
 														<button
 															className={`${
-																mainCategoryName === child ? 'bg-blue-500' : 'bg-white'
+																selectedMainDataset === child ? 'bg-blue-500' : 'bg-white'
 															}  shadow-md m-2 px-4 py-2 hover:bg-slate-100`}
 															
 															style={{
 																fontWeight: "700",
 																minWidth: '9.5rem',
-																borderColor: mainCategoryName === child ? '#0091FA' : '#C0C0C0',
-																color: mainCategoryName === child ? '#ffffff' : '#C0C0C0'}}
+																borderColor: selectedMainDataset === child ? '#0091FA' : '#C0C0C0',
+																color: selectedMainDataset === child ? '#ffffff' : '#C0C0C0'}}
 															key={child}
 															data-child={child}
 															onClick={() => {
@@ -300,7 +300,7 @@ const MetaDataInfo = () => {
 									<div className="flex flex-row bg-white rounded-2xl p-3">
 										<div className='flex flex-col items-center w-1/6 pt-1.5'>
 											
-										{subCategoryName ? (												
+										{selectedSubDataset ? (												
 												<p className='text-center' style={{color:"#94A3B8", fontWeight:"1000", fontSize:"17px"}}>중위 주제</p>
 												//marginLeft:"33%"
 											) : (
@@ -317,22 +317,22 @@ const MetaDataInfo = () => {
 												</p>
 											)}
 											
-											<p style={{ fontWeight: "1000",color : '#0091FA'}}>#{subCategoryName}</p>
+											<p style={{ fontWeight: "1000",color : '#0091FA'}}>#{selectedSubDataset}</p>
 									
 										</div>
 										<div className="flex flex-col w-5/6">
 											<div className="flex max-w-full">
 												<div className="flex flex-row overflow-x-auto scroll-smooth" ref={subDatasetRef}>
-													{Array.isArray(subDataset) && subDataset.map((child) => (
+													{Array.isArray(subDatasetList) && subDatasetList.map((child) => (
 														<button
 															className={`${
-																subCategoryName === child ? 'bg-white text-blue border border-blue-500' : 'bg-white'
+																selectedSubDataset === child ? 'bg-white text-blue border border-blue-500' : 'bg-white'
 															}  shadow-md m-2 px-4 py-2 hover:bg-slate-100`}
 															style={{
 																fontWeight: "700",
 																minWidth: '9.5rem',
-																borderColor: subCategoryName === child ? '#0091FA' : '#C0C0C0',
-																color: subCategoryName === child ? '#0091FA' : '#C0C0C0'
+																borderColor: selectedSubDataset === child ? '#0091FA' : '#C0C0C0',
+																color: selectedSubDataset === child ? '#0091FA' : '#C0C0C0'
 															}}
 															key={child}
 															data-child={child}

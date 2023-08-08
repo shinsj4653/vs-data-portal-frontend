@@ -28,6 +28,11 @@ const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange }) 
           <button
             onClick={() => handlePageChange(currentPage -1)}
             className='bg-white text-black-500 hover:bg-gray-100 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium'
+            style={{
+              borderLeft : "none",
+              borderTop: "none",
+              borderBottom: "none",
+              backgroundColor:"#f2f5f8", boxShadow:"none"}}
           >
             ◀
           </button>
@@ -51,6 +56,11 @@ const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange }) 
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             className='bg-white text-black-500 hover:bg-gray-100 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium'
+            style={{
+              borderRight : "none",
+              borderTop: "none",
+              borderBottom: "none",
+              backgroundColor:"#f2f5f8", boxShadow:"none"}}
           >
             ▶
           </button>

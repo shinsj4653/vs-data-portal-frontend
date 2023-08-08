@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DataDrivenOrgChart from '../components/orgchart/dataDrivenOrgChart';
 import Layout from '../components/layout';
 import { useOrgChartMain } from '../hooks/useOrgChart';
@@ -7,12 +7,32 @@ import Loading from '../components/loading';
 
 const Orgchart = () => {
 	const orgChartData = useOrgChartMain();
+	const [activeTarget, setActiveTarget] = useState('');
+	const [targetList, setTargetList] = useState(["유아", "초등", "중고등", "성인", "글로벌"]);
 
 	if (orgChartData.isLoading) {
 		return <Loading></Loading>;
 	}
 
 	const data = orgChartData.data.data;
+
+	const handleServiceTargetColorChange = (name, color) => {
+		setActiveTarget(name);
+
+		// const tempData = JSON.parse(JSON.stringify(originData));
+
+		// const findAndChangeColor = (data) => {
+		// 	if (data.name === name) {
+		// 		data.color = color;
+		// 	} else if (data.children) {
+		// 		data.children.forEach((child) => findAndChangeColor(child));
+		// 	}
+		// };
+
+		// findAndChangeColor(tempData);
+
+		// setData({ ...tempData }); // 이제 modifiedData도 필요하지 않습니다.
+	};
 
 	return (
 		<>
@@ -40,7 +60,25 @@ const Orgchart = () => {
 					<div className='bg-slate-200 p-5 rounded-lg shadow-md items-center mb-1'>
 						<p className='pb-3'>DataSet 검색하기</p>
 						<MainSearchBar />
+						
 					</div>
+					{/* <div className="flex justify-center p-5">
+								<div className="flex bg-slate-400 rounded-2xl p-3">
+									{targetList.map((child) => (
+										<button
+											className={`${
+												activeTarget === child ? 'bg-red-400' : 'bg-white'
+											}  rounded-lg shadow-md m-2 px-4 py-2 hover:bg-slate-200`}
+											key={child}
+											onClick={() => {
+												handleServiceTargetColorChange(child, '#F87171');
+											}}
+										>
+											#{child}
+										</button>
+									))}
+								</div>
+							</div> */}
 					<DataDrivenOrgChart data={data} />
 				</div>
 			</Layout>

@@ -52,15 +52,15 @@ const DataMapChart = ({ data, clickedNodeId, onNodeClick }) => {
       navigate('/metadataInfo', {
         state: {
           serviceName: node.data.parentList[2],
-          mainCategoryName : node.data.name,
+          selectedMainDataset : node.data.name,
         }
       })
     } else if (node.depth === 4){
       navigate('/metadataInfo', {
         state: {
           serviceName: node.data.parentList[2],
-          mainCategoryName : node.data.parentList[3],
-          subCategoryName : node.data.name,
+          selectedMainDataset : node.data.parentList[3],
+          selectedSubDataset : node.data.name,
         }
       })
     }

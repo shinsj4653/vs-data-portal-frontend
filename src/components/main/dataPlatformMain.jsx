@@ -92,7 +92,7 @@ const DataPlatformMain = () => {
 						</div>
 					</div>
 					<div className="grid grid-cols-1 gap-5 sm:grid-cols-3 my-4 bg-indigo-100 p-3 rounded-2xl justify-between">
-						<div
+						<Link
 							className="card"
 							to="/MetaDataInfo">
 							<div className="card border-2 border-slate-600 bg-base-100 shadow-xl transition duration-150 ease-out hover:bg-slate-200">
@@ -111,7 +111,7 @@ const DataPlatformMain = () => {
                   </p> */}
 								</div>
 							</div>
-						</div>
+						</Link>
 
 						<div className="card">
 							<div className="card border-2 border-slate-600 bg-base-100 shadow-xl transition duration-150 ease-out hover:bg-slate-200">

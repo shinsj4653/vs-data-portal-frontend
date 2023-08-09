@@ -85,7 +85,7 @@ const DataDrivenOrgChart = (props) => {
 	return (
 		<>
 			<div
-				className="bg-slate-100 w-full relative"
+				className="bg-white w-full relative"
 				ref={d3Container}
 			>
 				{cardShow && <ServiceDetailsCard handleClose={handleClose} />}

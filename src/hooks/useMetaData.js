@@ -1,10 +1,20 @@
-import { useQuery } from 'react-query';
-import { fetchMetaDataMainDataset, fetchMetaDataSubDataset } from '../api/metaDataApi';
+import { useQuery, useMutation } from 'react-query';
+import { fetchMetaDataMainDataset, fetchMetaDataSubDataset, fetchMetaDataTableInfo } from '../api/metaDataApi';
 
 export const useMetadataMainDataSet = (serviceName) => {
-	return useQuery('metaDataMainDataSet', fetchMetaDataMainDataset(serviceName));
+	return useQuery(['metaDataMainDataSet', serviceName], () => fetchMetaDataMainDataset(serviceName), {
+		staleTime: 1000 * 60 * 60 * 24, // 24시간 동안 유효
+	}); 
 };
 
-export const useMetadataSubDataSet = (serviceName) => {
-	return useQuery('metaDataSubDataSet', fetchMetaDataSubDataset(serviceName));
+export const useMetadataSubDataSet = (serviceName, mainCategoryName) => {
+	return useQuery(['metaDataSubDataSet', mainCategoryName], () => fetchMetaDataSubDataset(serviceName, mainCategoryName), {
+		staleTime: 1000 * 60 * 60 * 24, // 24시간 동안 유효
+	});
+};
+
+export const useMetadataTableInfo = (serviceName, mainCategoryName, subCategoryName) => {
+	return useQuery(['metaDataTableInfo', subCategoryName], () => fetchMetaDataTableInfo(serviceName, mainCategoryName, subCategoryName), {
+		staleTime: 1000 * 60 * 60 * 24, // 24시간 동안 유효
+	});
 };

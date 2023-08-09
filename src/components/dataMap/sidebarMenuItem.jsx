@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const SidebarMenuItem = ({ item, onMenuClick }) => {
-	const [isOpen, setIsOpen] = useState(item.depth === 0);
-	const handleItemClick = (itemId) => {
-		setIsOpen(item.depth === 0);
-		onMenuClick(itemId);
+const SidebarMenuItem = ({ item, onMenuClick, serviceName, isMap }) => {
+	const [isOpen, setIsOpen] = useState(isMap ? item.depth === 0 : true);
+	const handleItemClick = (itemId, itemName, itemDepth) => {
+		isMap && setIsOpen(item.depth === 0);
+		onMenuClick(itemId, itemName, itemDepth);
 	};
 
 	return (
@@ -15,7 +15,7 @@ const SidebarMenuItem = ({ item, onMenuClick }) => {
 				<details open={isOpen}>
 					<summary
 						className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 hover:bg-gray-100 hover:text-gray-700"
-						onClick={() => handleItemClick(item.id)}
+						onClick={() => handleItemClick(item.id, item.name, item.depth)}
 					>
 						<span className="text-sm font-medium">- {item.name}</span>
 					</summary>
@@ -27,14 +27,15 @@ const SidebarMenuItem = ({ item, onMenuClick }) => {
 									key={child.id}
 									item={child}
 									onMenuClick={handleItemClick}
+									serviceName={serviceName}
 								/>
 							))}
 					</ul>
 				</details>
 			) : (
 				<div
-					className="block rounded-lg px-4 py-2 text-sm font-medium hover:bg-gray-100 hover:text-gray-700"
-					onClick={() => handleItemClick(item.id)}
+					className={`${item.name === serviceName ? "block rounded-lg px-4 py-2 text-sm text-[#0091FA] font-medium hover:bg-gray-100 hover:text-gray-700" : "block rounded-lg px-4 py-2 text-sm font-medium hover:bg-gray-100 hover:text-gray-700"}`}
+					onClick={() => handleItemClick(item.id, item.name, item.depth)}
 				>
 					- {item.name}
 				</div>
@@ -42,5 +43,6 @@ const SidebarMenuItem = ({ item, onMenuClick }) => {
 		</li>
 	);
 };
+
 
 export default SidebarMenuItem;

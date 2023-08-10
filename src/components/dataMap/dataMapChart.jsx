@@ -64,16 +64,6 @@ const DataMapChart = ({ data, clickedNodeId, onNodeClick }) => {
         }
       })
     }
-  
-    // if(node.depth === 3) { 
-    //   // node 이름 가지고 페이지 이동
-    //   navigate('/metadataInfo', {
-    //     state: {
-    //         mainCategoryName : node.data.name,
-    //       }
-    //   })
-      
-    // }
 
     // 색변경 
     // setNodeColor(false);

@@ -34,3 +34,12 @@ export const fetchMetaDataTableInfo = async (serviceName, mainCategoryName, subC
     console.log(response.data)
     return response.data;
 }
+
+export const fetchMetaDataTableSearch = async (serviceName, tableKeyword) => {
+    const response = await axios.post(`metadata/search/tableinfo`, {
+        "service_name" : serviceName,
+        "table_keyword" : tableKeyword
+    });
+    console.log(response.data)
+    return response.data;
+}

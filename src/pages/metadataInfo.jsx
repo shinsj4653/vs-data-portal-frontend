@@ -85,7 +85,7 @@ const MetaDataInfo = () => {
     const subDatasetDataQuery = useMetadataSubDataSet(location.state?.serviceName ?? serviceName, location.state?.selectedMainDataset ?? selectedMainDataset);
 	const tableInfoDataQuery = useMetadataTableInfo(location.state?.serviceName ?? serviceName, location.state?.selectedMainDataset ?? selectedMainDataset, location.state?.selectedSubDataset ?? selectedSubDataset);
 
-	const fetchData = async (param) => {
+	const fetchData = async (param) => { 
 
 		if (param === "init") {
 			const [orgData, mainDataset, subDataset, tableInfoData] = await Promise.all([

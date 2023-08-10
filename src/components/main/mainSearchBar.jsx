@@ -1,6 +1,6 @@
 import React from "react";
 
-const MainSearchBar = () => {
+const MainSearchBar = ({ searchValue, updateValue, handleSearch }) => {
   return (
     <>
       <div className="relative">
@@ -11,13 +11,18 @@ const MainSearchBar = () => {
         <input
           type="text"
           id="Search"
-          placeholder="개발 예정"
-          disabled
+          value={searchValue}
+          onChange={(event) => {
+            updateValue(event.target.value);
+          }}
+          placeholder="서비스 명 혹은 데이터셋 명을 검색하세요."
           className="w-full rounded-md border-base-100 py-2.5 px-2 pe-10 shadow-sm sm:text-sm text-base-content bg-white"
         />
 
         <span className="absolute inset-y-0 end-0 grid my-2 mx-0 place-content-center">
-          <button type="button">
+          <button type="button" onClick={() => {
+            searchValue !== "" && handleSearch(searchValue);
+          }}>
             <span className="sr-only">Search</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"

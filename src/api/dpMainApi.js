@@ -8,14 +8,10 @@ axios.defaults.baseURL = "http://localhost:8080";
 
 axios.defaults.withCredentials = true; // withCredentials 전역 설정
 
-export const fetchOrgChartMain = async () => {
-    const response = await axios.get(`dataorg/allorginfo`);
-    console.log(response.data)
-    return response.data;
-}
-
-export const fetchServiceInfo = async () => {
-    const response = await axios.get(`dataorg/service/systeminfo`);
+export const fetchDatasetSearchResult = async (datasetName) => {
+    const response = await axios.post(`dpmain/search/service-dataset`, {
+        "keyword" : datasetName
+    });
     console.log(response.data)
     return response.data;
 }

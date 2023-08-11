@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import MainSearchBar from './mainSearchBar';
+import DpMainSearch from './dpMainSearch';
 import data_platform_img_light from '../../assets/backgrounds/data_platform_img_light.jpg';
 import lecture_icon from '../../assets/icons/lecture_icon.png';
 import brand_icon from '../../assets/icons/brand_icon.png';
@@ -8,8 +9,77 @@ import data_icon from '../../assets/icons/data_icon.png';
 import system_info_icon from '../../assets/icons/system_info_icon.png';
 import data_analytics_icon from '../../assets/icons/data_analytics_icon.png';
 import { Link } from 'react-router-dom';
+import { useDataMapAllDataset } from '../../hooks/useDataMap';
+import { useDatasetSearch } from '../../hooks/useDpMain';
+import { useNavigate } from 'react-router-dom';
 
 const DataPlatformMain = () => {
+
+	const [dataSet, setDataSet] = useState(null);
+	const [isSearch, setIsSearch] = useState(false); // 검색 버튼 클릭 여부 [true, false
+	const [searchValue , setSearchValue] = useState("");
+	const [searchResult, setSearchResult] = useState(null);
+
+	const [currentSearch, setCurrentSearch] = useState("");
+
+	const navigate = useNavigate();
+
+	const updateValue = (value) => {
+		setSearchValue(value);
+	}
+
+	const handleSearch = (value) => {
+
+		if (searchValue === "") {
+			alert("검색어를 입력해주세요.");
+			return;
+		} 
+		
+		setCurrentSearch(searchValue);
+		setIsSearch(true);
+		fetchSearchData();
+		
+
+		
+	}
+
+	const dataSetQuery = useDataMapAllDataset();
+	const dataSetSearchQuery = useDatasetSearch(searchValue);
+	
+	
+
+	// useEffect를 사용하여 데이터를 동기적으로 처리
+	useEffect(() => {
+		const fetchData = async () => {
+			// 여기서 사용할 API 호출들을 배열로 묶어서 Promise.all로 처리
+			const dataSetResult = await dataSetQuery.refetch();
+		
+
+			// 각 API 호출이 성공하면 데이터 처리
+			if (dataSetResult) {
+				const datasets = dataSetResult.data.data;
+				setDataSet(datasets);
+			}
+		};
+
+		fetchData();
+	}, []);
+
+	const fetchSearchData = async () => {
+		const datasetSearchResult = await dataSetSearchQuery.refetch();
+		if (datasetSearchResult) {
+			const searchResult = datasetSearchResult.data.data;
+			if (searchResult.length === 0){
+				setSearchResult([]);
+				alert("검색 결과가 없습니다.");
+				return;
+			} else {
+				setSearchResult(searchResult);
+			}
+		}
+	}
+	
+	
 	return (
 		<>
 			<section>
@@ -29,11 +99,11 @@ const DataPlatformMain = () => {
 								Data Platform Cell에서 제공하는 <br />
 								비상교육 통합 데이터 서비스 입니다.
 							</p>
-							<MainSearchBar />
+							<MainSearchBar searchValue={searchValue} updateValue={updateValue} handleSearch={handleSearch} isMain={true}/>
 						</div>
 					</div>
 				</div>
-				<div className="px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16 bg-sky-100">
+				{!isSearch ? <div className="px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16 bg-sky-100">
 					<div className="grid grid-cols-1 gap-5 sm:grid-cols-3 bg-sky-200 p-3 rounded-2xl justify- auto-cols-max">
 						<Link
 							className="card"
@@ -143,7 +213,12 @@ const DataPlatformMain = () => {
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> : 
+
+				<DpMainSearch setIsSearch={setIsSearch} currentSearch={currentSearch} setSearchValue={setSearchValue} searchResult={searchResult}/>
+
+				}
+
 			</section>
 		</>
 	);

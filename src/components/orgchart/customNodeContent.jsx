@@ -1,29 +1,25 @@
 import React from 'react';
 
 const CustomNodeContent = (props) => {
+
+	// console.log("Node:", props.servicesByTarget);
+	// let isServiceIncluded = props.servicesByTarget.includes(props.data.name);
+	// console.log(isServiceIncluded);
+
 	return (
 		<>
-			<div
-				className="h-36 flex flex-col items-center rounded-2xl text-3xl justify-center shadow-2xl border-2 border-gray-400 font-bold"
-				style={{backgroundColor : props.data.color}}
-			>
+			{props.servicesByTarget.includes(props.data.name) ? (
 				<div>
-					{props.data.imageUrl ? (
-						<div>
-							<img
-								className="node-img"
-								src={props.data.imageUrl}
-								alt="Profile"
-							/>
-							<div className="node-name">{props.data.name}</div>
-						</div>
-					) : (
-						<div className="font-">
-							<div className="node-name">{props.data.name}</div>
-						</div>
-					)}
+					{/* <img className="node-img" src={props.data.imageUrl} alt="Profile"/> */}
+					<div className={`h-36 flex flex-col items-center rounded-2xl text-3xl justify-center font-bold node-name`}
+					style={{backgroundColor: '#0091FA', color: 'white'}}>{props.data.name}</div>
 				</div>
-			</div>
+			) : (
+				<div className='h-1'>
+					<div className={`h-36 flex flex-col items-center rounded-2xl text-3xl justify-center font-bold node-name`}
+					style={{backgroundColor: props.data.color}}>{props.data.name}</div>
+				</div>
+			)}
 		</>
 	);
 };

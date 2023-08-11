@@ -1,169 +1,136 @@
-import React from "react";
+import React, {useState} from "react";
+import MainSearchBar from "../main/mainSearchBar";
+// import DataDrivenOrgChart from "./dataDrivenOrgChart";
 
-const Sidebar = ({ data, onNodeClick }) => {
+const Sidebar = ({onTargetSelect}) => {
+
+  const [selectedButton, setSelectedButton] = useState(null);
+  const targetData = ['유아', '초등', '중고등', '성인', '글로벌'];
+  const mainUnstructuredData = ['음성 데이터', '텍스트 데이터', '영상 데이터', '이미지 데이터'];
+  
+  const handleButtonClick = (buttonName) => {
+    setSelectedButton(buttonName);
+    onTargetSelect(buttonName);
+    // console.log(selectedButton);
+  };
+
+  const handleResetClick = (buttonName) => {
+    setSelectedButton(buttonName);
+    onTargetSelect(null);
+  }
+
   return (
     <>
-      <div className=" py-6 border-e hidden md:block w-1/6 min-w-fit ">
-  <div className="px-4 py-6">
-    <span
-      className="grid h-10 w-32 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600"
-    >
-      Logo
-    </span>
-
-    <ul className="mt-6 space-y-1">
-      <li>
-        <a
-          href=""
-          className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
-        >
-          General
-        </a>
-      </li>
-
-      <li>
-        <details className="group [&_summary::-webkit-details-marker]:hidden">
-          <summary
-            className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-          >
-            <span className="text-sm font-medium"> Teams </span>
-
-            <span
-              className="shrink-0 transition duration-300 group-open:-rotate-180"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </span>
-          </summary>
-
-          <ul className="mt-2 space-y-1 px-4">
+      <div className="border-e hidden md:block w-1/5 max-w-fit mt-0"> 
+        <div className="px-4">
+          <div className="pb-7">
+            <div className="justify-center items-center">
+                <p style={{
+                  color: "#C0C0C5",
+                  fontWeight: "1000",
+                  fontSize: "27px",
+                  display: 'flex',
+                  height: '100%',
+                  justifyContent: 'center',
+                  marginBottom: "10%"	
+                }}>
+                  VISANG
+                </p>
+            </div>
+            <div><hr style={{marginLeft: "5%", marginRight: "5%", height:"2px", backgroundColor:"#C0C0C5"}}></hr></div>
+            
+          </div>
+          <div className="flex flex-col items-center text-[#C0C0C5]">
+            <span className="h-7 w-32 place-content-center">Dataset 검색하기</span>
+            <MainSearchBar></MainSearchBar>
+          </div>
+          <ul className="mt-6 space-y-1">
             <li>
-              <a
-                href=""
-                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-              >
-                Banned Users
-              </a>
+              <details className="group [&_summary::-webkit-details-marker]:hidden">
+                <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-[#00B2E2] hover:text-white">
+                  <span className="text-sm font-medium"
+                    onClick={() => handleResetClick(selectedButton)}                
+                  > 서비스 대상 </span>
+                  <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                </summary>
+
+                <ul className="mt-2 space-y-1 px-4">
+                  {targetData.map((targetName) => (
+
+                    <li key={targetName}>
+                      <button
+                        className={`text-left w-full block rounded-lg px-4 py-2 text-sm font-medium ${
+                          selectedButton === targetName
+                            ? "bg-[#00B2E2] text-white"
+                            : "text-gray-500 hover:bg-[#00B2E2] hover:text-white"
+                        }`}
+                        onClick={() => handleButtonClick(targetName)}
+                      >
+                        {targetName}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </details>
             </li>
 
             <li>
-              <a
-                href=""
-                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-              >
-                Calendar
-              </a>
-            </li>
-          </ul>
-        </details>
-      </li>
+              <details className="group [&_summary::-webkit-details-marker]:hidden">
+                <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-[#00B2E2] hover:text-white">
+                  <span className="text-sm font-medium"
+                    onClick={() => handleResetClick(selectedButton)}> 주요 비정형 <br></br>데이터 종류 </span>
+                  <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                </summary>
 
-      <li>
-        <a
-          href=""
-          className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-        >
-          Billing
-        </a>
-      </li>
+                <ul className="mt-2 space-y-1 px-4">
+                  {mainUnstructuredData.map((data) => (
 
-      <li>
-        <a
-          href=""
-          className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-        >
-          Invoices
-        </a>
-      </li>
+                    <li key={data}>
+                      <button
+                        className={`text-left w-full block rounded-lg px-4 py-2 text-sm font-medium ${
+                          selectedButton === data
+                            ? "bg-[#00B2E2] text-white"
+                            : "text-gray-500 hover:bg-[#00B2E2] hover:text-white"
+                        }`}
+                        onClick={() => handleButtonClick(data)}
+                      >
+                        {data}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
 
-      <li>
-        <details className="group [&_summary::-webkit-details-marker]:hidden">
-          <summary
-            className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-          >
-            <span className="text-sm font-medium"> Account </span>
-
-            <span
-              className="shrink-0 transition duration-300 group-open:-rotate-180"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </span>
-          </summary>
-
-          <ul className="mt-2 space-y-1 px-4">
-            <li>
-              <a
-                href=""
-                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-              >
-                Details
-              </a>
-            </li>
-
-            <li>
-              <a
-                href=""
-                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-              >
-                Security
-              </a>
-            </li>
-
-            <li>
-              <form action="/logout">
-                <button
-                  type="submit"
-                  className="w-full rounded-lg px-4 py-2 text-sm font-medium text-gray-500 [text-align:_inherit] hover:bg-gray-100 hover:text-gray-700"
-                >
-                  Logout
-                </button>
-              </form>
+              </details>
             </li>
           </ul>
-        </details>
-      </li>
-    </ul>
-  </div>
-
-  <div className="sticky inset-x-0 bottom-0 border-t border-gray-100">
-    <a href="#" className="flex items-center gap-2 bg-white p-4 hover:bg-gray-50">
-      <img
-        alt="Man"
-        src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-        className="h-10 w-10 rounded-full object-cover"
-      />
-
-      <div>
-        <p className="text-xs">
-          <strong className="block font-medium">Eric Frusciante</strong>
-
-          <span> eric@frusciante.com </span>
-        </p>
+        </div>
       </div>
-    </a>
-  </div>
-</div>
     </>
   );
 };

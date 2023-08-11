@@ -19,8 +19,8 @@ export const useMetadataTableInfo = (serviceName, mainCategoryName, subCategoryN
 	});
 };
 
-export const useMetadataTableSearch = (serviceName, tableKeyword) => {
-	return useQuery(['metaDataTableSearch', tableKeyword], () => fetchMetaDataTableSearch(serviceName, tableKeyword), {
+export const useMetadataTableSearch = (serviceName, tableKeyword, pageNo, amountPerPage) => {
+	return useQuery(['metaDataTableSearch', tableKeyword], () => fetchMetaDataTableSearch(serviceName, tableKeyword, pageNo, amountPerPage), {
 		staleTime: 1000 * 60 * 60 * 24, // 24시간 동안 유효
 	});
 };	

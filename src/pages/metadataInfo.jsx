@@ -101,7 +101,10 @@ const MetaDataInfo = () => {
 	const [searchResult, setSearchResult] = useState([]);
 	const [currentSearch, setCurrentSearch] = useState(null); // 현재 검색어
 
-	const searchQuery = useMetadataTableSearch(serviceName, searchValue);
+	const [searchPageNo, setSearchPageNo] = useState(1); // 검색 결과 페이지 번호
+	const [searchAmountPerPage, setSearchAmountPerPage] = useState(20); // 검색 결과 페이지 당 개수
+
+	const searchQuery = useMetadataTableSearch(serviceName, searchValue, searchPageNo, searchAmountPerPage);
 
 	const updateValue = (value) => {
 		setSearchValue(value);
@@ -113,17 +116,13 @@ const MetaDataInfo = () => {
 
 		if(searchValue == "") {
 			alert("검색어를 입력해주세요.");
-		} else if (searchValue.length < 2) {
-			alert("검색어는 2글자 이상 입력해주세요.");
-		} else if(searchStandard === "테이블ID & 이름") {
-			
+			return;
+		}  else if(searchStandard === "테이블ID & 이름") 
 			fetchResultData();
-		}
+		
 	}
 
 	const fetchResultData = async () => {
-
-		
 		
 		const result = await searchQuery.refetch();
 		console.log(result.data.data);

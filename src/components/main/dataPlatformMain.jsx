@@ -33,14 +33,12 @@ const DataPlatformMain = () => {
 		if (searchValue === "") {
 			alert("검색어를 입력해주세요.");
 			return;
-		} else if (searchValue.length < 2) {
-			alert("검색어는 2글자 이상 입력해주세요.");
-			return;
-		} else {
-			setCurrentSearch(searchValue);
-			setIsSearch(true);
-			fetchSearchData();
-		}
+		} 
+		
+		setCurrentSearch(searchValue);
+		setIsSearch(true);
+		fetchSearchData();
+		
 
 		
 	}

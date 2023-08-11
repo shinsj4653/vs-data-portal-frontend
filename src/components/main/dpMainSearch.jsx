@@ -3,14 +3,36 @@ import { useNavigate } from 'react-router-dom';
 import { useDataMapAllDataset } from '../../hooks/useDataMap';
 import { useDatasetSearch } from '../../hooks/useDpMain';
 
-const DpMainSearch = ({ setIsSearch, setSearchValue, searchResult }) => {
+const DpMainSearch = ({ setIsSearch, currentSearch, setSearchValue, searchResult }) => {
 
     const navigate = useNavigate();
 
-    
+	const highlightLetters = (tableText, currentSearch) => {
+		const regex = new RegExp(currentSearch, 'gi');
+    	const matches = tableText.match(regex);
+
+    	if (!matches) return <span style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}}>{tableText}</span>;
+
+    	const parts = tableText.split(regex);
+    	const highlightedParts = [];
+
+    	parts.forEach((part, index) => {
+    	    highlightedParts.push(<span style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}} key={index}>{part}</span>);
+
+    	    if (index < parts.length - 1) {
+    	        highlightedParts.push(
+    	            <span key={`highlight-${index}`} style={{color:"#C0C0C0", backgroundColor: 'yellow', fontWeight:"800", fontSize:"13.5px"}}>
+    	                {matches[index]}
+    	            </span>
+    	        );
+    	    }
+    	});
+
+    	return <span>{highlightedParts}</span>;
+	}
 
 	useEffect(() => {
-
+		console.log('searchResult', searchResult);
 	}, [searchResult])
 
     return (<div className="px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-8 bg-gray-100">
@@ -47,7 +69,7 @@ const DpMainSearch = ({ setIsSearch, setSearchValue, searchResult }) => {
 									<div><hr style={{height:"3px", backgroundColor:"#E5E7EB"}}></hr></div>
 					<div className="flex flex-col pt-0 p-3" style={{backgroundColor: '#FFF'}}>
 					{
-						searchResult.length > 0 ? searchResult.map((tableInfo) => (
+						searchResult?.length > 0 ? searchResult?.map((tableInfo) => (
 						
 							<div style={{
 								cursor: 'pointer',
@@ -66,8 +88,24 @@ const DpMainSearch = ({ setIsSearch, setSearchValue, searchResult }) => {
 								}}
 							>
 								<div className='flex flex-row w-full pt-5 pb-5 text-center items-center'>
-									<div className='w-1/2 border-r items-center' style={{borderRightColor:'#E5E7EB', overflow: 'hidden'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px", overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>{tableInfo.service_name}</p></div>
-									<div className='w-1/2 border-r items-center' style={{borderRightColor:'#E5E7EB'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}}>{tableInfo.dataset_name}</p></div>
+									<div className='w-1/2 border-r items-center' 
+									style={{borderRightColor:'#E5E7EB', overflow: 'hidden'}}>
+										{
+											tableInfo.service_name?.split("").map((letter) => {
+												if(currentSearch.indexOf(letter) !== -1 && tableInfo.service_name.indexOf(currentSearch) !== -1){
+													return <span style={{color:"#C0C0C0", backgroundColor: 'yellow' ,fontWeight:"800", fontSize:"13.5px", overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>{letter}</span>
+												} else {
+													return <span style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px", overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>{letter}</span>
+												}
+											})
+										}
+										</div>
+										<div className='w-1/2 border-r items-center' 
+									style={{borderRightColor:'#E5E7EB', overflow: 'hidden'}}>
+										{
+											highlightLetters(tableInfo.dataset_name, currentSearch)
+										}
+										</div>
 								</div>
 								<div><hr style={{height:"1px", backgroundColor:"#E5E7EB"}}></hr></div>
 							</div> 

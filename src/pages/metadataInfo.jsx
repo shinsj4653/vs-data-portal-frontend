@@ -78,7 +78,7 @@ const MetaDataInfo = () => {
 		setIsSearch(false);
 		setSearchResult([]);
 		setSearchValue("");
-		
+
 		setClickedNodeId(nodeId);
 		setCurrentPage(1);
 
@@ -99,6 +99,7 @@ const MetaDataInfo = () => {
 	const [isSearch, setIsSearch] = useState(false);
 	const [searchValue , setSearchValue] = useState("");
 	const [searchResult, setSearchResult] = useState([]);
+	const [currentSearch, setCurrentSearch] = useState(null); // 현재 검색어
 
 	const searchQuery = useMetadataTableSearch(serviceName, searchValue);
 
@@ -107,8 +108,15 @@ const MetaDataInfo = () => {
 	}
 
 	const handleSearch = (value) => {
-		console.log(value);
-		if (searchStandard === "테이블ID & 이름") {
+		console.log(value.toLowerCase());
+		setCurrentSearch(value.toLowerCase());
+
+		if(searchValue == "") {
+			alert("검색어를 입력해주세요.");
+		} else if (searchValue.length < 2) {
+			alert("검색어는 2글자 이상 입력해주세요.");
+		} else if(searchStandard === "테이블ID & 이름") {
+			
 			fetchResultData();
 		}
 	}
@@ -117,6 +125,10 @@ const MetaDataInfo = () => {
 		
 		const result = await searchQuery.refetch();
 		console.log(result.data.data);
+		if(result.data.data.length == 0) {
+			alert("검색 결과가 없습니다.");
+			return;
+		} 
 		setSearchResult(result.data.data);
 	}
 
@@ -245,6 +257,30 @@ const MetaDataInfo = () => {
 
 	const handleSearchStandardColorChange = (child) => {
 		setSearchStandard(child);
+	}
+
+	const highlightLetters = (tableText, currentSearch) => {
+		const regex = new RegExp(currentSearch, 'gi');
+    	const matches = tableText.match(regex);
+
+    	if (!matches) return <span style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}}>{tableText}</span>;
+
+    	const parts = tableText.split(regex);
+    	const highlightedParts = [];
+
+    	parts.forEach((part, index) => {
+    	    highlightedParts.push(<span style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}} key={index}>{part}</span>);
+
+    	    if (index < parts.length - 1) {
+    	        highlightedParts.push(
+    	            <span key={`highlight-${index}`} style={{color:"#C0C0C0", backgroundColor: 'yellow', fontWeight:"800", fontSize:"13.5px"}}>
+    	                {matches[index]}
+    	            </span>
+    	        );
+    	    }
+    	});
+
+    	return <span>{highlightedParts}</span>;
 	}
 
     if (!orgData || orgDataQuery.isLoading || mainDatasetDataQuery.isLoading || subDatasetDataQuery.isLoading || tableInfoDataQuery.isLoading) {
@@ -481,17 +517,26 @@ const MetaDataInfo = () => {
 									<div><hr style={{height:"3px", backgroundColor:"#E5E7EB"}}></hr></div>
 									<div className="flex flex-col pt-0 p-3" style={{backgroundColor: '#F2F5F8'}}>
 										{
-											searchResult.length > 0 ? Array.isArray(searchResult) && searchResult.map((tableInfo) => (
-												<div>
-													<div className='flex flex-row w-full pt-5 pb-5 text-center items-center'>
-														<div className='w-1/4 border-r items-center' style={{borderRigthColor:'#E5E7EB', overflow: 'hidden'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px", overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>{tableInfo.table_id}</p></div>
-														<div className='w-1/4 border-r items-center' style={{borderRigthColor:'#E5E7EB'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}}>{tableInfo.table_name}</p></div>
-														<div className='w-1/4 border-r items-center' style={{borderRigthColor:'#E5E7EB'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}}>{tableInfo.table_comment}</p></div>
-														<div className='w-1/4 border-r items-center' style={{borderRigthColor:'#E5E7EB'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}}>{tableInfo.small_clsf_name}</p></div>
+											searchResult.length > 0 ? Array.isArray(searchResult) && searchResult.map((tableInfo) => {
+												
+
+
+												return (
+													<div>
+														<div className='flex flex-row w-full pt-5 pb-5 text-center items-center'>
+															<div className='w-1/4 border-r items-center' style={{borderRigthColor:'#E5E7EB', overflow: 'hidden'}}>
+																{highlightLetters(tableInfo.table_id, currentSearch)}
+															</div>
+															<div className='w-1/4 border-r items-center' style={{borderRigthColor:'#E5E7EB'}}>
+																{highlightLetters(tableInfo.table_name, currentSearch)}
+															</div>
+															<div className='w-1/4 border-r items-center' style={{borderRigthColor:'#E5E7EB'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}}>{tableInfo.table_comment}</p></div>
+															<div className='w-1/4 border-r items-center' style={{borderRigthColor:'#E5E7EB'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}}>{tableInfo.small_clsf_name}</p></div>
+														</div>
+														<div><hr style={{height:"1px", backgroundColor:"#E5E7EB"}}></hr></div>
 													</div>
-													<div><hr style={{height:"1px", backgroundColor:"#E5E7EB"}}></hr></div>
-												</div>
-											)) :
+												)
+											}) :
 											<div className='flex flex-row w-full pt-5 pb-5 text-center justify-center items-center'>
 												<div className='w-1/4 border-r items-center' style={{borderRightColor:'#E5E7EB', overflow: 'hidden'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px", overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>검색 결과가 없습니다.</p></div>
 											</div>

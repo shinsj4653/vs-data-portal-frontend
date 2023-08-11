@@ -19,6 +19,9 @@ const DataPlatformMain = () => {
 	const [isSearch, setIsSearch] = useState(false); // 검색 버튼 클릭 여부 [true, false
 	const [searchValue , setSearchValue] = useState("");
 	const [searchResult, setSearchResult] = useState(null);
+
+	const [currentSearch, setCurrentSearch] = useState("");
+
 	const navigate = useNavigate();
 
 	const updateValue = (value) => {
@@ -26,9 +29,20 @@ const DataPlatformMain = () => {
 	}
 
 	const handleSearch = (value) => {
-		console.log(value);
-		setIsSearch(true);
-		fetchSearchData();
+
+		if (searchValue === "") {
+			alert("검색어를 입력해주세요.");
+			return;
+		} else if (searchValue.length < 2) {
+			alert("검색어는 2글자 이상 입력해주세요.");
+			return;
+		} else {
+			setCurrentSearch(searchValue);
+			setIsSearch(true);
+			fetchSearchData();
+		}
+
+		
 	}
 
 	const dataSetQuery = useDataMapAllDataset();
@@ -46,8 +60,7 @@ const DataPlatformMain = () => {
 			// 각 API 호출이 성공하면 데이터 처리
 			if (dataSetResult) {
 				const datasets = dataSetResult.data.data;
-				console.log(datasets);
-				setSearchResult(datasets);
+				setDataSet(datasets);
 			}
 		};
 
@@ -58,7 +71,12 @@ const DataPlatformMain = () => {
 		const datasetSearchResult = await dataSetSearchQuery.refetch();
 		if (datasetSearchResult) {
 			const searchResult = datasetSearchResult.data.data;
-			setSearchResult(searchResult);
+			if (searchResult.length === 0){
+				alert("검색 결과가 없습니다.");
+				return;
+			} else {
+				setSearchResult(searchResult);
+			}
 		}
 	}
 	
@@ -198,7 +216,7 @@ const DataPlatformMain = () => {
 					</div>
 				</div> : 
 
-				<DpMainSearch setIsSearch={setIsSearch} setSearchValue={setSearchValue} searchResult={searchResult}/>
+				<DpMainSearch setIsSearch={setIsSearch} currentSearch={currentSearch} setSearchValue={setSearchValue} searchResult={searchResult}/>
 
 				}
 

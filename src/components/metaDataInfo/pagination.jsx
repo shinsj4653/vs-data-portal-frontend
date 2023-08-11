@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange }) => {
+const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange, isSearchPage }) => {
   // console.log("페이지 : ", currentPage)
   // console.log(itemsPerPage)
-  const totalPages = Math.ceil(tableInfoList.length / itemsPerPage);
+  const totalPages = isSearchPage ? Math.ceil(tableInfoList[0]?.total_num / itemsPerPage) : Math.ceil(tableInfoList.length / itemsPerPage);
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
   // console.log(pageNumbers)
   const pagesToShow = 10; // 한번에 보여줄 페이지 개수
@@ -16,17 +16,20 @@ const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange }) 
     startPage = Math.max(1, startPage - (pagesToShow - (endPage - startPage + 1)));
   }
   
-  const handlePageChange = (pageNumber) => {
-    onPageChange(pageNumber);
-    window.scrollTo(0, 130); // 메타테이블리스트 상단으로 스크롤
-  };
+  // const handlePageChange = (pageNumber) => {
+  //   onPageChange(pageNumber);
+  //   window.scrollTo(0, 130); // 메타테이블리스트 상단으로 스크롤
+  // };
 
   return (
     <div className="flex justify-center my-4">
       <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
         {currentPage > 1 && (
           <button
-            onClick={() => handlePageChange(currentPage -1)}
+            onClick={() => {
+              onPageChange(tableInfoList, currentPage -1, isSearchPage);
+              
+            }}
             className='bg-white text-black-500 hover:bg-gray-100 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium'
             style={{
               borderLeft : "none",
@@ -41,7 +44,9 @@ const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange }) 
         {pageNumbers.slice(startPage - 1, endPage).map((pageNumber) => (
           <button
             key={pageNumber}
-            onClick={() => handlePageChange(pageNumber)}
+            onClick={() => {
+              onPageChange(tableInfoList, pageNumber, isSearchPage)
+            }}
             className={`${
               currentPage === pageNumber
                 ? 'bg-blue-500 text-white'
@@ -54,7 +59,9 @@ const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange }) 
 
         {currentPage < totalPages && (
           <button
-            onClick={() => handlePageChange(currentPage + 1)}
+            onClick={() => {
+              onPageChange(tableInfoList, currentPage + 1, isSearchPage)
+            }}
             className='bg-white text-black-500 hover:bg-gray-100 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium'
             style={{
               borderRight : "none",

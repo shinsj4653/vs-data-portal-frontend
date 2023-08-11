@@ -38,16 +38,32 @@ const MetaDataInfo = () => {
 	
 	const [scrollPosition, setScrollPosition] = useState(0);
 	
-	
+	const [searchStandard, setSearchStandard] = useState('테이블ID & 이름');
+	const [isSearch, setIsSearch] = useState(false);
+	const [searchValue , setSearchValue] = useState("");
+	const [searchResult, setSearchResult] = useState([]);
+	const [currentSearch, setCurrentSearch] = useState(null); // 현재 검색어
+
+	const [searchPageNo, setSearchPageNo] = useState(1); // 검색 결과 페이지 번호
+	const [searchAmountPerPage, setSearchAmountPerPage] = useState(15); // 검색 결과 페이지 당 개수
+
+	const searchQuery = useMetadataTableSearch(serviceName, searchValue, searchPageNo, searchAmountPerPage);
 
 	
 
-	const handlePageChange = (pageNumber) => {
-		setCurrentPage(pageNumber);
-		console.log("길이 ", tableInfoList.length);
+	const handlePageChange = (list, pageNumber, isSearchPage) => {
+		isSearchPage ? setSearchPageNo(pageNumber) : setCurrentPage(pageNumber);
+		console.log("길이 ", list.length);
 		console.log("total ", totalPages);
 		console.log("현재 페이지 ", pageNumber);
 	};
+
+	useEffect(() => {
+
+		fetchResultData();
+		
+
+	}, [searchPageNo, searchAmountPerPage]);
 	
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const endIndex = startIndex + itemsPerPage;
@@ -95,16 +111,7 @@ const MetaDataInfo = () => {
 	const tableInfoDataQuery = useMetadataTableInfo(location.state?.serviceName ?? serviceName, location.state?.selectedMainDataset ?? selectedMainDataset, location.state?.selectedSubDataset ?? selectedSubDataset);
 
 
-	const [searchStandard, setSearchStandard] = useState('테이블ID & 이름');
-	const [isSearch, setIsSearch] = useState(false);
-	const [searchValue , setSearchValue] = useState("");
-	const [searchResult, setSearchResult] = useState([]);
-	const [currentSearch, setCurrentSearch] = useState(null); // 현재 검색어
-
-	const [searchPageNo, setSearchPageNo] = useState(1); // 검색 결과 페이지 번호
-	const [searchAmountPerPage, setSearchAmountPerPage] = useState(20); // 검색 결과 페이지 당 개수
-
-	const searchQuery = useMetadataTableSearch(serviceName, searchValue, searchPageNo, searchAmountPerPage);
+	
 
 	const updateValue = (value) => {
 		setSearchValue(value);
@@ -217,6 +224,10 @@ const MetaDataInfo = () => {
 	useEffect(() => {
 		fetchData("subCategoryChange");
 	}, [selectedSubDataset]);
+
+	useEffect(() => {
+		fetchResultData();
+	}, [searchPageNo])
 
     const handleMainDatasetColorChange = (child) => {
 		location.state = null;
@@ -459,7 +470,9 @@ const MetaDataInfo = () => {
 											currentPage={currentPage}
 											itemsPerPage={itemsPerPage}
 											tableInfoList={tableInfoList}
-											onPageChange={handlePageChange}>
+											onPageChange={handlePageChange}
+											isSearchPage={false}
+											>
 										</Pagination>
 									</div>
 						</div>
@@ -544,6 +557,14 @@ const MetaDataInfo = () => {
 											</div>
 
 										}
+										<Pagination
+											currentPage={searchPageNo}
+											itemsPerPage={searchAmountPerPage}
+											tableInfoList={searchResult}
+											onPageChange={handlePageChange}
+											isSearchPage={true}
+											>
+										</Pagination>
 										
 									</div>
 						</div>

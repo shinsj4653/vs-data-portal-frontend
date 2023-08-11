@@ -100,11 +100,8 @@ const DpMainSearch = ({ setIsSearch, currentSearch, setSearchValue, searchResult
 											})
 										}
 										</div>
-										<div className='w-1/2 border-r items-center' 
-									style={{borderRightColor:'#E5E7EB', overflow: 'hidden'}}>
-										{
-											highlightLetters(tableInfo.dataset_name, currentSearch)
-										}
+										<div className='w-1/2 border-r items-center' style={{borderRightColor:'#E5E7EB', overflow: 'hidden'}}>
+											{highlightLetters(tableInfo.dataset_name, currentSearch)}
 										</div>
 								</div>
 								<div><hr style={{height:"1px", backgroundColor:"#E5E7EB"}}></hr></div>

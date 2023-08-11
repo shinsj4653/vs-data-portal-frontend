@@ -122,10 +122,13 @@ const MetaDataInfo = () => {
 	}
 
 	const fetchResultData = async () => {
+
+		
 		
 		const result = await searchQuery.refetch();
 		console.log(result.data.data);
 		if(result.data.data.length == 0) {
+			setSearchResult([]);
 			alert("검색 결과가 없습니다.");
 			return;
 		} 

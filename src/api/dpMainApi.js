@@ -9,7 +9,7 @@ axios.defaults.baseURL = "http://localhost:8080";
 axios.defaults.withCredentials = true; // withCredentials 전역 설정
 
 export const fetchDatasetSearchResult = async (datasetName) => {
-    const response = await axios.post(`dpmain/search/dataset`, {
+    const response = await axios.post(`dpmain/search/service-dataset`, {
         "keyword" : datasetName
     });
     console.log(response.data)

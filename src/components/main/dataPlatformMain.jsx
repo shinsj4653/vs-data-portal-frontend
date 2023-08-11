@@ -72,6 +72,7 @@ const DataPlatformMain = () => {
 		if (datasetSearchResult) {
 			const searchResult = datasetSearchResult.data.data;
 			if (searchResult.length === 0){
+				setSearchResult([]);
 				alert("검색 결과가 없습니다.");
 				return;
 			} else {

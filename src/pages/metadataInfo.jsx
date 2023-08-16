@@ -109,8 +109,6 @@ const MetaDataInfo = () => {
     const mainDatasetDataQuery = useMetadataMainDataSet(location.state?.serviceName ?? serviceName);
     const subDatasetDataQuery = useMetadataSubDataSet(location.state?.serviceName ?? serviceName, location.state?.selectedMainDataset ?? selectedMainDataset);
 	const tableInfoDataQuery = useMetadataTableInfo(location.state?.serviceName ?? serviceName, location.state?.selectedMainDataset ?? selectedMainDataset, location.state?.selectedSubDataset ?? selectedSubDataset);
-
-
 	
 
 	const updateValue = (value) => {
@@ -124,8 +122,12 @@ const MetaDataInfo = () => {
 		if(searchValue == "") {
 			alert("검색어를 입력해주세요.");
 			return;
-		}  else if(searchStandard === "테이블ID & 이름") 
-			fetchResultData();
+		} else if(searchStandard === "테이블ID & 이름") {
+			fetchResultData(); 
+		} else {
+			alert("현재는 테이블ID & 이름만 검색 가능합니다.");
+			return;
+		}
 		
 	}
 

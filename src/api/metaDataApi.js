@@ -26,7 +26,7 @@ export const fetchMetaDataSubDataset = async (serviceName, mainCategoryName) => 
 }
 
 export const fetchMetaDataTableInfo = async (serviceName, mainCategoryName, subCategoryName) => {
-    const response = await axios.post(`metadata/category/sub`, {
+    const response = await axios.post(`metadata/tableinfo`, {
         "service_name" : serviceName,
         "main_category_name" : mainCategoryName,
         "sub_category_name" : subCategoryName

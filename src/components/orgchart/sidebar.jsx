@@ -25,23 +25,15 @@ const Sidebar = ({onTargetSelect}) => {
         <div className="px-4">
           <div className="pb-7">
             <div className="justify-center items-center">
-                <p style={{
-                  color: "#C0C0C5",
-                  fontWeight: "1000",
-                  fontSize: "27px",
-                  display: 'flex',
-                  height: '100%',
-                  justifyContent: 'center',
-                  marginBottom: "10%"	
-                }}>
+                <p className="flex justify-center mb-7 h-full text-[#C0C0C5] font-extrabold text-2xl">
                   VISANG
                 </p>
             </div>
-            <div><hr style={{marginLeft: "5%", marginRight: "5%", height:"2px", backgroundColor:"#C0C0C5"}}></hr></div>
+            <div><hr className="ml-3 mr-3 border bg-[#C0C0C5]"></hr></div>
             
           </div>
-          <div className="flex flex-col items-center text-[#C0C0C5]">
-            <span className="h-7 w-32 place-content-center">Dataset 검색하기</span>
+          <div className="flex flex-col text-[#C0C0C5] ml-3 mr-3">
+            <span className="ml-1 h-7 w-32 mb-2">Dataset 검색하기</span>
             <MainSearchBar></MainSearchBar>
           </div>
           <ul className="mt-6 space-y-1">

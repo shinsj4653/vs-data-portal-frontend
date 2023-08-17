@@ -1,11 +1,8 @@
 import React from 'react';
 
 const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange, isSearchPage }) => {
-  // console.log("페이지 : ", currentPage)
-  // console.log(itemsPerPage)
   const totalPages = isSearchPage ? Math.ceil(tableInfoList[0]?.total_num / itemsPerPage) : Math.ceil(tableInfoList.length / itemsPerPage);
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
-  // console.log(pageNumbers)
   const pagesToShow = 10; // 한번에 보여줄 페이지 개수
 
   let startPage = Math.max(1, currentPage - Math.floor(pagesToShow / 2));
@@ -15,11 +12,6 @@ const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange, is
   if (startPage > 1 && endPage - startPage + 1 < pagesToShow) {
     startPage = Math.max(1, startPage - (pagesToShow - (endPage - startPage + 1)));
   }
-  
-  // const handlePageChange = (pageNumber) => {
-  //   onPageChange(pageNumber);
-  //   window.scrollTo(0, 130); // 메타테이블리스트 상단으로 스크롤
-  // };
 
   return (
     <div className="flex justify-center my-4">
@@ -28,14 +20,8 @@ const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange, is
           <button
             onClick={() => {
               onPageChange(tableInfoList, currentPage -1, isSearchPage);
-              
             }}
-            className='bg-white text-black-500 hover:bg-gray-100 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium'
-            style={{
-              borderLeft : "none",
-              borderTop: "none",
-              borderBottom: "none",
-              backgroundColor:"#f2f5f8", boxShadow:"none"}}
+            className='bg-white text-black-500 hover:bg-gray-100 relative inline-flex items-center px-4 py-2 border-r border-gray-300 text-sm font-medium boxshadow-none bg-[#f2f5f8]'
           >
             ◀
           </button>
@@ -45,7 +31,8 @@ const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange, is
           <button
             key={pageNumber}
             onClick={() => {
-              onPageChange(tableInfoList, pageNumber, isSearchPage)
+              onPageChange(tableInfoList, pageNumber, isSearchPage);
+              window.scrollTo(0, 130);
             }}
             className={`${
               currentPage === pageNumber
@@ -60,14 +47,9 @@ const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange, is
         {currentPage < totalPages && (
           <button
             onClick={() => {
-              onPageChange(tableInfoList, currentPage + 1, isSearchPage)
+              onPageChange(tableInfoList, currentPage + 1, isSearchPage);
             }}
-            className='bg-white text-black-500 hover:bg-gray-100 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium'
-            style={{
-              borderRight : "none",
-              borderTop: "none",
-              borderBottom: "none",
-              backgroundColor:"#f2f5f8", boxShadow:"none"}}
+            className='bg-white text-black-500 hover:bg-gray-100 relative inline-flex items-center px-4 py-2 border-l border-gray-300 text-sm font-medium boxshadow-none bg-[#f2f5f8]'
           >
             ▶
           </button>

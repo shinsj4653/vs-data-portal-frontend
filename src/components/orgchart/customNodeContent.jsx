@@ -11,8 +11,7 @@ const CustomNodeContent = (props) => {
 			{props.servicesByTarget.includes(props.data.name) ? (
 				<div>
 					{/* <img className="node-img" src={props.data.imageUrl} alt="Profile"/> */}
-					<div className={`h-36 flex flex-col items-center rounded-2xl text-3xl justify-center font-bold node-name`}
-					style={{backgroundColor: '#0091FA', color: 'white'}}>{props.data.name}</div>
+					<div className={`h-36 flex flex-col items-center rounded-2xl text-3xl justify-center font-bold node-name text-white bg-[#0091FA]`}>{props.data.name}</div>
 				</div>
 			) : (
 				<div className='h-1'>

@@ -45,19 +45,11 @@ const Orgchart = () => {
 					<Sidebar onTargetSelect={handleTargetSelect}/>
 					<div className="flex flex-col w-full h-full bg-white flex relative z-10">
 						<div>
-							<p style={{
-								marginLeft: "6%",
-								color: "black",
-								fontWeight: "800",
-								fontSize: "27px",
-								display: 'flex',
-								height: '100%',
-								marginBottom: "1.5%"	
-							}}>
+							<p className="flex ml-16 text-black font-extrabold text-2xl h-full mb-6">
 								조직도
 							</p>
 						</div>
-						<div><hr style={{marginLeft: "5%", marginRight: "5%", height:"2px", backgroundColor:"black"}}></hr></div>
+						<div><hr className="bg-black mr-16 ml-16 border border-black"></hr></div>
 						<div className='w-full h-full justify-top items-top'>
 							<DataDrivenOrgChart data={data} activeTarget={activeTarget} />
 						</div>

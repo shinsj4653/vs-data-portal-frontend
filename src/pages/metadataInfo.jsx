@@ -38,7 +38,8 @@ const MetaDataInfo = () => {
 	
 	const [scrollPosition, setScrollPosition] = useState(0);
 	
-	const [searchStandard, setSearchStandard] = useState('테이블ID & 이름');
+	const [searchStandard, setSearchStandard] = useState('테이블ID & 테이블명');
+	const [searchCondition, setSearchCondition] = useState('table_id_or_name'); // [테이블ID & 이름, 기타
 	const [isSearch, setIsSearch] = useState(false);
 	const [searchValue , setSearchValue] = useState("");
 	const [searchResult, setSearchResult] = useState([]);
@@ -47,7 +48,7 @@ const MetaDataInfo = () => {
 	const [searchPageNo, setSearchPageNo] = useState(1); // 검색 결과 페이지 번호
 	const [searchAmountPerPage, setSearchAmountPerPage] = useState(15); // 검색 결과 페이지 당 개수
 
-	const searchQuery = useMetadataTableSearch(serviceName, searchValue, searchPageNo, searchAmountPerPage);
+	const searchQuery = useMetadataTableSearch(serviceName, searchCondition, currentSearch, searchPageNo, searchAmountPerPage);
 
 	
 
@@ -122,29 +123,29 @@ const MetaDataInfo = () => {
 		if(searchValue == "") {
 			alert("검색어를 입력해주세요.");
 			return;
-		} else if(searchStandard === "테이블ID & 이름") {
+		} else 
 			fetchResultData(); 
-		} else {
-			alert("현재는 테이블ID & 이름만 검색 가능합니다.");
-			return;
-		}
+		
 		
 	}
 
 	const fetchResultData = async () => {
 		
 		const result = await searchQuery.refetch();
-		console.log(result.data.data);
-		if(result.data.data.length == 0) {
-			setSearchResult([]);
-			alert("검색 결과가 없습니다.");
-			return;
+		// console.log(result.data.data);
+		if(!result.isLoading) {
+			if (result.data.data.length == 0 ) {
+				setSearchResult([]);
+				alert("검색 결과가 없습니다.");
+				return;
+			}
+			setSearchResult(result.data.data);
 		} 
-		setSearchResult(result.data.data);
+		
+		
 	}
-
 	const fetchData = async (param) => { 
-
+		setSearchResult([]);
 		if (param === "init") {
 			const [orgData, mainDataset, subDataset, tableInfoData] = await Promise.all([
 				orgDataQuery.refetch(),
@@ -164,6 +165,8 @@ const MetaDataInfo = () => {
 				setSelectedSubDataset(location.state?.selectedSubDataset ?? subDataset.data.data[0]);
 				setTableInfoList(tableInfoData.data.data);
 			}
+			
+
 		} else if (param === "serviceChange") {
 			
 			const [mainDataset, subDataset, tableInfoData]  = await Promise.all([
@@ -229,7 +232,7 @@ const MetaDataInfo = () => {
 
 	useEffect(() => {
 		fetchResultData();
-	}, [searchPageNo])
+	}, [searchPageNo, currentSearch])
 
     const handleMainDatasetColorChange = (child) => {
 		location.state = null;
@@ -272,6 +275,15 @@ const MetaDataInfo = () => {
 
 	const handleSearchStandardColorChange = (child) => {
 		setSearchStandard(child);
+		setSearchValue("");
+		setCurrentSearch(null);
+		setSearchResult([]);
+
+		if(child === "테이블ID & 테이블명") {
+			setSearchCondition("table_id_or_name");
+		} else if(child === "하위 주제") {
+			setSearchCondition("small_clsf_name");
+		}
 	}
 
 	const highlightLetters = (tableText, currentSearch) => {
@@ -418,24 +430,24 @@ const MetaDataInfo = () => {
 												<div>
 													<div className='flex flex-row w-full pt-5 pb-5 text-center items-center'>
 														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
-														    <p className="text-gray-400 font-bold text-sm">
+														    <span className="text-gray-400 font-bold text-sm">
 														        {tableInfo.table_id}
-														    </p>
+														    </span>
 														</div>
 														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">	
-															 <p className="text-gray-400 font-bold text-sm">
+															 <span className="text-gray-400 font-bold text-sm">
 														        {tableInfo.table_name}
-														    </p>
+														    </span>
 														</div>
 														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">		
-															<p className="text-gray-400 font-bold text-sm">
+															<span className="text-gray-400 font-bold text-sm">
 														        {tableInfo.table_comment}
-														    </p>
+														    </span>
 														</div>
 														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">			
-															<p className="text-gray-400 font-bold text-sm">
+															<span className="text-gray-400 font-bold text-sm">
 														        {tableInfo.small_clsf_name}
-														    </p>
+														    </span>
 														</div>
 													</div>
 													<div><hr className="h-0.3 bg-[#E5E7EB]"></hr></div>
@@ -466,7 +478,7 @@ const MetaDataInfo = () => {
 											<div className="flex flex-row items-center w-100%">
 
 												<div className="flex flex-row overflow-x-auto scroll-smooth">
-													{["테이블ID & 이름", "기타"].map((child) => (
+													{["테이블ID & 테이블명", "하위 주제"].map((child) => (
 														<button
 														className={`${
 															searchStandard === child ? 'bg-blue-500 text-white' : 'bg-white text-gray-400'
@@ -477,9 +489,10 @@ const MetaDataInfo = () => {
 														data-child={child}
 														onClick={() => {
 															handleSearchStandardColorChange(child);
+															setSearchResult([]);
 														}}
 													>
-													#{child}
+													{child}
 														</button>
 													))
 												}
@@ -504,26 +517,31 @@ const MetaDataInfo = () => {
 									<div className="flex flex-col pt-0 p-3 bg-[#F2F5F8]">
 										{
 											searchResult.length > 0 ? Array.isArray(searchResult) && searchResult.map((tableInfo) => {
-												
 
 												return (
 													<div>
 														<div className='flex flex-row w-full pt-5 pb-5 text-center items-center'>
 															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
-																{highlightLetters(tableInfo.table_id, currentSearch)}
+															<span className="text-gray-400 font-bold text-sm">
+
+																{searchCondition === "table_id_or_name" ? highlightLetters(tableInfo.table_id, currentSearch) : tableInfo.table_id}
+															</span>
 															</div>
 															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
-																{highlightLetters(tableInfo.table_name, currentSearch)}
+															<span className="text-gray-400 font-bold text-sm">
+																{searchCondition === "table_id_or_name" ? highlightLetters(tableInfo.table_name, currentSearch) : tableInfo.table_name}
+
+															</span>
 															</div>
 															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
-															    <p className="text-gray-400 font-bold text-sm">
+															    <span className="text-gray-400 font-bold text-sm">
 															        {tableInfo.table_comment}
-															    </p>
+															    </span>
 															</div>
 															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
-															    <p className="text-gray-400 font-bold text-sm">
-															        {tableInfo.small_clsf_name}
-															    </p>
+															    <span className="text-gray-400 font-bold text-sm">
+															        {searchCondition === "small_clsf_name" ? highlightLetters(tableInfo.small_clsf_name, currentSearch) : tableInfo.small_clsf_name}
+															    </span>
 															</div>
 														</div>
 														<div><hr className="h-0.1 bg-[#E5E7EB]"></hr></div>

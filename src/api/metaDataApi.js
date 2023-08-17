@@ -35,9 +35,10 @@ export const fetchMetaDataTableInfo = async (serviceName, mainCategoryName, subC
     return response.data;
 }
 
-export const fetchMetaDataTableSearch = async (serviceName, tableKeyword, pageNo, amountPerPage) => {
+export const fetchMetaDataTableSearch = async (serviceName, searchCondition, tableKeyword, pageNo, amountPerPage) => {
     const response = await axios.post(`metadata/search/tableinfo`, {
         "service_name" : serviceName,
+        "search_condition" : searchCondition,
         "table_keyword" : tableKeyword,
         "page_no" : pageNo,
         "amount_per_page" : amountPerPage

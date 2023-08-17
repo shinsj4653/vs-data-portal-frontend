@@ -1,10 +1,11 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState, useEffect } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { OrgChart } from 'd3-org-chart';
 import CustomNodeContent from './customNodeContent';
 import CustomExpandButton from './customExpandedButton';
 import { GoZoomIn, GoZoomOut } from 'react-icons/go';
 import ServiceDetailsCard from './serviceDetailsCard';
+import { useServiceByTarget } from '../../hooks/useOrgChart';
 
 const transformData = (data, depth = 0) => {
 	const transformedData = [];
@@ -36,24 +37,48 @@ const transformData = (data, depth = 0) => {
 };
 
 const DataDrivenOrgChart = (props) => {
+	const [target, setTarget] = useState(props.activeTarget?.targetName || "");
+
+	useEffect(() => {
+	// 타겟명 변경될 때
+	  if (JSON.stringify(target) !== JSON.stringify(props.activeTarget.targetName)) {
+		setTarget(props.activeTarget.targetName);
+	  }
+	}, [props.activeTarget.targetName, target]);
+			
+	// console.log(target);
+
+	const serviceByTargetDataQuery = useServiceByTarget(target);
+	const [servicesByTarget, setServicesByTarget] = useState([]);
+
+	useEffect(() => {
+		// 서비스 데이터가 로드될 때만 실행
+		if (serviceByTargetDataQuery.data) {
+			setServicesByTarget(serviceByTargetDataQuery.data.data);
+		}
+	}, [serviceByTargetDataQuery.data]);
+
 	const [cardShow, setCardShow] = useState(false);
 	const d3Container = useRef(null);
 
 	const data = transformData(props.data, 2);
+	
 	data.forEach((d) => (d._expanded = true));
 
 	const handleShow = (nodeId) => {
 		console.log(nodeId);
 		setCardShow(true);
 	};
+	
 	const handleClose = () => setCardShow(false);
 
-	let chart = new OrgChart();
+	let chart = new OrgChart();	
 
 	useLayoutEffect(() => {
 		const toggleDetailsCard = (nodeId) => {
 			handleShow(nodeId);
 		};
+		// console.log("custom service : ", servicesByTarget);
 
 		if (data && d3Container.current) {
 			chart
@@ -69,7 +94,12 @@ const DataDrivenOrgChart = (props) => {
 				})
 				.nodeContent((d) => {
 					return ReactDOMServer.renderToStaticMarkup(
-						<CustomNodeContent {...d} />
+						<>
+						<CustomNodeContent
+							{...d}
+							servicesByTarget={servicesByTarget}
+						/>
+						</>
 					);
 				})
 				.onNodeClick((d) => {
@@ -80,12 +110,13 @@ const DataDrivenOrgChart = (props) => {
 		}
 
 		chart.getChartState().svg.on('wheel.zoom', null);
-	}, []);
+	  
+	}, [servicesByTarget]);
 
 	return (
 		<>
 			<div
-				className="bg-white w-full relative"
+				className="bg-white w-full"
 				ref={d3Container}
 			>
 				{cardShow && <ServiceDetailsCard handleClose={handleClose} />}

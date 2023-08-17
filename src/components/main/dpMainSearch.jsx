@@ -11,17 +11,18 @@ const DpMainSearch = ({ setIsSearch, currentSearch, setSearchValue, searchResult
 		const regex = new RegExp(currentSearch, 'gi');
     	const matches = tableText.match(regex);
 
-    	if (!matches) return <span style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}}>{tableText}</span>;
+    	if (!matches) return <span className='text-[#C0C0C0] text-[14px] font-extrabold'>{tableText}</span>;
 
     	const parts = tableText.split(regex);
     	const highlightedParts = [];
 
     	parts.forEach((part, index) => {
-    	    highlightedParts.push(<span style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}} key={index}>{part}</span>);
+    	    highlightedParts.push(<span className='text-[#C0C0C0] text-[14px] font-extrabold' key={index}>{part}</span>);
 
     	    if (index < parts.length - 1) {
     	        highlightedParts.push(
-    	            <span key={`highlight-${index}`} style={{color:"#C0C0C0", backgroundColor: 'yellow', fontWeight:"800", fontSize:"13.5px"}}>
+    	            <span className='text-[#C0C0C0] text-[15px] font-extrabold bg-yellow'
+					key={`highlight-${index}`}>
     	                {matches[index]}
     	            </span>
     	        );
@@ -38,11 +39,10 @@ const DpMainSearch = ({ setIsSearch, currentSearch, setSearchValue, searchResult
     return (<div className="px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-8 bg-gray-100">
 					
 					<div className="flex flex-row justify-between mb-8">
-						<div className="flex flex-row" onClick={() => {
+						<div className="flex flex-row cursor-pointer" onClick={() => {
 								setIsSearch(false);
 								setSearchValue("");
 							}}
-							style={{cursor: 'pointer'}}
 							>
 							<button >
                             <svg className="cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 25" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -56,28 +56,22 @@ const DpMainSearch = ({ setIsSearch, currentSearch, setSearchValue, searchResult
 
 								
 
-					<div className="flex flex-row p-3" style={{backgroundColor: '#FFF'}}>
+					<div className="flex flex-row p-3 bg-[#FFF]">
 										{["서비스명", "데이터 셋"].map((label) => (
 
 											<div className='w-1/2' key={label}>
-												<div className='p-2 text-center border-r' style={{borderRightColor:"#E5E7EB"}}>
-													<p style={{color:"#94A3B8", fontWeight:"1000", fontSize:"17px"}}>{label}</p>
+												<div className='p-2 text-center border-r border-[#E5E7EB]'>
+													<p className='text-[#94A3B8] text-[17px] font-extrabold'>{label}</p>
 												</div>
 											</div>
 										))}
 									</div>
-									<div><hr style={{height:"3px", backgroundColor:"#E5E7EB"}}></hr></div>
-					<div className="flex flex-col pt-0 p-3" style={{backgroundColor: '#FFF'}}>
+									<div><hr className= 'bg-[#E5E7EB] h-[3px]'></hr></div>
+					<div className="flex flex-col pt-0 p-3 bg-[#FFF]">
 					{
 						searchResult?.length > 0 ? searchResult?.map((tableInfo) => (
 						
-							<div style={{
-								cursor: 'pointer',
-								overflow: 'hidden',
-								whiteSpace: 'nowrap',
-								textOverflow: 'ellipsis',
-							}}
-								className='hover:bg-gray-100'
+							<div className='cursor-pointer hover:bg-gray-100 overflow-hidden whitespace-nowrap truncate'
 								onClick={() => {
 									navigate('/metadataInfo', {
 										state: {
@@ -88,27 +82,30 @@ const DpMainSearch = ({ setIsSearch, currentSearch, setSearchValue, searchResult
 								}}
 							>
 								<div className='flex flex-row w-full pt-5 pb-5 text-center items-center'>
-									<div className='w-1/2 border-r items-center' 
-									style={{borderRightColor:'#E5E7EB', overflow: 'hidden'}}>
+									<div className='w-1/2 border-r border-[#E5E7EB] items-center overflow-hidden'>
 										{
 											tableInfo.service_name?.split("").map((letter) => {
 												if(currentSearch.indexOf(letter) !== -1 && tableInfo.service_name.indexOf(currentSearch) !== -1){
-													return <span style={{color:"#C0C0C0", backgroundColor: 'yellow' ,fontWeight:"800", fontSize:"13.5px", overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>{letter}</span>
+													return <span className='bg-[yellow] text-[#C0C0C0] text-[14px] overflow-hidden whitespace-nowrap truncate font-bold'>{letter}</span>
 												} else {
-													return <span style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px", overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>{letter}</span>
+													return <span className='text-[#C0C0C0] text-[14px] overflow-hidden whitespace-nowrap truncate font-bold'>{letter}</span>
 												}
 											})
 										}
 										</div>
-										<div className='w-1/2 border-r items-center' style={{borderRightColor:'#E5E7EB', overflow: 'hidden'}}>
+										<div className='w-1/2 border-r border-[#E5E7EB] items-center overflow-hidden'>
 											{highlightLetters(tableInfo.dataset_name, currentSearch)}
 										</div>
 								</div>
-								<div><hr style={{height:"1px", backgroundColor:"#E5E7EB"}}></hr></div>
+								<div><hr className='bg-[#E5E7EB] h-[1px]'></hr></div>
 							</div> 
 						)) : 
 						<div className='flex flex-row w-full pt-5 pb-5 text-center items-center'>
-							<div className='w-full border-r items-center' style={{borderRigthColor:'#E5E7EB', overflow: 'hidden'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px", overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>검색 결과가 없습니다.</p></div>
+							<div className='w-full border-r border-[#E5E7EB] items-center overflow-hidden'>
+								<p className='text-[#C0C0C0] font-extrabold text-[14px] overflow-hidden whitespace-nowrap truncate'>
+									검색 결과가 없습니다.
+								</p>
+							</div>
 						</div>
 
 						}

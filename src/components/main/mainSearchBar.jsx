@@ -24,11 +24,11 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, isMain }) => {
             updateValue(event.target.value);
           }}
           placeholder={isMain ? "서비스 명 혹은 데이터셋 명을 검색하세요." : "검색어를 입력하세요."}
-          className="w-full rounded-md border-base-100 py-2.5 px-2 pe-10 shadow-sm sm:text-sm text-base-content bg-white"
+          className="w-full rounded-md border-base-100 py-2.5 px-2 pe-10 shadow-sm sm:text-sm text-base-content bg-slate-100"
           onKeyDown={(e) => activeEnter(e)}
         />
 
-        <span className="absolute inset-y-0 end-0 grid my-2 mx-0 place-content-center">
+        <span className="absolute inset-y-0 end-0 grid my-2 mx-1 place-content-center">
           <button type="button" onClick={() => {
             searchValue !== "" && handleSearch(searchValue);
           }}
@@ -40,8 +40,8 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, isMain }) => {
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth="1.5"
-              stroke="black"
-              className="h-8 w-8"
+              stroke="gray"
+              className="h-7 w-7"
             >
               <path
                 strokeLinecap="round"

@@ -19,3 +19,11 @@ export const fetchServiceInfo = async () => {
     console.log(response.data)
     return response.data;
 }
+
+export const fetchServiceByTarget = async (targetName) => {
+    const response = await axios.post(`dataorg/service/target`, {
+        "target_name" : targetName
+    });
+    console.log(response.data.data)
+    return response.data;
+}

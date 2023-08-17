@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DataDrivenOrgChart from '../components/orgchart/dataDrivenOrgChart';
 import Layout from '../components/layout';
 import { useOrgChartMain } from '../hooks/useOrgChart';
-import MainSearchBar from '../components/main/mainSearchBar';
+// import MainSearchBar from '../components/main/mainSearchBar';
 import Loading from '../components/loading';
+import Sidebar from '../components/orgchart/sidebar';
+
 
 const Orgchart = () => {
 	const orgChartData = useOrgChartMain();
-	const [activeTarget, setActiveTarget] = useState('');
-	const [targetList, setTargetList] = useState(["유아", "초등", "중고등", "성인", "글로벌"]);
+	const [activeTarget, setActiveTarget] = useState("");
 
 	if (orgChartData.isLoading) {
 		return <Loading></Loading>;
@@ -16,34 +17,15 @@ const Orgchart = () => {
 
 	const data = orgChartData.data.data;
 
-	const handleServiceTargetColorChange = (name, color) => {
-		setActiveTarget(name);
-
-		// const tempData = JSON.parse(JSON.stringify(originData));
-
-		// const findAndChangeColor = (data) => {
-		// 	if (data.name === name) {
-		// 		data.color = color;
-		// 	} else if (data.children) {
-		// 		data.children.forEach((child) => findAndChangeColor(child));
-		// 	}
-		// };
-
-		// findAndChangeColor(tempData);
-
-		// setData({ ...tempData }); // 이제 modifiedData도 필요하지 않습니다.
+	const handleTargetSelect = async (targetName) => {
+		setActiveTarget({ targetName });
 	};
-
+			
 	return (
 		<>
 			<Layout>
-				<div
-					className="hero min-h-16"
-					// style={{
-					// 	backgroundImage: `url(${circlepack_background})`,
-					// }}
-				>
-					<div className="hero-overlay bg-primary-content bg-opacity-70"></div>
+				<div className="hero min-h-16 flex flex-col bg-[#69676A]">
+					<div className="hero-overlay bg-[#69676A] bg-opacity-70"></div>
 					<div className="hero-content text-center text-neutral-100">
 						<div className="">
 							<h1 className="my-5 text-5xl font-bold">
@@ -54,32 +36,24 @@ const Orgchart = () => {
 							</p>
 						</div>
 					</div>
-				</div>
-				<div className="flex flex-col justify-center items-center bg-slate-100 p-5">
-					{/* <Sidebar /> */}
-					<div className='bg-slate-200 p-5 rounded-lg shadow-md items-center mb-1'>
-						<p className='pb-3'>DataSet 검색하기</p>
-						<MainSearchBar />
-						
+					<div className='hero h-16 relative items-center'>
+						<div className="absolute w-full h-full bg-[#69676A]"></div>
+						<div className="absolute w-3/4 h-full bg-white"></div>
 					</div>
-					{/* <div className="flex justify-center p-5">
-								<div className="flex bg-slate-400 rounded-2xl p-3">
-									{targetList.map((child) => (
-										<button
-											className={`${
-												activeTarget === child ? 'bg-red-400' : 'bg-white'
-											}  rounded-lg shadow-md m-2 px-4 py-2 hover:bg-slate-200`}
-											key={child}
-											onClick={() => {
-												handleServiceTargetColorChange(child, '#F87171');
-											}}
-										>
-											#{child}
-										</button>
-									))}
-								</div>
-							</div> */}
-					<DataDrivenOrgChart data={data} />
+				</div>
+				<div className="relative flex flex-row justify-center items-top mx-auto w-3/4 h-screen bg-white">
+					<Sidebar onTargetSelect={handleTargetSelect}/>
+					<div className="flex flex-col w-full h-full bg-white flex relative z-10">
+						<div>
+							<p className="flex ml-16 text-black font-extrabold text-2xl h-full mb-6">
+								조직도
+							</p>
+						</div>
+						<div><hr className="bg-black mr-16 ml-16 border border-black"></hr></div>
+						<div className='w-full h-full justify-top items-top'>
+							<DataDrivenOrgChart data={data} activeTarget={activeTarget} />
+						</div>
+					</div>
 				</div>
 			</Layout>
 		</>

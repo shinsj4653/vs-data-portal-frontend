@@ -278,19 +278,19 @@ const MetaDataInfo = () => {
 		const regex = new RegExp(currentSearch, 'gi');
     	const matches = tableText.match(regex);
 
-    	if (!matches) return <span style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}}>{tableText}</span>;
+    	if (!matches) return <span className="text-gray-400 font-bold text-sm">{tableText}</span>;
 
     	const parts = tableText.split(regex);
     	const highlightedParts = [];
 
     	parts.forEach((part, index) => {
-    	    highlightedParts.push(<span style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}} key={index}>{part}</span>);
+    	    highlightedParts.push(<span className="text-gray-400 font-bold text-sm" key={index}>{part}</span>);
 
     	    if (index < parts.length - 1) {
     	        highlightedParts.push(
-    	            <span key={`highlight-${index}`} style={{color:"#C0C0C0", backgroundColor: 'yellow', fontWeight:"800", fontSize:"13.5px"}}>
-    	                {matches[index]}
-    	            </span>
+    	            <span key={`highlight-${index}`} className="inline-block px-1 py-0.5 text-gray-400 bg-yellow-300 font-extrabold text-sm">
+    					{matches[index]}
+					</span>
     	        );
     	    }
     	});
@@ -307,15 +307,10 @@ const MetaDataInfo = () => {
 	return (
 		<>
 			<Layout>
-				<div
-					className="flex flex-col justify-center items-center"
-					style={{
-						backgroundImage: `url(${metadata_background})`,
-					}}
-				>
+			<div className='flex flex-col justify-center items-center' style={{ backgroundImage: `url(${metadata_background})` }}>
 					<div className="hero-overlay bg-primary-content bg-opacity-70"></div>
 					<div className="hero-content text-center text-neutral-100">
-						<div className="">
+						<div>
 							<h1 className="my-5 text-5xl font-bold">
 								비상교육 메타 데이터 정보
 							</h1>
@@ -343,24 +338,11 @@ const MetaDataInfo = () => {
 
 						<div className="flex flex-col justify-top p-5 w-3/4">
 									<div className="flex flex-row bg-white rounded-2xl pt-1 p-3">
-										<div className='flex flex-col items-center w-1/6 pt-3'>
-											{selectedMainDataset ? (												
-												<p className='text-center' style={{color:"#94A3B8", fontWeight:"1000", fontSize:"17px"}}>상위 주제</p>
-												//marginLeft:"33%"
-											) : (
-												<p className='text-center' style={{
-													color: "#94A3B8",
-													fontWeight: "1000",
-													fontSize: "17px",
-													display: 'flex',
-													alignItems: 'center',
-													justifyContent: 'center',
-													height: '100%'	
-												}}>
-													상위 주제
-												</p>
-											)}
-											<p style={{ fontWeight: "1000",color : '#0091FA'}}>#{selectedMainDataset}</p>
+										<div className='flex flex-col justify-center items-center w-1/6 pt-1'>
+																						
+											<p className="text-center text-gray-400 font-extrabold text-lg">상위 주제</p>
+											
+											<p className="font-extrabold text-blue-500">#{selectedMainDataset}</p>
 										</div>
 										<div className="flex flex-col w-5/6">
 											<div className="flex max-w-full">
@@ -369,102 +351,94 @@ const MetaDataInfo = () => {
 													{Array.isArray(mainDatasetList) && mainDatasetList.map((child) => (
 														<button
 															className={`${
-																selectedMainDataset === child ? 'bg-blue-500' : 'bg-white'
-															}  shadow-md m-2 px-4 py-2 hover:bg-slate-100`}
-															
-															style={{
-																fontWeight: "700",
-																minWidth: '9.5rem',
-																borderColor: selectedMainDataset === child ? '#0091FA' : '#C0C0C0',
-																color: selectedMainDataset === child ? '#ffffff' : '#C0C0C0'}}
+																selectedMainDataset === child ? 'bg-blue-500 text-white' : 'bg-white text-gray-400'
+															} shadow-md m-2 px-4 py-2 hover:bg-slate-100 border ${
+																selectedMainDataset === child ? 'border-blue-500' : 'border-gray-300'
+															} font-semibold min-w-[9.5rem]`}
 															key={child}
 															data-child={child}
 															onClick={() => {
 																handleMainDatasetColorChange(child);
 															}}
 														>
-															#{child}
-														</button>
+														#{child}
+													</button>
 													))
 												}
 												</div>
 											</div>
 										</div>
 									</div>
-									<div><hr style={{height:"2px", backgroundColor:"#E5E7EB"}}></hr></div>
+									<div><hr className="h-0.3 bg-[#E5E7EB]"></hr></div>
 									<div className="flex flex-row bg-white rounded-2xl p-3">
-										<div className='flex flex-col items-center w-1/6 pt-1.5'>
-											
-										{selectedSubDataset ? (												
-												<p className='text-center' style={{color:"#94A3B8", fontWeight:"1000", fontSize:"17px"}}>중위 주제</p>
-												//marginLeft:"33%"
-											) : (
-												<p className='text-center' style={{
-													color: "#94A3B8",
-													fontWeight: "1000",
-													fontSize: "17px",
-													display: 'flex',
-													alignItems: 'center',
-													justifyContent: 'center',
-													height: '100%'	
-												}}>
-													중위 주제
-												</p>
-											)}
-											
-											<p style={{ fontWeight: "1000",color : '#0091FA'}}>#{selectedSubDataset}</p>
-									
+										<div className='flex flex-col justify-center items-center w-1/6 pt-1'>
+																						
+											<p className="text-center text-gray-400 font-extrabold text-lg">중위 주제</p>
+											<p className="font-extrabold text-blue-500">#{selectedSubDataset}</p>
 										</div>
 										<div className="flex flex-col w-5/6">
 											<div className="flex max-w-full">
-												<div className="flex flex-row overflow-x-auto scroll-smooth" ref={subDatasetRef}>
+											<div className="flex flex-row overflow-x-auto scroll-smooth" ref={subDatasetRef}>
 													{Array.isArray(subDatasetList) && subDatasetList.map((child) => (
 														<button
 															className={`${
-																selectedSubDataset === child ? 'bg-white text-blue border border-blue-500' : 'bg-white'
-															}  shadow-md m-2 px-4 py-2 hover:bg-slate-100`}
-															style={{
-																fontWeight: "700",
-																minWidth: '9.5rem',
-																borderColor: selectedSubDataset === child ? '#0091FA' : '#C0C0C0',
-																color: selectedSubDataset === child ? '#0091FA' : '#C0C0C0'
-															}}
+																selectedSubDataset === child ? 'bg-blue-500 text-white' : 'bg-white text-gray-400'
+															} shadow-md m-2 px-4 py-2 hover:bg-slate-100 border ${
+																selectedSubDataset === child ? 'border-blue-500' : 'border-gray-300'
+															} font-semibold min-w-[9.5rem]`}
 															key={child}
 															data-child={child}
 															onClick={() => {
 																handleSubDatasetColorChange(child);
 															}}
 														>
-															#{child}
-														</button>
-													))}
+														#{child}
+													</button>
+													))
+												}
 												</div>
 											</div>
 										</div>
 									</div>
-									<div><hr style={{height:"7px", backgroundColor:"#E5E7EB"}}></hr></div>
-									<div className="flex flex-row p-3" style={{backgroundColor: '#F2F5F8'}}>
+									<div><hr className="h-1 bg-[#E5E7EB]"></hr></div>
+									<div className="flex flex-row p-3 bg-[#F2F5F8]">
 										{["테이블ID", "테이블명", "테이블 설명", "하위 주제"].map((label) => (
 
 											<div className='w-1/4' key={label}>
-												<div className='p-2 text-center border-r' style={{borderRightColor:"#E5E7EB"}}>
-													<p style={{color:"#94A3B8", fontWeight:"1000", fontSize:"17px"}}>{label}</p>
+												<div className='p-2 text-center border-r border-color-[#E5E7EB]'>
+													<p className="text-center text-gray-400 font-extrabold text-lg">{label}</p>
 												</div>
 											</div>
 										))}
 									</div>
-									<div><hr style={{height:"3px", backgroundColor:"#E5E7EB"}}></hr></div>
-									<div className="flex flex-col pt-0 p-3" style={{backgroundColor: '#F2F5F8'}}>
+									<div><hr className="h-1 bg-[#E5E7EB]"></hr></div>
+									<div className="flex flex-col pt-0 p-3 bg-[#F2F5F8]">
 										{
 											Array.isArray(visibleItems) && visibleItems.map((tableInfo) => (
 												<div>
 													<div className='flex flex-row w-full pt-5 pb-5 text-center items-center'>
-														<div className='w-1/4 border-r items-center' style={{borderRigthColor:'#E5E7EB', overflow: 'hidden'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px", overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>{tableInfo.table_id}</p></div>
-														<div className='w-1/4 border-r items-center' style={{borderRigthColor:'#E5E7EB'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}}>{tableInfo.table_name}</p></div>
-														<div className='w-1/4 border-r items-center' style={{borderRigthColor:'#E5E7EB'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}}>{tableInfo.table_comment}</p></div>
-														<div className='w-1/4 border-r items-center' style={{borderRigthColor:'#E5E7EB'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}}>{tableInfo.small_clsf_name}</p></div>
+														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
+														    <p className="text-gray-400 font-bold text-sm">
+														        {tableInfo.table_id}
+														    </p>
+														</div>
+														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">	
+															 <p className="text-gray-400 font-bold text-sm">
+														        {tableInfo.table_name}
+														    </p>
+														</div>
+														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">		
+															<p className="text-gray-400 font-bold text-sm">
+														        {tableInfo.table_comment}
+														    </p>
+														</div>
+														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">			
+															<p className="text-gray-400 font-bold text-sm">
+														        {tableInfo.small_clsf_name}
+														    </p>
+														</div>
 													</div>
-													<div><hr style={{height:"1px", backgroundColor:"#E5E7EB"}}></hr></div>
+													<div><hr className="h-0.3 bg-[#E5E7EB]"></hr></div>
 												</div>
 											))
 										}
@@ -486,30 +460,26 @@ const MetaDataInfo = () => {
 						<div className="flex flex-col justify-top p-5 w-3/4">
 									<div className="flex flex-row bg-white rounded-2xl pt-1 p-3">
 										<div className='flex flex-col items-center w-1/6 pt-3'>
-											<p className='text-center' style={{color:"#94A3B8", fontWeight:"1000", fontSize:"17px"}}>검색 기준</p>
+											<p className="text-center text-gray-400 font-extrabold text-lg">검색 기준</p>
 										</div>
 										<div className="flex flex-col w-5/6">
 											<div className="flex flex-row items-center w-100%">
 
-												<div className="flex flex-row overflow-x-auto scroll-smooth" ref={mainDatasetRef}>
+												<div className="flex flex-row overflow-x-auto scroll-smooth">
 													{["테이블ID & 이름", "기타"].map((child) => (
 														<button
-															className={`${
-																searchStandard === child ? 'bg-blue-500' : 'bg-white'
-															}  shadow-md m-2 px-4 py-2 hover:bg-slate-100`}
-															
-															style={{
-																fontWeight: "700",
-																minWidth: '9.5rem',
-																borderColor: searchStandard === child ? '#0091FA' : '#C0C0C0',
-																color: searchStandard === child ? '#ffffff' : '#C0C0C0'}}
-															key={child}
-															data-child={child}
-															onClick={() => {
-																handleSearchStandardColorChange(child);
-															}}
-														>
-															{child}
+														className={`${
+															searchStandard === child ? 'bg-blue-500 text-white' : 'bg-white text-gray-400'
+														} shadow-md m-2 px-4 py-2 hover:bg-slate-100 border ${
+															searchStandard === child ? 'border-blue-500' : 'border-gray-300'
+														} font-semibold min-w-[9.5rem]`}
+														key={child}
+														data-child={child}
+														onClick={() => {
+															handleSearchStandardColorChange(child);
+														}}
+													>
+													#{child}
 														</button>
 													))
 												}
@@ -518,44 +488,55 @@ const MetaDataInfo = () => {
 											</div>
 										</div>
 									</div>
-									<div><hr style={{height:"2px", backgroundColor:"#E5E7EB"}}></hr></div>
 									
-									<div><hr style={{height:"7px", backgroundColor:"#E5E7EB"}}></hr></div>
-									<div className="flex flex-row p-3" style={{backgroundColor: '#F2F5F8'}}>
+									<div><hr className="h-1 bg-[#E5E7EB]"></hr></div>
+									<div className="flex flex-row p-3 bg-[#F2F5F8]">
 										{["테이블ID", "테이블명", "테이블 설명", "하위 주제"].map((label) => (
 
 											<div className='w-1/4' key={label}>
-												<div className='p-2 text-center border-r' style={{borderRightColor:"#E5E7EB"}}>
-													<p style={{color:"#94A3B8", fontWeight:"1000", fontSize:"17px"}}>{label}</p>
+												<div className='p-2 text-center border-r border-color-[#E5E7EB]'>
+													<p className="text-center text-gray-400 font-extrabold text-lg">{label}</p>
 												</div>
 											</div>
 										))}
 									</div>
-									<div><hr style={{height:"3px", backgroundColor:"#E5E7EB"}}></hr></div>
-									<div className="flex flex-col pt-0 p-3" style={{backgroundColor: '#F2F5F8'}}>
+									<div><hr className="h-1 bg-[#E5E7EB]"></hr></div>
+									<div className="flex flex-col pt-0 p-3 bg-[#F2F5F8]">
 										{
 											searchResult.length > 0 ? Array.isArray(searchResult) && searchResult.map((tableInfo) => {
 												
 
-
 												return (
 													<div>
 														<div className='flex flex-row w-full pt-5 pb-5 text-center items-center'>
-															<div className='w-1/4 border-r items-center' style={{borderRigthColor:'#E5E7EB', overflow: 'hidden'}}>
+															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
 																{highlightLetters(tableInfo.table_id, currentSearch)}
 															</div>
-															<div className='w-1/4 border-r items-center' style={{borderRigthColor:'#E5E7EB'}}>
+															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
 																{highlightLetters(tableInfo.table_name, currentSearch)}
 															</div>
-															<div className='w-1/4 border-r items-center' style={{borderRigthColor:'#E5E7EB'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}}>{tableInfo.table_comment}</p></div>
-															<div className='w-1/4 border-r items-center' style={{borderRigthColor:'#E5E7EB'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px"}}>{tableInfo.small_clsf_name}</p></div>
+															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
+															    <p className="text-gray-400 font-bold text-sm">
+															        {tableInfo.table_comment}
+															    </p>
+															</div>
+															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
+															    <p className="text-gray-400 font-bold text-sm">
+															        {tableInfo.small_clsf_name}
+															    </p>
+															</div>
 														</div>
-														<div><hr style={{height:"1px", backgroundColor:"#E5E7EB"}}></hr></div>
+														<div><hr className="h-0.1 bg-[#E5E7EB]"></hr></div>
 													</div>
 												)
 											}) :
 											<div className='flex flex-row w-full pt-5 pb-5 text-center justify-center items-center'>
-												<div className='w-1/4 border-r items-center' style={{borderRightColor:'#E5E7EB', overflow: 'hidden'}}><p style={{color:"#C0C0C0", fontWeight:"800", fontSize:"13.5px", overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}}>검색 결과가 없습니다.</p></div>
+												<div className="w-1/8 border-r border-gray-300 flex items-center overflow-hidden border-[#E5E7EB]">
+												    <p className="text-gray-400 text-sm">
+												        검색 결과가 없습니다. 
+												    </p>
+												</div>
+
 											</div>
 
 										}

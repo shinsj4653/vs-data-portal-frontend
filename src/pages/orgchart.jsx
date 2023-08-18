@@ -50,7 +50,7 @@ const Orgchart = () => {
 							</p>
 						</div>
 						<div><hr className="bg-black mr-16 ml-16 border border-black"></hr></div>
-						<div className='w-full h-full justify-top items-top'>
+						<div className='w-full h-full'>
 							<DataDrivenOrgChart data={data} activeTarget={activeTarget} />
 						</div>
 					</div>

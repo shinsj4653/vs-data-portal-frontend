@@ -129,39 +129,48 @@ const DataMap = () => {
 						isMap={true}
 					/>
 					<div>
-						<div className="flex flex-row items-center">
-							<div className="flex justify-center p-5">
-								<div className="flex bg-slate-400 rounded-2xl p-3">
-									{dataSet.map((child, idx) => (
-										idx < 7 &&
-										<button
-											className={`${
-												activeButton === child ? 'bg-red-400' : 'bg-white'
-											}  rounded-lg shadow-md m-2 px-4 py-2 hover:bg-slate-200`}
-											key={child}
-											onClick={() => {
-												handleDatasetColorChange(child, '#F87171');
-											}}
-										>
-											#{child}
-										</button>
-									))}
+						<div className='flex flex-col'>
+
+							<div className="flex flex-row bg-white rounded-2xl pt-5">
+								<div className="flex justify-center items-center w-1/6 pt-1">
+									<p className="text-center text-gray-400 font-extrabold text-lg">주요 데이터셋</p>
 								</div>
+								<div className="flex w-2/3">
+									<div className='flex flex-row overflow-x-auto scroll-smooth'>
+										{dataSet.map((child, idx) => (
+											idx < 7 &&
+											<button
+												className={`${
+													activeButton === child ? 'bg-white text-blue border border-[#0091FA] text-[#0091FA]' : 'bg-white border-[#C0C0C0] text-[#C0C0C0]'
+												} shadow-md m-2 px-4 hover:bg-slate-100 border font-bold min-w-[9rem] flex-shrink-0 overflow-wrap break-word min-h-[3rem]`}
+												key={child}
+												onClick={() => {
+													handleDatasetColorChange(child, '#F87171');
+												}}
+											>
+												#{child}
+											</button>
+										))}
+									</div>
+								</div>
+
+								<div className="form-control items-center w-1/6  pt-3">
+									<label className="label cursor-pointer">
+										<span className="text-center text-[#0091FA] font-extrabold text-lg label-text pr-10">
+											{filterCategory ? '대분류' : '중분류'}
+										</span>
+										<input
+											id="filterCategory"
+											type="checkbox"
+											className="toggle toggle-lg bg-[#0091FA] border border-[#0091FA]"
+											checked={filterCategory} // 상태와 체크 여부를 연결
+											onChange={handleChange} // 체크박스 상태 변경 이벤트 처리
+										/>
+									</label>
+								</div>
+
 							</div>
-							<div className="form-control">
-								<label className="label cursor-pointer">
-									<span className="label-text font-bold pr-3 text-xl">
-										{filterCategory ? '대분류' : '중분류'}
-									</span>
-									<input
-										id="filterCategory"
-										type="checkbox"
-										className="toggle toggle-lg"
-										checked={filterCategory} // 상태와 체크 여부를 연결
-										onChange={handleChange} // 체크박스 상태 변경 이벤트 처리
-									/>
-								</label>
-							</div>
+							<div><hr className="mt-5 h-[1px] bg-[#E5E7EB]"></hr></div>
 						</div>
 						<DataMapChart
 							data={data}

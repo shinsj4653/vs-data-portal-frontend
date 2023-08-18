@@ -99,7 +99,7 @@ const DataPlatformMain = () => {
 								Data Platform Cell에서 제공하는 <br />
 								비상교육 통합 데이터 서비스 입니다.
 							</p>
-							<MainSearchBar searchValue={searchValue} updateValue={updateValue} handleSearch={handleSearch} isMain={true}/>
+							<MainSearchBar searchValue={searchValue} updateValue={updateValue} handleSearch={handleSearch} isMain={true} isOrg={false}/>
 						</div>
 					</div>
 				</div>

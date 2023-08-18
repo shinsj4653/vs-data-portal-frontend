@@ -1,6 +1,6 @@
 import React from "react";
 
-const MainSearchBar = ({ searchValue, updateValue, handleSearch, isMain }) => {
+const MainSearchBar = ({ searchValue, updateValue, handleSearch, isMain, isOrg }) => {
   
   const activeEnter = (e) => {
     if (e.key === "Enter") {
@@ -11,7 +11,7 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, isMain }) => {
 
   return (
     <>
-      <div className="relative">
+      <div className={isMain || isOrg ? "relative" : "relative w-1/2 ml-3"}>
         <label htmlFor="Search" className="sr-only">
           Search
         </label>
@@ -23,16 +23,21 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, isMain }) => {
           onChange={(event) => {
             updateValue(event.target.value);
           }}
-          placeholder={isMain ? "서비스 명 혹은 데이터셋 명을 검색하세요." : "검색어를 입력하세요."}
-          className="w-full rounded-md border-base-100 py-2.5 px-2 pe-10 shadow-sm sm:text-sm text-base-content bg-slate-100"
+          readOnly={isOrg}
+          placeholder={isMain ? "서비스 명 혹은 데이터셋 명을 검색하세요" : "검색어를 입력하세요"}
+          className={isMain || isOrg ? 
+          "w-full rounded-md border-base-100 py-2.5 px-2 pe-10 shadow-sm sm:text-sm text-base-content bg-slate-100"
+          : 'w-full rounded-md border-base-100 py-2.5 px-5 pe-10 shadow-sm sm:text-sm text-base-content bg-slate-100'}
           onKeyDown={(e) => activeEnter(e)}
         />
 
-        <span className="absolute inset-y-0 end-0 grid my-2 mx-1 place-content-center">
+        <span className="absolute inset-y-0 end-0 grid my-2 mx-2 place-content-center">
           <button type="button" onClick={() => {
-            searchValue !== "" && handleSearch(searchValue);
+            if (!isOrg) {
+              searchValue !== "" && handleSearch(searchValue);
+            }
           }}
-         
+          disabled={isOrg}
           >
             <span className="sr-only">Search</span>
             <svg

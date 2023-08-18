@@ -57,7 +57,7 @@ const DpMainSearch = ({ setIsSearch, currentSearch, setSearchValue, searchResult
 								
 
 					<div className="flex flex-row p-3 bg-[#FFF]">
-										{["서비스명", "데이터 셋"].map((label) => (
+										{["서비스명", "데이터셋"].map((label) => (
 
 											<div className='w-1/2' key={label}>
 												<div className='p-2 text-center border-r border-[#E5E7EB]'>

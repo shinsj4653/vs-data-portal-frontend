@@ -27,3 +27,11 @@ export const fetchServiceByTarget = async (targetName) => {
     console.log(response.data.data)
     return response.data;
 }
+
+export const fetchServiceByMainDataset = async (mainDataset) => {
+    const response = await axios.post(`dataorg/search/maindataset`, {
+        "mainDataset" : mainDataset
+    });
+    console.log(response.data.data)
+    return response.data;
+}

@@ -125,7 +125,7 @@ const MetaDataInfo = () => {
 			return;
 		} else 
 			fetchResultData(); 
-		
+
 		
 	}
 
@@ -140,9 +140,9 @@ const MetaDataInfo = () => {
 				return;
 			}
 			setSearchResult(result.data.data);
-		} 
-		
-		
+		}
+
+
 	}
 	const fetchData = async (param) => { 
 		setSearchResult([]);
@@ -363,10 +363,8 @@ const MetaDataInfo = () => {
 													{Array.isArray(mainDatasetList) && mainDatasetList.map((child) => (
 														<button
 															className={`${
-																selectedMainDataset === child ? 'bg-blue-500 text-white' : 'bg-white text-gray-400'
-															} shadow-md m-2 px-4 py-2 hover:bg-slate-100 border ${
-																selectedMainDataset === child ? 'border-blue-500' : 'border-gray-300'
-															} font-semibold min-w-[9.5rem]`}
+																selectedMainDataset === child ? 'bg-blue-500 text-white border-[#0091FA]' : 'bg-white text-[#C0C0C0] border-[#C0C0C0]'
+															} shadow-md m-2 px-4 py-2 hover:bg-slate-100 border font-bold min-w-[9.5rem] flex-shrink-0 overflow-wrap break-word`}
 															key={child}
 															data-child={child}
 															onClick={() => {
@@ -383,31 +381,28 @@ const MetaDataInfo = () => {
 									</div>
 									<div><hr className="h-0.3 bg-[#E5E7EB]"></hr></div>
 									<div className="flex flex-row bg-white rounded-2xl p-3">
-										<div className='flex flex-col justify-center items-center w-1/6 pt-1'>
-																						
+										<div className='flex flex-col justify-center items-center w-1/6 pt-1'>					
 											<p className="text-center text-gray-400 font-extrabold text-lg">중위 주제</p>
 											<p className="font-extrabold text-blue-500">#{selectedSubDataset}</p>
 										</div>
 										<div className="flex flex-col w-5/6">
 											<div className="flex max-w-full">
-											<div className="flex flex-row overflow-x-auto scroll-smooth" ref={subDatasetRef}>
-													{Array.isArray(subDatasetList) && subDatasetList.map((child) => (
-														<button
-															className={`${
-																selectedSubDataset === child ? 'bg-blue-500 text-white' : 'bg-white text-gray-400'
-															} shadow-md m-2 px-4 py-2 hover:bg-slate-100 border ${
-																selectedSubDataset === child ? 'border-blue-500' : 'border-gray-300'
-															} font-semibold min-w-[9.5rem]`}
-															key={child}
-															data-child={child}
-															onClick={() => {
-																handleSubDatasetColorChange(child);
-															}}
-														>
-														#{child}
-													</button>
-													))
-												}
+												<div className="flex flex-row overflow-x-auto scroll-smooth" ref={subDatasetRef}>
+														{Array.isArray(subDatasetList) && subDatasetList.map((child) => (
+															<button
+																className={`${
+																	selectedSubDataset === child ? 'bg-white text-blue border border-[#0091FA] text-[#0091FA]' : 'bg-white border-[#C0C0C0] text-[#C0C0C0]'
+																} shadow-md m-2 px-4 py-2 hover:bg-slate-100 border font-bold min-w-[9.5rem] flex-shrink-0 overflow-wrap break-word`}
+																key={child}
+																data-child={child}
+																onClick={() => {
+																	handleSubDatasetColorChange(child);
+																}}
+															>
+															#{child}
+														</button>
+														))
+													}
 												</div>
 											</div>
 										</div>
@@ -430,24 +425,24 @@ const MetaDataInfo = () => {
 												<div>
 													<div className='flex flex-row w-full pt-5 pb-5 text-center items-center'>
 														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
-														    <span className="text-gray-400 font-bold text-sm">
+														    <p className="text-gray-400 font-bold text-sm">
 														        {tableInfo.table_id}
-														    </span>
+														    </p>
 														</div>
 														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">	
-															 <span className="text-gray-400 font-bold text-sm">
+															 <p className="text-gray-400 font-bold text-sm">
 														        {tableInfo.table_name}
-														    </span>
+														    </p>
 														</div>
 														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">		
-															<span className="text-gray-400 font-bold text-sm">
+															<p className="text-gray-400 font-bold text-sm">
 														        {tableInfo.table_comment}
-														    </span>
+														    </p>
 														</div>
 														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">			
-															<span className="text-gray-400 font-bold text-sm">
+															<p className="text-gray-400 font-bold text-sm">
 														        {tableInfo.small_clsf_name}
-														    </span>
+														    </p>
 														</div>
 													</div>
 													<div><hr className="h-0.3 bg-[#E5E7EB]"></hr></div>
@@ -475,16 +470,14 @@ const MetaDataInfo = () => {
 											<p className="text-center text-gray-400 font-extrabold text-lg">검색 기준</p>
 										</div>
 										<div className="flex flex-col w-5/6">
-											<div className="flex flex-row items-center w-100%">
+											<div className="flex flex-row items-center w-50%">
 
 												<div className="flex flex-row overflow-x-auto scroll-smooth">
 													{["테이블ID & 테이블명", "하위 주제"].map((child) => (
 														<button
 														className={`${
-															searchStandard === child ? 'bg-blue-500 text-white' : 'bg-white text-gray-400'
-														} shadow-md m-2 px-4 py-2 hover:bg-slate-100 border ${
-															searchStandard === child ? 'border-blue-500' : 'border-gray-300'
-														} font-semibold min-w-[9.5rem]`}
+															searchStandard === child ? 'bg-blue-500 text-white border-blue-500' : 'bg-white text-gray-400 border-gray-300'
+														} shadow-md m-2 px-10 py-2 hover:bg-slate-100 border font-semibold min-w-[9.5rem]`}
 														key={child}
 														data-child={child}
 														onClick={() => {
@@ -497,7 +490,12 @@ const MetaDataInfo = () => {
 													))
 												}
 												</div>
-												<MainSearchBar searchValue={searchValue} updateValue={updateValue} handleSearch={handleSearch} isMain={false}/>
+												<MainSearchBar
+													searchValue={searchValue}
+													updateValue={updateValue}
+													handleSearch={handleSearch}
+													isMain={false}
+													isOrg={false}/>
 											</div>
 										</div>
 									</div>
@@ -517,21 +515,20 @@ const MetaDataInfo = () => {
 									<div className="flex flex-col pt-0 p-3 bg-[#F2F5F8]">
 										{
 											searchResult.length > 0 ? Array.isArray(searchResult) && searchResult.map((tableInfo) => {
+												
 
 												return (
 													<div>
 														<div className='flex flex-row w-full pt-5 pb-5 text-center items-center'>
 															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
-															<span className="text-gray-400 font-bold text-sm">
-
-																{searchCondition === "table_id_or_name" ? highlightLetters(tableInfo.table_id, currentSearch) : tableInfo.table_id}
-															</span>
+																<span className="text-gray-400 font-bold text-sm">
+																	{searchCondition === "table_id_or_name" ? highlightLetters(tableInfo.table_id, currentSearch) : tableInfo.table_id}
+																</span>
 															</div>
 															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
-															<span className="text-gray-400 font-bold text-sm">
-																{searchCondition === "table_id_or_name" ? highlightLetters(tableInfo.table_name, currentSearch) : tableInfo.table_name}
-
-															</span>
+																<span className="text-gray-400 font-bold text-sm">
+																	{searchCondition === "table_id_or_name" ? highlightLetters(tableInfo.table_name, currentSearch) : tableInfo.table_name}
+																</span>
 															</div>
 															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
 															    <span className="text-gray-400 font-bold text-sm">
@@ -549,7 +546,8 @@ const MetaDataInfo = () => {
 												)
 											}) :
 											<div className='flex flex-row w-full pt-5 pb-5 text-center justify-center items-center'>
-												<div className="w-1/8 border-r border-gray-300 flex items-center overflow-hidden border-[#E5E7EB]">
+											{/* <div className="w-1/8 border-r border-gray-300 flex items-center overflow-hidden border-[#E5E7EB]"> */}
+												<div className="w-1/8 flex items-center overflow-hidden">
 												    <p className="text-gray-400 text-sm">
 												        검색 결과가 없습니다. 
 												    </p>

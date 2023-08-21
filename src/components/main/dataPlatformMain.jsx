@@ -12,11 +12,13 @@ import { Link } from 'react-router-dom';
 import { useDataMapAllDataset } from '../../hooks/useDataMap';
 import { useDatasetSearch } from '../../hooks/useDpMain';
 import { useNavigate } from 'react-router-dom';
+import { useMain } from '../../context/MainContext';
 
 const DataPlatformMain = () => {
 
+	const { isSearch, setIsSearch } = useMain();
 	const [dataSet, setDataSet] = useState(null);
-	const [isSearch, setIsSearch] = useState(false); // 검색 버튼 클릭 여부 [true, false
+	
 	const [searchValue , setSearchValue] = useState("");
 	const [searchResult, setSearchResult] = useState(null);
 

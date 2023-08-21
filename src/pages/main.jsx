@@ -4,7 +4,7 @@ import DataPlatformMain from "../components/main/dataPlatformMain";
 
 // Main 화면 컴포넌트
 const Main = () => {
-
+  
   return (
     <>
       <Layout>

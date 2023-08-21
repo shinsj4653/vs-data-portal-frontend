@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logos/visang_logo.png';
+import { useMain } from '../context/MainContext';
 
 const Header = () => {
+	const { setIsSearch } = useMain();
 	// const [theme, setTheme] = useState("pastel");
 	// const toggleTheme = () => {
 	//   setTheme(theme === "dracula" ? "pastel" : "dracula");
@@ -18,6 +20,9 @@ const Header = () => {
 				<Link
 					className="block"
 					to="/"
+					onClick={() => {
+						setIsSearch(false);
+					}}
 				>
 					<span className="sr-only">Home</span>
 					<img

@@ -12,11 +12,13 @@ import { Link } from 'react-router-dom';
 import { useDataMapAllDataset } from '../../hooks/useDataMap';
 import { useDatasetSearch } from '../../hooks/useDpMain';
 import { useNavigate } from 'react-router-dom';
+import { useMain } from '../../context/MainContext';
 
 const DataPlatformMain = () => {
 
+	const { isSearch, setIsSearch } = useMain();
 	const [dataSet, setDataSet] = useState(null);
-	const [isSearch, setIsSearch] = useState(false); // 검색 버튼 클릭 여부 [true, false
+	
 	const [searchValue , setSearchValue] = useState("");
 	const [searchResult, setSearchResult] = useState(null);
 
@@ -99,7 +101,7 @@ const DataPlatformMain = () => {
 								Data Platform Cell에서 제공하는 <br />
 								비상교육 통합 데이터 서비스 입니다.
 							</p>
-							<MainSearchBar searchValue={searchValue} updateValue={updateValue} handleSearch={handleSearch} isMain={true}/>
+							<MainSearchBar searchValue={searchValue} updateValue={updateValue} handleSearch={handleSearch} isMain={true} isOrg={false}/>
 						</div>
 					</div>
 				</div>

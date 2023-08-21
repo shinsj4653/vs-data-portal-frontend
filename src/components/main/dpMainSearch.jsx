@@ -11,20 +11,19 @@ const DpMainSearch = ({ setIsSearch, currentSearch, setSearchValue, searchResult
 		const regex = new RegExp(currentSearch, 'gi');
     	const matches = tableText.match(regex);
 
-    	if (!matches) return <span className='text-[#C0C0C0] text-[14px] font-extrabold'>{tableText}</span>;
+    	if (!matches) return <span className="text-[#000] font-bold text-m">{tableText}</span>;
 
     	const parts = tableText.split(regex);
     	const highlightedParts = [];
 
     	parts.forEach((part, index) => {
-    	    highlightedParts.push(<span className='text-[#C0C0C0] text-[14px] font-extrabold' key={index}>{part}</span>);
+    	    highlightedParts.push(<span className="text-[#000] font-bold text-m" key={index}>{part}</span>);
 
     	    if (index < parts.length - 1) {
     	        highlightedParts.push(
-    	            <span className='text-[#C0C0C0] text-[15px] font-extrabold bg-yellow'
-					key={`highlight-${index}`}>
-    	                {matches[index]}
-    	            </span>
+    	            <span key={`highlight-${index}`} className="inline-block px-1 py-0.5 text-[#000] bg-yellow-300 font-extrabold text-m">
+    					{matches[index]}
+					</span>
     	        );
     	    }
     	});
@@ -57,7 +56,7 @@ const DpMainSearch = ({ setIsSearch, currentSearch, setSearchValue, searchResult
 								
 
 					<div className="flex flex-row p-3 bg-[#FFF]">
-										{["서비스명", "데이터 셋"].map((label) => (
+										{["서비스명", "데이터셋"].map((label) => (
 
 											<div className='w-1/2' key={label}>
 												<div className='p-2 text-center border-r border-[#E5E7EB]'>
@@ -82,27 +81,19 @@ const DpMainSearch = ({ setIsSearch, currentSearch, setSearchValue, searchResult
 								}}
 							>
 								<div className='flex flex-row w-full pt-5 pb-5 text-center items-center'>
-									<div className='w-1/2 border-r border-[#E5E7EB] items-center overflow-hidden'>
-										{
-											tableInfo.service_name?.split("").map((letter) => {
-												if(currentSearch.indexOf(letter) !== -1 && tableInfo.service_name.indexOf(currentSearch) !== -1){
-													return <span className='bg-[yellow] text-[#C0C0C0] text-[14px] overflow-hidden whitespace-nowrap truncate font-bold'>{letter}</span>
-												} else {
-													return <span className='text-[#C0C0C0] text-[14px] overflow-hidden whitespace-nowrap truncate font-bold'>{letter}</span>
-												}
-											})
-										}
-										</div>
-										<div className='w-1/2 border-r border-[#E5E7EB] items-center overflow-hidden'>
-											{highlightLetters(tableInfo.dataset_name, currentSearch)}
-										</div>
+									<div className="w-1/2 border-r border-color-[#E5E7EB] text-[#000] flex justify-center">
+										{highlightLetters(tableInfo.service_name, currentSearch)}
+									</div>
+									<div className="w-1/2 border-r border-color-[#E5E7EB] text-[#000] flex justify-center">
+										{highlightLetters(tableInfo.dataset_name, currentSearch)}
+									</div>
 								</div>
 								<div><hr className='bg-[#E5E7EB] h-[1px]'></hr></div>
 							</div> 
 						)) : 
 						<div className='flex flex-row w-full pt-5 pb-5 text-center items-center'>
 							<div className='w-full border-r border-[#E5E7EB] items-center overflow-hidden'>
-								<p className='text-[#C0C0C0] font-extrabold text-[14px] overflow-hidden whitespace-nowrap truncate'>
+								<p className='text-[#000] font-extrabold text-[16px] overflow-hidden whitespace-nowrap truncate'>
 									검색 결과가 없습니다.
 								</p>
 							</div>

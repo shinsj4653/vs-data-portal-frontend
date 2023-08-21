@@ -80,8 +80,8 @@ const DataMapChart = ({ data, clickedNodeId, onNodeClick }) => {
   };
 
   return (
-    <section>
-      <div className="h-screen w-screen max-w-screen-lg">
+    <section className="flex justify-center items-center">
+      <div className="mt-10 h-screen w-screen max-w-screen-lg">
         <ResponsiveCirclePacking          
           theme={{
             fontSize: 20,
@@ -91,7 +91,7 @@ const DataMapChart = ({ data, clickedNodeId, onNodeClick }) => {
           motionConfig="slow"
           onClick={handleNodeClick}
           data={data}
-          margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
+          margin={{ top: 50, right: 20, bottom: 20, left: 20 }}
           id="id"
           value="loc"
           colors={nodeColor == true ? {scheme: 'set3'} : (node) => node.data.color}

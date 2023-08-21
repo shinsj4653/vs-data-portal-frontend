@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import MainSearchBar from "../main/mainSearchBar";
 // import DataDrivenOrgChart from "./dataDrivenOrgChart";
 
-const Sidebar = ({onTargetSelect}) => {
+const Sidebar = ({searchValue, updateValue, onSearch, onTargetSelect}) => {
 
   const [selectedButton, setSelectedButton] = useState(null);
   const targetData = ['유아', '초등', '중고등', '성인', '글로벌'];
@@ -34,15 +34,16 @@ const Sidebar = ({onTargetSelect}) => {
           </div>
           <div className="flex flex-col text-[#C0C0C5] ml-3 mr-3">
             <span className="ml-1 h-7 w-32 mb-2">Dataset 검색하기</span>
-            <MainSearchBar></MainSearchBar>
+            <MainSearchBar searchValue={searchValue} updateValue={updateValue} handleSearch={onSearch} isMain={false} isOrg={true}></MainSearchBar>
           </div>
           <ul className="mt-6 space-y-1">
             <li>
               <details className="group [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-[#00B2E2] hover:text-white">
-                  <span className="text-sm font-medium"
-                    onClick={() => handleResetClick(selectedButton)}                
-                  > 서비스 대상 </span>
+                <summary
+                  className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-[#00B2E2] hover:text-white"
+                  onClick={() => handleResetClick(selectedButton)}                
+                >
+                  <span className="text-sm font-medium"> 서비스 대상 </span>
                   <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -83,7 +84,7 @@ const Sidebar = ({onTargetSelect}) => {
               <details className="group [&_summary::-webkit-details-marker]:hidden">
                 <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-[#00B2E2] hover:text-white">
                   <span className="text-sm font-medium"
-                    onClick={() => handleResetClick(selectedButton)}> 주요 비정형 <br></br>데이터 종류 </span>
+                    onClick={() => handleResetClick(selectedButton)}> 주요 비정형 데이터 종류 </span>
                   <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

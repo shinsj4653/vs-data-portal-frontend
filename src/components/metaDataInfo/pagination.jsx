@@ -21,7 +21,7 @@ const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange, is
             onClick={() => {
               onPageChange(tableInfoList, currentPage -1, isSearchPage);
             }}
-            className='bg-white text-black-500 hover:bg-gray-100 relative inline-flex items-center px-4 py-2 border-r border-gray-300 text-sm font-medium boxshadow-none bg-[#f2f5f8]'
+            className='bg-[#f2f5f8] text-black-500 hover:bg-gray-100 relative inline-flex items-center px-4 py-2 border-r border-gray-300 text-sm font-medium boxshadow-none'
           >
             ◀
           </button>
@@ -49,7 +49,7 @@ const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange, is
             onClick={() => {
               onPageChange(tableInfoList, currentPage + 1, isSearchPage);
             }}
-            className='bg-white text-black-500 hover:bg-gray-100 relative inline-flex items-center px-4 py-2 border-l border-gray-300 text-sm font-medium boxshadow-none bg-[#f2f5f8]'
+            className='text-black-500 hover:bg-gray-100 relative inline-flex items-center px-4 py-2 border-l border-gray-300 text-sm font-medium boxshadow-none bg-[#f2f5f8]'
           >
             ▶
           </button>

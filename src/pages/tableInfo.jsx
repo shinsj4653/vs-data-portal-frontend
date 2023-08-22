@@ -7,6 +7,9 @@ import Pagination from "../components/metaDataInfo/pagination";
 const TableInfo = (props) => {
 
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const [metaState, setMetaState] = useState(location.state);
 
     const itemsPerPage = 1;
 	const [currentPage, setCurrentPage] = useState(1);
@@ -73,13 +76,13 @@ const TableInfo = (props) => {
                     <div className='flex flex-col w-full mt-5'>
                         <div className='flex rounded-t-xl h-10'>
                             <div className='flex justify-center items-center w-1/4 bg-[#F8F6F1] border font-black text-sm'>제공 서비스</div>
-                            <div className='flex items-center w-3/4 pl-5 bc-white border font-bold text-sm'>{'피어나다'}</div>
+                            <div className='flex items-center w-3/4 pl-5 bc-white border font-bold text-sm'>{metaState.serviceName}</div>
                             <div className='flex justify-center items-center w-1/4 bg-[#F8F6F1] border font-black text-sm'>테이블ID</div>
-                            <div className='flex items-center w-3/4 pl-5 bc-white border font-bold  text-sm'>{'TB_SURVEY_MEM'}</div>
+                            <div className='flex items-center w-3/4 pl-5 bc-white border font-bold  text-sm'>{metaState.tableId}</div>
                         </div>
                         <div className='flex h-10'>
                             <div className='flex justify-center items-center w-1/4 bg-[#F8F6F1] border font-black text-sm'>분류 체계</div>
-                            <div className='flex items-center w-3/4 pl-5 bc-white border font-bold  text-sm'>{'홈페이지, 앱 - 설문조사'}</div>
+                            <div className='flex items-center w-3/4 pl-5 bc-white border font-bold  text-sm'>{metaState.selectedMainDataset + "-" + 설문조사'}</div>
                             <div className='flex justify-center items-center w-1/4 bg-[#F8F6F1] border font-black text-sm'>키워드</div>
                             <div className='flex items-center w-3/4 pl-5 bc-white border font-bold  text-sm'>{'키워드'}</div>
                         </div>

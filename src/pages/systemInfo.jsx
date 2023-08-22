@@ -1,13 +1,15 @@
-import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from '../components/dataMap/sidebar';
 import Layout from '../components/layout';
-import { useOrgChartMain } from '../hooks/useOrgChart';
-import { useMetadataMainDataSet, useMetadataSubDataSet, useMetadataTableInfo, useMetadataTableSearch } from '../hooks/useMetaData';
+import { useOrgChartMain, useSercviceSystemInfo } from '../hooks/useOrgChart';
+import { useMetadataMainDataSet } from '../hooks/useMetaData';
 import systemInfo_background from '../assets/backgrounds/systemInfo_background.jpg';
 import service_pionada_log from '../assets/logos/service_pionada_logo.jpg';
 import Loading from '../components/loading';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import LogoCard from '../components/systemInfo/logoCard';
+import SystemInfoAndDataset from '../components/systemInfo/systemInfoAndDataset';
 
 
 const SystemInfo = () => {
@@ -21,6 +23,8 @@ const SystemInfo = () => {
 	
 	const [clickedNodeId, setClickedNodeId] = useState(null);
 	const [serviceName, setServiceName] = useState(location.state?.serviceName ?? '피어나다');
+    const [serviceDesc, setServiceDesc] = useState('심리 상담부터 학습 코칭까지 하나로 결합한');
+    const [systemInfoData, setSystemInfoData] = useState({});
 
 	// 만약 mainCategory 있으면 그걸로, 없으면 '회원, 교사'로 초기화
 	
@@ -72,19 +76,22 @@ const SystemInfo = () => {
 	
 	const orgDataQuery = useOrgChartMain();
     const mainDatasetDataQuery = useMetadataMainDataSet(location.state?.serviceName ?? serviceName);
-	
-	const fetchData = async (param) => { 
-		setMainDatasetList([]);
-	    const [orgData, mainDataset] = await Promise.all([
+	const serviceSystemInfoQuery = useSercviceSystemInfo(location.state?.serviceName ?? serviceName);
+
+	const fetchData = async () => { 
+	    const [orgData, mainDataset, systemInfoData] = await Promise.all([
 	    	orgDataQuery.refetch(),
 	    	mainDatasetDataQuery.refetch(),
+            serviceSystemInfoQuery.refetch()
 	    ])  
-	    if (!orgData.isLoading && !mainDataset.isLoading) {
+	    if (!orgData.isLoading && !mainDataset.isLoading && !systemInfoData.isLoading) {
         
 	    	const transformedData = transformData(orgData.data.data);
 	    	setOrgData(transformedData);
 	    	setMainDatasetList(mainDataset.data.data);
-	    }
+            setSystemInfoData(systemInfoData.data.data);
+        }
+        
     };
 
     const handleDatasetClick = (datasetName) => {
@@ -99,6 +106,10 @@ const SystemInfo = () => {
     useEffect(() => {
         fetchData();
     }, [serviceName]);
+
+    useEffect(() => {
+
+    }, [mainDatasetList, systemInfoData])
 
 
     if (!orgData || orgDataQuery.isLoading || mainDatasetDataQuery.isLoading) {
@@ -137,17 +148,9 @@ const SystemInfo = () => {
 					
 					{serviceName === "피어나다" ?
 						(<div className='flex w-full items-center -ml-5'>
-                            <div className='flex w-2/5 justify-center pt-20 h-full bg-white p-100'>
-                                <div className='flex flex-col justify-center items-center space-y-10 w-9/12 h-1/3 bg-white drop-shadow-xl transition duration-300'>
-                                    <div className='flex w-3/4 h-4/6 bg-contain bg-center bg-no-repeat' style={{backgroundImage: `url(${ service_pionada_log })`}} />
-                                    <div className='flex flex-col items-center'>
-                                        <p className='font-semibold	'>심리 상담부터 학습 코칭까지 하나로 결합한</p>
-                                        <p className='font-black text-xl'>[피어나다]</p>  
-                                    </div>  
-                                </div>
-                            </div>
-
-                            <div className='flex flex-col w-3/5 h-full pt-20 mb-15 -ml-10 drop-shadow-l'>
+                            <LogoCard logo_url={service_pionada_log} serviceDesc={serviceDesc} serviceName={serviceName}/>
+                            <SystemInfoAndDataset systemInfoData={systemInfoData} mainDatasetList={mainDatasetList} onDatasetClick={handleDatasetClick}/>
+                            {/* <div className='flex flex-col w-3/5 h-full pt-20 mb-15 -ml-10 drop-shadow-l'>
                                 <div className='flex flex-col w-full'>
                                     <div className='flex rounded-t-xl h-10'>
                                         <div className='flex justify-center items-center w-1/4 bg-gray-100 border font-black text-[#0975DA] rounded-tl-xl text-sm'>데이터베이스 정보</div>
@@ -200,7 +203,7 @@ const SystemInfo = () => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 						</div>)
 					 : (
 						<div className="flex flex-col items-center justify-top p-5 w-3/4 mt-10">

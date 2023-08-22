@@ -1,12 +1,12 @@
 import { useQuery } from 'react-query';
-import { fetchOrgChartMain, fetchServiceInfo, fetchServiceByTarget, fetchServiceByMainDataset } from '../api/orgChartApi';
+import { fetchOrgChartMain, fetchServiceInfo, fetchServiceByTarget, fetchServiceByMainDataset, fetchServiceSystemInfo } from '../api/orgChartApi';
 
 export const useOrgChartMain = () => {
   return useQuery('orgChartMain', fetchOrgChartMain);
 };
 
-export const useSercviceInfo = () => {
-  return useQuery('serviceInfo', fetchServiceInfo);
+export const useSercviceSystemInfo = (serviceName) => {
+  return useQuery(['serviceSystemInfo', serviceName], () => fetchServiceSystemInfo(serviceName));
 };
 
 export const useServiceByTarget = (targetName) => {

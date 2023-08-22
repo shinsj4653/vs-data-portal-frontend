@@ -16,6 +16,7 @@ function App() {
               <Route path="/DataMap" element={<DataMap />} />
               <Route path="/Orgchart" element={<Orgchart />} />
               <Route path="/MetaDataInfo" element={<MetaDataInfo />} />
+              <Route path="/SystemInfo" element={<MetaDataInfo />} />
             </Routes>
           </MainProvider>
         </Router>

@@ -185,7 +185,8 @@ const DataPlatformMain = () => {
 							</div>
 						</Link>
 
-						<div className="card">
+						<Link className="card"
+							to="/SystemInfo">
 							<div className="card border-2 border-slate-600 bg-base-100 shadow-xl transition duration-150 ease-out hover:bg-slate-200">
 								<figure className="px-10 pt-10">
 									<img
@@ -195,10 +196,10 @@ const DataPlatformMain = () => {
 									/>
 								</figure>
 								<div className="card-body items-center text-center">
-									<h2 className="card-title">시스템정보 (개발 예정)</h2>
+									<h2 className="card-title">시스템 정보</h2>
 								</div>
 							</div>
-						</div>
+						</Link>
 
 						<div className="card">
 							<div className="card border-2 border-slate-600 bg-base-100 shadow-xl transition duration-150 ease-out hover:bg-slate-200">

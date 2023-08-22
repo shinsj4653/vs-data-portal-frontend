@@ -51,6 +51,10 @@ const Header = () => {
 								<Link to="/MetaDataInfo">메타 데이터 정보</Link>
 							</li>
 
+							<li className="hover:font-extrabold hover:text-slate-950">
+								<Link to="/MetaDataInfo">시스템 정보</Link>
+							</li>
+
 						</ul>
 					</nav>
 
@@ -107,6 +111,10 @@ const Header = () => {
 
 								<li className="hover:font-extrabold hover:text-slate-950">
 									<Link to="/MetaDataInfo">메타 데이터 정보</Link>
+								</li>
+
+								<li className="hover:font-extrabold hover:text-slate-950">
+									<Link to="/SystemInfo">시스템 정보</Link>
 								</li>
 							</ul>
 						</div>

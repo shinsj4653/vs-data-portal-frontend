@@ -14,8 +14,8 @@ export const fetchOrgChartMain = async () => {
     return response.data;
 }
 
-export const fetchServiceInfo = async () => {
-    const response = await axios.get(`dataorg/service/systeminfo`);
+export const fetchServiceSystemInfo = async (serviceName) => {
+    const response = await axios.get(`dataorg/service/systeminfo?name=${serviceName}`);
     console.log(response.data)
     return response.data;
 }

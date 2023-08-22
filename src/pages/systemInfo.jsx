@@ -3,7 +3,8 @@ import Sidebar from '../components/dataMap/sidebar';
 import Layout from '../components/layout';
 import { useOrgChartMain } from '../hooks/useOrgChart';
 import { useMetadataMainDataSet, useMetadataSubDataSet, useMetadataTableInfo, useMetadataTableSearch } from '../hooks/useMetaData';
-import metadata_background from '../assets/backgrounds/metadata_background.jpg';
+import systemInfo_background from '../assets/backgrounds/systemInfo_background.jpg';
+import service_pionada_log from '../assets/logos/service_pionada_logo.jpg';
 import Pagination from '../components/metaDataInfo/pagination';
 import Loading from '../components/loading';
 import { useLocation } from 'react-router-dom';
@@ -319,15 +320,15 @@ const SystemInfo = () => {
 	return (
 		<>
 			<Layout>
-			<div className='flex flex-col justify-center items-center' style={{ backgroundImage: `url(${metadata_background})` }}>
+			<div className='flex flex-col justify-center items-center bg-cover' style={{ backgroundImage: `url(${systemInfo_background})` }}>
 					<div className="hero-overlay bg-primary-content bg-opacity-70"></div>
 					<div className="hero-content text-center text-neutral-100">
 						<div>
 							<h1 className="my-5 text-5xl font-bold">
-								비상교육 메타 데이터 정보
+								비상교육 시스템 정보
 							</h1>
 							<p className="mb-5">
-								비상교육 브랜드 별 메타 데이터 정보를 볼 수 있는 서비스입니다.
+								비상교육 전체 브랜드의 시스템 정보를 볼 수 있는 서비스입니다.
 							</p>
 						</div>
 					</div>
@@ -339,235 +340,72 @@ const SystemInfo = () => {
 						data={orgData}
 						onNodeClick={handleNodeClick}
 						serviceName={serviceName}
-						isMap={false}
+						isMap={true}
 						isSearch={isSearch}
 						setIsSearch={setIsSearch}
 						setSearchValue={setSearchValue}
 						setSearchResult={setSearchResult}
 					/>
 					
-					{!isSearch ? (Array.isArray(mainDatasetList) && mainDatasetList.length > 0 ? (
+					{serviceName === "피어나다" ?
+						(<div className='flex w-full justify-center items-center'>
+                            <div className='flex w-1/3 justify-center pt-20 h-full bg-white p-100'>
+                                <div className='flex flex-col justify-center items-center space-y-10 w-9/12 h-1/3 bg-white drop-shadow-2xl hover:shadow-xl transition duration-300'>
+                                    <div className='flex w-3/4 h-4/6 bg-contain bg-center bg-no-repeat' style={{backgroundImage: `url(${ service_pionada_log })`}} />
+                                    <div className='flex flex-col items-center'>
+                                        <p className='font-semibold	'>심리 상담부터 학습 코칭까지 하나로 결합한</p>
+                                        <p className='font-black text-xl'>[피어나다]</p>  
+                                    </div>  
+                                </div>
+                            </div>
 
-						<div className="flex flex-col justify-top p-5 w-3/4">
-									<div className="flex flex-row bg-white rounded-2xl pt-1 p-3">
-										<div className='flex flex-col justify-center items-center w-1/6 pt-1'>
-																						
-											<p className="text-center text-gray-400 font-extrabold text-lg">상위 주제</p>
-											
-											<p className="font-extrabold text-blue-500">#{selectedMainDataset}</p>
-										</div>
-										<div className="flex flex-col w-5/6">
-											<div className="flex max-w-full">
-
-												<div className="flex flex-row overflow-x-auto scroll-smooth" ref={mainDatasetRef}>
-													{Array.isArray(mainDatasetList) && mainDatasetList.map((child) => (
-														<button
-															className={`${
-																selectedMainDataset === child ? 'bg-blue-500 text-white border-[#0091FA]' : 'bg-white text-[#C0C0C0] border-[#C0C0C0]'
-															} shadow-md m-2 px-4 py-2 hover:bg-slate-100 border font-bold min-w-[9.5rem] flex-shrink-0 overflow-wrap break-word`}
-															key={child}
-															data-child={child}
-															onClick={() => {
-																handleMainDatasetColorChange(child);
-															}}
-														>
-														#{child}
-													</button>
-													))
-												}
-												</div>
-											</div>
-										</div>
-									</div>
-									<div><hr className="h-0.3 bg-[#E5E7EB]"></hr></div>
-									<div className="flex flex-row bg-white rounded-2xl p-3">
-										<div className='flex flex-col justify-center items-center w-1/6 pt-1'>					
-											<p className="text-center text-gray-400 font-extrabold text-lg">중위 주제</p>
-											<p className="font-extrabold text-blue-500">#{selectedSubDataset}</p>
-										</div>
-										<div className="flex flex-col w-5/6">
-											<div className="flex max-w-full">
-												<div className="flex flex-row overflow-x-auto scroll-smooth" ref={subDatasetRef}>
-														{Array.isArray(subDatasetList) && subDatasetList.map((child) => (
-															<button
-																className={`${
-																	selectedSubDataset === child ? 'bg-white text-blue border border-[#0091FA] text-[#0091FA]' : 'bg-white border-[#C0C0C0] text-[#C0C0C0]'
-																} shadow-md m-2 px-4 py-2 hover:bg-slate-100 border font-bold min-w-[9.5rem] flex-shrink-0 overflow-wrap break-word`}
-																key={child}
-																data-child={child}
-																onClick={() => {
-																	handleSubDatasetColorChange(child);
-																}}
-															>
-															#{child}
-														</button>
-														))
-													}
-												</div>
-											</div>
-										</div>
-									</div>
-									<div><hr className="h-1 bg-[#E5E7EB]"></hr></div>
-									<div className="flex flex-row p-3 bg-[#F2F5F8]">
-										{["테이블ID", "테이블명", "테이블 설명", "하위 주제"].map((label) => (
-
-											<div className='w-1/4' key={label}>
-												<div className='p-2 text-center border-r border-color-[#E5E7EB]'>
-													<p className="text-center text-gray-400 font-extrabold text-lg">{label}</p>
-												</div>
-											</div>
-										))}
-									</div>
-									<div><hr className="h-1 bg-[#E5E7EB]"></hr></div>
-									<div className="flex flex-col pt-0 p-3 bg-[#F2F5F8]">
-										{
-											Array.isArray(visibleItems) && visibleItems.map((tableInfo) => (
-												<div>
-													<div className='flex flex-row w-full pt-5 pb-5 text-center items-center'>
-														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
-														    <p className="text-gray-400 font-bold text-sm">
-														        {tableInfo.table_id}
-														    </p>
-														</div>
-														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">	
-															 <p className="text-gray-400 font-bold text-sm">
-														        {tableInfo.table_name}
-														    </p>
-														</div>
-														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">		
-															<p className="text-gray-400 font-bold text-sm">
-														        {tableInfo.table_comment}
-														    </p>
-														</div>
-														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">			
-															<p className="text-gray-400 font-bold text-sm">
-														        {tableInfo.small_clsf_name}
-														    </p>
-														</div>
-													</div>
-													<div><hr className="h-0.3 bg-[#E5E7EB]"></hr></div>
-												</div>
-											))
-										}
-										<Pagination
-											currentPage={currentPage}
-											itemsPerPage={itemsPerPage}
-											tableInfoList={tableInfoList}
-											onPageChange={handlePageChange}
-											isSearchPage={false}
-											>
-										</Pagination>
-									</div>
-						</div>
-					) : (
+                            <div className='flex flex-col w-2/3 h-full'>
+                                <div className='flex flex-col w-full drop-shadow-xl'>
+                                    <div className='flex rounded-t-xl h-10'>
+                                        <div className='flex justify-center items-center w-1/5 bc-[#F5F7FA] border font-black text-[#0975DA] rounded-tl-xl text-sm'>데이터베이스 정보</div>
+                                        <div className='flex justify-center items-center w-4/5 bc-white border font-black rounded-tr-xl text-sm'>Maria DB</div>
+                                    </div>
+                                    <div className='flex h-10'>
+                                        <div className='flex justify-center items-center w-1/5 bc-[#F5F7FA] border font-black text-[#0975DA] text-sm'>운영 환경</div>
+                                        <div className='flex justify-center items-center w-4/5 bc-white border font-black text-sm'>Amazon Web Service Cloud</div>
+                                    </div>
+                                    <div className='flex h-10'>
+                                        <div className='flex justify-center items-center w-1/5 bc-[#F5F7FA] border  font-black text-[#0975DA] text-sm'>홈페이지</div>
+                                        <div className='flex justify-center items-center w-4/5 bc-white border  font-black text-sm'>https://www.pionada.com</div>
+                                    </div>
+                                    <div className='flex h-10'>
+                                        <div className='flex pl-5 items-center w-4/5 bc-white border font-black text-lg'>담당자 정보</div>
+                                    </div>
+                                    <div className='flex h-10'>
+                                        <div className='flex justify-center items-center w-1/5 bc-[#F5F7FA] border  font-black text-[#0975DA] text-sm'>기획 관리부서명/담당자</div>
+                                        <div className='flex justify-center items-center w-4/5 bc-white border  font-black text-sm'>서비스 Cell / 김영갑</div>
+                                    </div>
+                                    <div className='flex h-10'>
+                                        <div className='flex justify-center items-center w-1/5 bc-[#F5F7FA] border font-black text-[#0975DA] text-sm'>개발 관리부서명/담당자</div>
+                                        <div className='flex justify-center items-center w-4/5 bc-white border font-black text-sm'>서비스 Cell / 박건규</div>
+                                    </div>
+                                    <div className='flex h-10'>
+                                        <div className='flex justify-center items-center w-1/5 bc-[#F5F7FA] border font-black text-[#0975DA] rounded-bl-xl text-sm'>인프라 관리부서명/담당자</div>
+                                        <div className='flex justify-center items-center w-4/5 bc-white border font-black rounded-br-xl text-sm'>IT인프라 Cell / 임종규, 고영원</div>
+                                    </div>
+                                </div>
+                                <hr className="h-0.5 bg-black mt-15 mb-15" />
+                                <div>
+                                    <p className='font-black text-m'>주요 데이터셋</p>
+                                    <div className='flex flex-wrap w-full h-48 drop-shadow-xl bc-green-500'>
+                                        hifawefawf
+                                        awfaw
+                                        wafw
+                                    </div>
+                                </div>
+                            </div>
+						</div>)
+					 : (
 						<div className="flex flex-col items-center justify-top p-5 w-3/4 mt-10">
-							<h3>해당 브랜드의 메타 데이터는 아직 준비중입니다.</h3>
+							<h3>해당 브랜드의 시스템 정보는 아직 준비중입니다.</h3>
 						</div>
-					)) : (
-						<div className="flex flex-col justify-top p-5 w-3/4">
-									<div className="flex flex-row bg-white rounded-2xl pt-1 p-3">
-										<div className='flex flex-col items-center w-1/6 pt-3'>
-											<p className="text-center text-gray-400 font-extrabold text-lg">검색 기준</p>
-										</div>
-										<div className="flex flex-col w-5/6">
-											<div className="flex flex-row items-center w-50%">
-
-												<div className="flex flex-row overflow-x-auto scroll-smooth">
-													{["테이블ID & 테이블명", "하위 주제"].map((child) => (
-														<button
-														className={`${
-															searchStandard === child ? 'bg-blue-500 text-white border-blue-500' : 'bg-white text-gray-400 border-gray-300'
-														} shadow-md m-2 px-10 py-2 hover:bg-slate-100 border font-semibold min-w-[9.5rem]`}
-														key={child}
-														data-child={child}
-														onClick={() => {
-															handleSearchStandardColorChange(child);
-															setSearchResult([]);
-														}}
-													>
-													{child}
-														</button>
-													))
-												}
-												</div>
-												<MainSearchBar
-													searchValue={searchValue}
-													updateValue={updateValue}
-													handleSearch={handleSearch}
-													isMain={false}
-													isOrg={false}/>
-											</div>
-										</div>
-									</div>
-									
-									<div><hr className="h-1 bg-[#E5E7EB]"></hr></div>
-									<div className="flex flex-row p-3 bg-[#F2F5F8]">
-										{["테이블ID", "테이블명", "테이블 설명", "하위 주제"].map((label) => (
-
-											<div className='w-1/4' key={label}>
-												<div className='p-2 text-center border-r border-color-[#E5E7EB]'>
-													<p className="text-center text-gray-400 font-extrabold text-lg">{label}</p>
-												</div>
-											</div>
-										))}
-									</div>
-									<div><hr className="h-1 bg-[#E5E7EB]"></hr></div>
-									<div className="flex flex-col pt-0 p-3 bg-[#F2F5F8]">
-										{
-											searchResult.length > 0 ? Array.isArray(searchResult) && searchResult.map((tableInfo) => {
-												
-
-												return (
-													<div>
-														<div className='flex flex-row w-full pt-5 pb-5 text-center items-center'>
-															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
-																<span className="text-gray-400 font-bold text-sm">
-																	{searchCondition === "table_id_or_name" ? highlightLetters(tableInfo.table_id, currentSearch) : tableInfo.table_id}
-																</span>
-															</div>
-															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
-																<span className="text-gray-400 font-bold text-sm">
-																	{searchCondition === "table_id_or_name" ? highlightLetters(tableInfo.table_name, currentSearch) : tableInfo.table_name}
-																</span>
-															</div>
-															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
-															    <span className="text-gray-400 font-bold text-sm">
-															        {tableInfo.table_comment}
-															    </span>
-															</div>
-															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
-															    <span className="text-gray-400 font-bold text-sm">
-															        {searchCondition === "small_clsf_name" ? highlightLetters(tableInfo.small_clsf_name, currentSearch) : tableInfo.small_clsf_name}
-															    </span>
-															</div>
-														</div>
-														<div><hr className="h-0.1 bg-[#E5E7EB]"></hr></div>
-													</div>
-												)
-											}) :
-											<div className='flex flex-row w-full pt-5 pb-5 text-center justify-center items-center'>
-											{/* <div className="w-1/8 border-r border-gray-300 flex items-center overflow-hidden border-[#E5E7EB]"> */}
-												<div className="w-1/8 flex items-center overflow-hidden">
-												    <p className="text-gray-400 text-sm">
-												        검색 결과가 없습니다. 
-												    </p>
-												</div>
-
-											</div>
-
-										}
-										<Pagination
-											currentPage={searchPageNo}
-											itemsPerPage={searchAmountPerPage}
-											tableInfoList={searchResult}
-											onPageChange={handlePageChange}
-											isSearchPage={true}
-											>
-										</Pagination>
-										
-									</div>
-						</div>
-					)}
+					)
+					}
 				</div>
 			</Layout>
 		</>

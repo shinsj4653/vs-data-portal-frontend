@@ -52,7 +52,7 @@ const Header = () => {
 							</li>
 
 							<li className="hover:font-extrabold hover:text-slate-950">
-								<Link to="/MetaDataInfo">시스템 정보</Link>
+								<Link to="/SystemInfo">시스템 정보</Link>
 							</li>
 
 						</ul>

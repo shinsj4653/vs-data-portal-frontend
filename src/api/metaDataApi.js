@@ -46,3 +46,11 @@ export const fetchMetaDataTableSearch = async (serviceName, searchCondition, tab
     console.log(response.data)
     return response.data;
 }
+
+export const fetchMetaTableColumnInfo = async (tableId) => {
+    const response = await axios.post(`metadata/tablecolumninfo`, {
+        "table_id" : tableId,
+    });
+    console.log(response.data)
+    return response.data;
+}

@@ -24,23 +24,20 @@ const TableInfo = (props) => {
 
     const [colInfoList, setColInfoList] = useState([
         {
-            'table_meta_detail_info_id': 1,
             'table_col_id': 'COL_001',
             'table_col_name': 'COL_NM_001',
             'table_col_datatype': 'VARCHAR2',
             'table_col_comment': '컬럼 설명 001'
         },
         {
-            'table_meta_detail_info_id': 2,
             'table_col_id': 'COL_001',
-            'table_col_name': 'COL_NM_001',
+            'table_col_name': 'COL_NM_002',
             'table_col_datatype': 'VARCHAR2',
             'table_col_comment': '컬럼 설명 001'
         },
         {
-            'table_meta_detail_info_id': 3,
             'table_col_id': 'COL_001',
-            'table_col_name': 'COL_NM_001',
+            'table_col_name': 'COL_NM_003',
             'table_col_datatype': 'VARCHAR2',
             'table_col_comment': '컬럼 설명 001'
         },
@@ -120,14 +117,13 @@ const TableInfo = (props) => {
 									<div><hr className="h-1 bg-[#E5E7EB]"></hr></div>
 									<div className="flex flex-col pt-0 p-3">
 										{
-											visibleItems.length > 0 ? Array.isArray(visibleItems) && visibleItems.map((colInfo) => {
-											
+											visibleItems.length > 0 ? Array.isArray(visibleItems) && visibleItems.map((colInfo, index) => {
 												return (
 													<div>
 														<div className='flex flex-row w-full pt-5 pb-5 text-center items-center'>
 															<div className="w-1/12 border-r border-color-[#E5E7EB] flex justify-center">
 																<span className="font-black font-bold text-sm">
-																	{colInfo.table_meta_detail_info_id}
+																	{index + 1 + (currentPage - 1) * itemsPerPage}
 																</span>
 															</div>
 															<div className="w-2/12 border-r border-color-[#E5E7EB] flex justify-center">

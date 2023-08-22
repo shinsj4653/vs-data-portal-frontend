@@ -1,5 +1,3 @@
-import React, { useState, useEffect } from 'react';
-
 const SystemInfoAndDataset = ({systemInfoData, mainDatasetList, onDatasetClick}) => {
 
     const findManager = (role) => {
@@ -13,10 +11,9 @@ const SystemInfoAndDataset = ({systemInfoData, mainDatasetList, onDatasetClick})
         })
         return data;
     }
-
-
     return (
-<div className='flex flex-col w-3/5 h-full pt-20 mb-15 -ml-10 drop-shadow-l'>
+
+        <div className='flex flex-col w-3/5 h-full pt-20 mb-15 -ml-10 drop-shadow-l'>
             <div className='flex flex-col w-full'>
                 <div className='flex rounded-t-xl h-10'>
                     <div className='flex justify-center items-center w-1/4 bg-gray-100 border font-black text-[#0975DA] rounded-tl-xl text-sm'>데이터베이스 정보</div>

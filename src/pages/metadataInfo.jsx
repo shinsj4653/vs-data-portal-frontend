@@ -6,13 +6,14 @@ import { useMetadataMainDataSet, useMetadataSubDataSet, useMetadataTableInfo, us
 import metadata_background from '../assets/backgrounds/metadata_background.jpg';
 import Pagination from '../components/metaDataInfo/pagination';
 import Loading from '../components/loading';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import MainSearchBar from '../components/main/mainSearchBar';
 
 
 const MetaDataInfo = () => {
 	
 	const location = useLocation();
+	const navigate = useNavigate();
 	console.log(location.state);
 
 	const [orgData, setOrgData] = useState(null);
@@ -49,8 +50,6 @@ const MetaDataInfo = () => {
 	const [searchAmountPerPage, setSearchAmountPerPage] = useState(15); // 검색 결과 페이지 당 개수
 
 	const searchQuery = useMetadataTableSearch(serviceName, searchCondition, currentSearch, searchPageNo, searchAmountPerPage);
-
-	
 
 	const handlePageChange = (list, pageNumber, isSearchPage) => {
 		isSearchPage ? setSearchPageNo(pageNumber) : setCurrentPage(pageNumber);
@@ -286,6 +285,19 @@ const MetaDataInfo = () => {
 		}
 	}
 
+	const handleTableClick = (tableId, small_clsf_name) => {
+		location.state = null;
+		navigate('/TableInfo', {
+			state: {
+				tableId,
+				small_clsf_name,
+				serviceName,
+				selectedMainDataset,
+				selectedSubDataset,
+			}
+		})
+	}
+
 	const highlightLetters = (tableText, currentSearch) => {
 		const regex = new RegExp(currentSearch, 'gi');
     	const matches = tableText.match(regex);
@@ -347,8 +359,7 @@ const MetaDataInfo = () => {
 					/>
 					
 					{!isSearch ? (Array.isArray(mainDatasetList) && mainDatasetList.length > 0 ? (
-
-						<div className="flex flex-col justify-top p-5 w-3/4">
+							<div className="flex flex-col justify-top p-5 w-3/4">
 									<div className="flex flex-row bg-white rounded-2xl pt-1 p-3">
 										<div className='flex flex-col justify-center items-center w-1/6 pt-1'>
 																						
@@ -423,7 +434,11 @@ const MetaDataInfo = () => {
 										{
 											Array.isArray(visibleItems) && visibleItems.map((tableInfo) => (
 												<div>
-													<div className='flex flex-row w-full pt-5 pb-5 text-center items-center'>
+													<div className='flex flex-row w-full pt-5 pb-5 text-center items-center hover:bg-gray-200 cursor-pointer'
+														onClick={() => {
+															handleTableClick(tableInfo.table_id, tableInfo.small_clsf_name);
+														}}
+													>
 														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
 														    <p className="text-gray-400 font-bold text-sm">
 														        {tableInfo.table_id}
@@ -459,6 +474,8 @@ const MetaDataInfo = () => {
 										</Pagination>
 									</div>
 						</div>
+						
+						
 					) : (
 						<div className="flex flex-col items-center justify-top p-5 w-3/4 mt-10">
 							<h3>해당 브랜드의 메타 데이터는 아직 준비중입니다.</h3>

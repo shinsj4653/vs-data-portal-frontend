@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/layout";
 import metadata_background from '../assets/backgrounds/metadata_background.jpg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Pagination from "../components/metaDataInfo/pagination";
+import { useMetadataTableColumnInfo } from "../hooks/useMetaData";
 
 const TableInfo = (props) => {
 
@@ -11,7 +12,7 @@ const TableInfo = (props) => {
 
     const [metaState, setMetaState] = useState(location.state);
 
-    const itemsPerPage = 1;
+    const itemsPerPage = 15;
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(0);
 
@@ -21,6 +22,20 @@ const TableInfo = (props) => {
 		console.log("total ", totalPages);
 		console.log("현재 페이지 ", pageNumber);
 	};
+
+	const columnInfoQuery = useMetadataTableColumnInfo(metaState.tableId);
+
+	const fetchColumnData = async () => {
+		const columnInfoResult = await columnInfoQuery.refetch();
+		if (!columnInfoResult.isLoading) {
+			setColInfoList(columnInfoResult.data.data);
+			setTotalPages(Math.ceil(columnInfoResult.data.data.length / itemsPerPage));
+		}
+	}
+
+	useEffect(() => {
+		fetchColumnData();
+	}, [])
 
     const [colInfoList, setColInfoList] = useState([
         {

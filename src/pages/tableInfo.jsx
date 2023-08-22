@@ -69,8 +69,8 @@ const TableInfo = (props) => {
                 <div className="flex flex-col w-full px-28 mt-5">
                     <p className="font-black text-2xl">데이터 상세</p>
                     <div className="flex flex-col justify-center border border-gray-300 mt-5 p-5 h-28">
-                        <p className="font-black text-xl mb-2">설문참여학생</p>
-                        <p>설문참여학생 관리를 위한 테이블입니다.</p>
+                        <p className="font-black text-xl mb-2">{metaState.tableName === "nan" ? metaState.tableId : metaState.tableName}</p>
+                        <p>{metaState.tableCmnt}입니다.</p>
                     </div>
 
                     <div className='flex flex-col w-full mt-5'>
@@ -82,15 +82,14 @@ const TableInfo = (props) => {
                         </div>
                         <div className='flex h-10'>
                             <div className='flex justify-center items-center w-1/4 bg-[#F8F6F1] border font-black text-sm'>분류 체계</div>
-                            <div className='flex items-center w-3/4 pl-5 bc-white border font-bold  text-sm'>{metaState.selectedMainDataset + "-" + 설문조사'}</div>
+                            <div className='flex items-center w-3/4 pl-5 bc-white border font-bold  text-sm'>{metaState.selectedMainDataset + " - " + metaState.selectedSubDataset}</div>
                             <div className='flex justify-center items-center w-1/4 bg-[#F8F6F1] border font-black text-sm'>키워드</div>
-                            <div className='flex items-center w-3/4 pl-5 bc-white border font-bold  text-sm'>{'키워드'}</div>
+                            <div className='flex items-center w-3/4 pl-5 bc-white border font-bold  text-sm'>{metaState.smallClsfName}</div>
                         </div>
                     </div>
 
                     <p className="font-black text-l mt-5">데이터 항목(칼럼) 정보</p>
 
-                    {/* make me a table which has No, ColumnId, ColumnName, ColumnType, and Column Desc */}
                              <div className="flex flex-row p-3 bg-[#F2F5F8] mt-5">
                                             <div className='w-1/12'>
 												<div className='p-2 text-center border-r border-color-[#E5E7EB]'>
@@ -176,7 +175,13 @@ const TableInfo = (props) => {
 										</Pagination>
 
                                         <div className="flex justify-center mt-5">
-                                            <button onClick={() => { navigate(-1); }} className='bg-white text-blue border border-[#0091FA] text-[#0091FA] shadow-md m-2 px-4 py-2 hover:bg-slate-100 border font-bold min-w-[9.5rem] flex-shrink-0 overflow-wrap break-word'>목록</button>
+                                            <button onClick={() => { navigate('/metadataInfo', {
+												state: {
+													serviceName: metaState.serviceName,
+													selectedMainDataset: metaState.selectedMainDataset,
+													selectedSubDataset: metaState.selectedSubDataset,
+												}
+											}); }} className='bg-white text-blue border border-[#0091FA] text-[#0091FA] shadow-md m-2 px-4 py-2 hover:bg-slate-100 border font-bold min-w-[9.5rem] flex-shrink-0 overflow-wrap break-word'>목록</button>
                                         </div>
 										
 									</div>

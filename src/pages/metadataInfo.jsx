@@ -249,9 +249,6 @@ const MetaDataInfo = () => {
 			//clickedButton.scrollLeft = mainDatasetRef.current.scrollLeft;
 		  }
 	};
-	
-
-	// const [clickedSub, setClickedSub] = useState([]);
 
 	const handleSubDatasetColorChange = (child) => {
 		location.state = null;
@@ -285,12 +282,14 @@ const MetaDataInfo = () => {
 		}
 	}
 
-	const handleTableClick = (tableId, small_clsf_name) => {
+	const handleTableClick = (tableId, tableName, tableCmnt, smallClsfName) => {
 		location.state = null;
 		navigate('/TableInfo', {
 			state: {
 				tableId,
-				small_clsf_name,
+				tableName,
+				tableCmnt,
+				smallClsfName,
 				serviceName,
 				selectedMainDataset,
 				selectedSubDataset,
@@ -436,7 +435,7 @@ const MetaDataInfo = () => {
 												<div>
 													<div className='flex flex-row w-full pt-5 pb-5 text-center items-center hover:bg-gray-200 cursor-pointer'
 														onClick={() => {
-															handleTableClick(tableInfo.table_id, tableInfo.small_clsf_name);
+															handleTableClick(tableInfo.table_id, tableInfo.table_name, tableInfo.table_comment, tableInfo.small_clsf_name);
 														}}
 													>
 														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">

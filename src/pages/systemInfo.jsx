@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../components/dataMap/sidebar';
 import Layout from '../components/layout';
-import { useOrgChartMain, useSercviceSystemInfo } from '../hooks/useOrgChart';
+import { useOrgChartMain } from '../hooks/useOrgChart';
+import { useSercviceSystemInfo } from '../hooks/useSysInfo';
 import { useMetadataMainDataSet } from '../hooks/useMetaData';
 import systemInfo_background from '../assets/backgrounds/systemInfo_background.jpg';
 import service_pionada_log from '../assets/logos/service_pionada_logo.jpg';

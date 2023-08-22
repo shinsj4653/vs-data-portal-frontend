@@ -7,10 +7,12 @@ import systemInfo_background from '../assets/backgrounds/systemInfo_background.j
 import service_pionada_log from '../assets/logos/service_pionada_logo.jpg';
 import Loading from '../components/loading';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const SystemInfo = () => {
 	
+    const navigate = useNavigate();
 	const location = useLocation();
 	console.log(location.state);
 
@@ -85,6 +87,14 @@ const SystemInfo = () => {
 	    }
     };
 
+    const handleDatasetClick = (datasetName) => {
+        navigate('/metadataInfo', {
+            state: {
+              serviceName,
+              selectedMainDataset : datasetName,
+            }
+          })
+    }
 	
     useEffect(() => {
         fetchData();
@@ -126,9 +136,9 @@ const SystemInfo = () => {
 					/>
 					
 					{serviceName === "피어나다" ?
-						(<div className='flex w-full justify-center items-center -ml-5'>
+						(<div className='flex w-full items-center -ml-5'>
                             <div className='flex w-2/5 justify-center pt-20 h-full bg-white p-100'>
-                                <div className='flex flex-col justify-center items-center space-y-10 w-9/12 h-1/3 bg-white drop-shadow-2xl transition duration-300'>
+                                <div className='flex flex-col justify-center items-center space-y-10 w-9/12 h-1/3 bg-white drop-shadow-xl transition duration-300'>
                                     <div className='flex w-3/4 h-4/6 bg-contain bg-center bg-no-repeat' style={{backgroundImage: `url(${ service_pionada_log })`}} />
                                     <div className='flex flex-col items-center'>
                                         <p className='font-semibold	'>심리 상담부터 학습 코칭까지 하나로 결합한</p>
@@ -137,7 +147,7 @@ const SystemInfo = () => {
                                 </div>
                             </div>
 
-                            <div className='flex flex-col w-3/5 h-full pt-20 mb-15 -ml-10'>
+                            <div className='flex flex-col w-3/5 h-full pt-20 mb-15 -ml-10 drop-shadow-l'>
                                 <div className='flex flex-col w-full'>
                                     <div className='flex rounded-t-xl h-10'>
                                         <div className='flex justify-center items-center w-1/4 bg-gray-100 border font-black text-[#0975DA] rounded-tl-xl text-sm'>데이터베이스 정보</div>
@@ -170,14 +180,17 @@ const SystemInfo = () => {
                                 <hr className="h-0.5 bg-black mt-5 mb-5"></hr>
                                 <div className='flex flex-col w-full h-2/5'>
                                     <p className='font-black text-m mb-5'>주요 데이터셋</p>
-                                    <div className='flex justify-center items-center h-32 w-full bg-white drop-shadow-l border-2 rounded-l px-20'>
-                                        <div className='flex flex-wrap w-3/4 justify-center items-center'>
+                                    <div className='flex justify-center items-center h-32 w-full bg-white drop-shadow-l border-2 rounded-xl px-20'>
+                                        <div className='flex flex-wrap w-full h-full justify-center items-center'>
                                         {
                                             mainDatasetList?.map((child, idx) => {
                                                 return (
                                                     <button
-                                                        className='flex justify-center items-center w-1/4 bg-gray-100 border font-black text-sm m-1 mx-3 p-3 drop-shadow-l hover:shadow-xl transition duration-300'
+                                                        className='flex justify-center items-center w-1/4 h-12 bg-gray-100 border font-black text-sm mx-2 p-3 drop-shadow-l hover:shadow-xl transition duration-300'
                                                         key={child}
+                                                        onClick={() => {
+                                                            handleDatasetClick(child);
+                                                        }}
                                                     >
                                                         {child}
                                                     </button>

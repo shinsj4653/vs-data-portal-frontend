@@ -5,7 +5,8 @@ import CustomNodeContent from './customNodeContent';
 import CustomExpandButton from './customExpandedButton';
 import { GoZoomIn, GoZoomOut } from 'react-icons/go';
 import ServiceDetailsCard from './serviceDetailsCard';
-import { useServiceByTarget } from '../../hooks/useOrgChart';
+import { useServiceByTarget, useServiceByDataset } from '../../hooks/useOrgChart';
+
 
 const transformData = (data, depth = 0) => {
 	const transformedData = [];
@@ -38,6 +39,28 @@ const transformData = (data, depth = 0) => {
 
 const DataDrivenOrgChart = (props) => {
 	const [target, setTarget] = useState(props.activeTarget?.targetName || "");
+	
+	const searchQuery = useServiceByDataset(props.currentSearch);
+
+	useEffect(() => {
+		servicesByTarget.length > 0 && setServicesByTarget([]);
+		fetchSearchResult();
+
+	}, [props.currentSearch])
+
+	const fetchSearchResult = async () => {
+		const searchResult = await searchQuery.refetch();
+		if (!searchResult.isLoading) {
+			if(searchResult.data.data.length === 0) {
+				alert("검색 결과가 없습니다.");
+				props.setSearchValue("");
+				setServicesByTarget([]);
+				return;
+			} 
+			setServicesByTarget(searchResult.data.data);
+		}
+		
+	}
 
 	useEffect(() => {
 	// 타겟명 변경될 때

@@ -535,7 +535,10 @@ const MetaDataInfo = () => {
 
 												return (
 													<div>
-														<div className='flex flex-row w-full pt-5 pb-5 text-center items-center hover:bg-white hover:shadow-xl cursor-pointer'>
+														<div className='flex flex-row w-full pt-5 pb-5 text-center items-center hover:bg-white hover:shadow-xl cursor-pointer'
+														onClick={() => {
+															handleTableClick(tableInfo.table_id, tableInfo.table_name, tableInfo.table_comment, tableInfo.small_clsf_name);
+														}}>
 															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
 																<span className="text-[#404040] font-bold text-sm">
 																	{searchCondition === "table_id_or_name" ? highlightLetters(tableInfo.table_id, currentSearch) : tableInfo.table_id}

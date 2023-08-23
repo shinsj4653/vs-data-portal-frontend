@@ -14,37 +14,12 @@ const Orgchart = () => {
 	const [searchValue, setSearchValue] = useState("");
   	const [currentSearch, setCurrentSearch] = useState("");
 
-	const searchQuery = useServiceByDataset(currentSearch);
-	
-	// 데이터 셋 기준 서비스명 검색 결과
-	const [searchResult, setSearchResult] = useState([]);
-
-  	const handleSearch = (currentSearch) => {
-		setCurrentSearch(currentSearch);
-  	}
-
-	useEffect(() => {
-		
-		fetchSearchResult();
-
-	}, [currentSearch])
-
-	const fetchSearchResult = async () => {
-		const searchResult = await searchQuery.refetch();
-		if (!searchResult.isLoading) {
-			if(searchResult.data.data.length === 0) {
-				alert("검색 결과가 없습니다.");
-				setCurrentSearch("");
-				setSearchValue("");
-				return;
-			}
-			setSearchResult(searchResult.data.data);
-		}
-		
-	}
-
 	if (orgChartData.isLoading) {
 		return <Loading></Loading>;
+	}
+
+	const handleSearch = (currentSearch) => {
+		setCurrentSearch(currentSearch);
 	}
 
 	const data = orgChartData.data.data;
@@ -74,7 +49,7 @@ const Orgchart = () => {
 					</div>
 				</div>
 				<div className="relative flex flex-row justify-center items-top mx-auto w-3/4 h-screen bg-white">
-					<Sidebar searchValue={searchValue} updateValue={setSearchValue} onSearch={handleSearch} onTargetSelect={handleTargetSelect}/>
+					<Sidebar searchValue={searchValue} updateValue={setSearchValue} handleSearch={handleSearch} onTargetSelect={handleTargetSelect}/>
 					<div className="flex flex-col w-full h-full bg-white flex relative z-10">
 						<div>
 							<p className="flex ml-16 text-black font-extrabold text-2xl h-full mb-6">
@@ -83,7 +58,7 @@ const Orgchart = () => {
 						</div>
 						<div><hr className="bg-black mr-16 ml-16 border border-black"></hr></div>
 						<div className='w-full h-full'>
-							<DataDrivenOrgChart data={data} activeTarget={activeTarget} />
+							<DataDrivenOrgChart data={data} activeTarget={activeTarget} currentSearch={currentSearch} setSearchValue={setSearchValue}/>
 						</div>
 					</div>
 				</div>

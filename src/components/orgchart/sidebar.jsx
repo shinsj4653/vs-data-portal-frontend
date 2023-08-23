@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import MainSearchBar from "../main/mainSearchBar";
 // import DataDrivenOrgChart from "./dataDrivenOrgChart";
 
-const Sidebar = ({searchValue, updateValue, onSearch, onTargetSelect}) => {
+const Sidebar = ({searchValue, updateValue, handleSearch, onTargetSelect}) => {
 
   const [selectedButton, setSelectedButton] = useState(null);
   const targetData = ['유아', '초등', '중고등', '성인', '글로벌'];
@@ -34,7 +34,7 @@ const Sidebar = ({searchValue, updateValue, onSearch, onTargetSelect}) => {
           </div>
           <div className="flex flex-col text-[#C0C0C5] ml-3 mr-3">
             <span className="ml-1 h-7 w-32 mb-2">Dataset 검색하기</span>
-            <MainSearchBar searchValue={searchValue} updateValue={updateValue} handleSearch={onSearch} isMain={false} isOrg={true}></MainSearchBar>
+            <MainSearchBar searchValue={searchValue} updateValue={updateValue} handleSearch={handleSearch} isMain={false} isOrg={true}></MainSearchBar>
           </div>
           <ul className="mt-6 space-y-1">
             <li>

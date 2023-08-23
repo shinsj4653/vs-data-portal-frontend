@@ -22,9 +22,9 @@ export const fetchServiceByTarget = async (targetName) => {
     return response.data;
 }
 
-export const fetchServiceByMainDataset = async (mainDataset) => {
-    const response = await axios.post(`dataorg/search/maindataset`, {
-        "mainDataset" : mainDataset
+export const fetchServiceByDataset = async (keyword) => {
+    const response = await axios.post(`dataorg/search/dataset`, {
+        "keyword" : keyword
     });
     console.log(response.data.data)
     return response.data;

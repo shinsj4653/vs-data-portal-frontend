@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { fetchOrgChartMain, fetchServiceInfo, fetchServiceByTarget, fetchServiceByMainDataset, fetchServiceSystemInfo } from '../api/orgChartApi';
+import { fetchOrgChartMain, fetchServiceInfo, fetchServiceByTarget, fetchServiceByDataset, fetchServiceSystemInfo } from '../api/orgChartApi';
 
 export const useOrgChartMain = () => {
   return useQuery('orgChartMain', fetchOrgChartMain);
@@ -11,8 +11,8 @@ export const useServiceByTarget = (targetName) => {
   });
 };
 
-export const useServiceByMainDataset = (mainDataset) => {
-  return useQuery(['serviceByMainDataset', mainDataset], () => fetchServiceByMainDataset(mainDataset), {
+export const useServiceByDataset = (keyword) => {
+  return useQuery(['serviceByDataset', keyword], () => fetchServiceByDataset(keyword), {
     staleTime: 1000 * 60 * 60 * 24, // 24시간 동안 유효
   });
 };

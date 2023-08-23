@@ -133,7 +133,7 @@ const DataMap = () => {
 
 							<div className="flex flex-row bg-white rounded-2xl pt-5">
 								<div className="flex justify-center items-center w-1/6 pt-1">
-									<p className="text-center text-gray-400 font-extrabold text-lg">주요 데이터셋</p>
+									<p className="text-center text-[#191970] font-extrabold text-lg">주요 데이터셋</p>
 								</div>
 								<div className="flex w-2/3">
 									<div className='flex flex-row overflow-x-auto scroll-smooth'>
@@ -141,7 +141,7 @@ const DataMap = () => {
 											idx < 7 &&
 											<button
 												className={`${
-													activeButton === child ? 'bg-white text-blue border border-[#0091FA] text-[#0091FA]' : 'bg-white border-[#C0C0C0] text-[#C0C0C0]'
+													activeButton === child ? 'bg-white text-blue border border-[#0091FA] text-[#0091FA]' : 'bg-white border-[#C0C0C0] text-[#404040]'
 												} shadow-md m-2 px-4 hover:bg-slate-100 border font-bold min-w-[9rem] flex-shrink-0 overflow-wrap break-word min-h-[3rem]`}
 												key={child}
 												onClick={() => {

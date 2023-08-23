@@ -119,7 +119,7 @@ const DataDrivenOrgChart = (props) => {
 				className="bg-white w-full"
 				ref={d3Container}
 			>
-				{cardShow && <ServiceDetailsCard handleClose={handleClose} />}
+				{/* {cardShow && <ServiceDetailsCard handleClose={handleClose} />} */}
 			</div>
 		</>
 	);

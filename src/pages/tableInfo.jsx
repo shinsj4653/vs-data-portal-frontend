@@ -102,64 +102,64 @@ const TableInfo = (props) => {
 
                     <p className="font-black text-l mt-5">데이터 항목(칼럼) 정보</p>
 
-                             <div className="flex flex-row p-3 bg-[#F2F5F8] mt-5">
-                                            <div className='w-1/12'>
-												<div className='p-2 text-center border-r border-color-[#E5E7EB]'>
+									<div className="flex flex-row bg-[#F0F4F7] mt-5 h-[60px]">
+                                            <div className='flex items-center justify-center w-1/12 h-full border-r border-color-[#E5E7EB]'>
+												<div className='p-2 text-center'>
 													<p className="text-center font-black text-lg">{'No.'}</p>
 												</div>
 											</div>
-                                            <div className='w-2/12'>
-												<div className='p-2 text-center border-r border-color-[#E5E7EB]'>
+                                            <div className='flex items-center justify-center w-2/12 h-full border-r border-color-[#E5E7EB]'>
+												<div className='p-2 text-center'>
 													<p className="text-center font-black text-lg">{'컬럼 ID'}</p>
 												</div>
 											</div>
-                                            <div className='w-2/12'>
-												<div className='p-2 text-center border-r border-color-[#E5E7EB]'>
+                                            <div className='flex items-center justify-center w-2/12 h-full border-r border-color-[#E5E7EB]'>
+												<div className='p-2 text-center'>
 													<p className="text-center font-black text-lg">{'컬럼명 (한글명)'}</p>
 												</div>
 											</div>
-                                            <div className='w-1/12'>
-												<div className='p-2 text-center border-r border-color-[#E5E7EB]'>
+                                            <div className='flex items-center justify-center w-1/12 h-full border-r border-color-[#E5E7EB]'>
+												<div className='p-2 text-center'>
 													<p className="text-center font-black text-lg">{'데이터 타입'}</p>
 												</div>
 											</div>
-                                            <div className='w-6/12'>
-												<div className='p-2 text-center border-r border-color-[#E5E7EB]'>
+                                            <div className='flex items-center justify-center w-6/12 h-full border-r border-color-[#E5E7EB]'>
+												<div className='p-2 text-center'>
 													<p className="text-center font-black text-lg">{'컬럼 설명'}</p>
 												</div>
 											</div>
 									</div>
 									<div><hr className="h-1 bg-[#E5E7EB]"></hr></div>
-									<div className="flex flex-col pt-0 p-3">
+									<div className="flex flex-col">
 										{
 											visibleItems.length > 0 ? Array.isArray(visibleItems) && visibleItems.map((colInfo, index) => {
 												return (
 													<div>
-														<div className='flex flex-row w-full pt-5 pb-5 text-center items-center'>
-															<div className="w-1/12 border-r border-color-[#E5E7EB] flex justify-center">
-																<span className="font-black font-bold text-sm">
-																	{index + 1 + (currentPage - 1) * itemsPerPage}
-																</span>
+														<div className='flex flex-row w-full text-center items-center border-b border-l border-r border-color-[#E5E7EB] min-h-[3rem]'>
+															<div className='flex items-center justify-center w-1/12 h-full border-r border-color-[#E5E7EB]'>
+																<div className='py-4 text-center'>
+																	<p className="text-center font-black font-bold text-sm">{index + 1 + (currentPage - 1) * itemsPerPage}</p>
+																</div>
 															</div>
-															<div className="w-2/12 border-r border-color-[#E5E7EB] flex justify-center">
-																<span className="font-black font-bold text-sm">
-																	{colInfo.table_col_id}
-																</span>
+															<div className="flex items-center justify-center w-2/12 h-full border-r border-color-[#E5E7EB] overflow-hidden whitespace-nowrap truncate">
+																<div className='py-4 text-center'>
+																	<p className="text-center font-black font-bold text-sm">{colInfo.table_col_id}</p>
+																</div>
 															</div>
-															<div className="w-2/12 border-r border-color-[#E5E7EB] flex justify-center">
-															    <span className="font-black font-bold text-sm">
-															        {colInfo.table_col_name}
-															    </span>
+															<div className="flex items-center justify-center w-2/12 h-full border-r border-color-[#E5E7EB] overflow-hidden whitespace-nowrap truncate">
+																<div className='py-4 text-center'>
+																	<p className="text-center font-black font-bold text-sm">{colInfo.table_col_name}</p>
+																</div>
 															</div>
-															<div className="w-1/12 border-r border-color-[#E5E7EB] flex justify-center">
-															    <span className="font-black font-bold text-sm">
-															        {colInfo.table_col_datatype}
-															    </span>
+															<div className="flex items-center justify-center w-1/12 h-full border-r border-color-[#E5E7EB] overflow-hidden whitespace-nowrap truncate">
+																<div className='py-4 text-center'>
+																	<p className="text-center font-black font-bold text-sm">{colInfo.table_col_datatype}</p>
+																</div>
 															</div>
-                                                            <div className="w-6/12 border-r border-color-[#E5E7EB] flex justify-center">
-															    <span className="font-black font-bold text-sm">
-															        {colInfo.table_col_comment}
-															    </span>
+															<div className="flex items-center justify-center w-6/12 h-full border-r border-color-[#E5E7EB] overflow-hidden whitespace-nowrap truncate">
+																<div className='py-4 text-center'>
+																	<p className="text-center font-black font-bold text-sm">{colInfo.table_col_comment}</p>
+																</div>
 															</div>
 														</div>
 													</div>
@@ -182,6 +182,7 @@ const TableInfo = (props) => {
 											tableInfoList={colInfoList}
 											onPageChange={handlePageChange}
 											isSearchPage={false}
+											isDetail={true}
 											>
 										</Pagination>
 

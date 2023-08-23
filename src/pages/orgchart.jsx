@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DataDrivenOrgChart from '../components/orgchart/dataDrivenOrgChart';
 import Layout from '../components/layout';
-import { useOrgChartMain, useServiceByMainDataset } from '../hooks/useOrgChart';
+import { useOrgChartMain, useServiceByDataset } from '../hooks/useOrgChart';
 // import MainSearchBar from '../components/main/mainSearchBar';
 import Loading from '../components/loading';
 import Sidebar from '../components/orgchart/sidebar';
@@ -14,7 +14,7 @@ const Orgchart = () => {
 	const [searchValue, setSearchValue] = useState("");
   	const [currentSearch, setCurrentSearch] = useState("");
 
-	const searchQuery = useServiceByMainDataset(currentSearch);
+	const searchQuery = useServiceByDataset(currentSearch);
 	
 	// 데이터 셋 기준 서비스명 검색 결과
 	const [searchResult, setSearchResult] = useState([]);
@@ -34,6 +34,8 @@ const Orgchart = () => {
 		if (!searchResult.isLoading) {
 			if(searchResult.data.data.length === 0) {
 				alert("검색 결과가 없습니다.");
+				setCurrentSearch("");
+				setSearchValue("");
 				return;
 			}
 			setSearchResult(searchResult.data.data);

@@ -52,8 +52,13 @@ const SystemInfoAndDataset = ({systemInfoData, mainDatasetList, onDatasetClick})
                 <p className='font-black text-m mb-5'>주요 데이터셋</p>
                 <div className='flex justify-center items-center h-32 w-full bg-white drop-shadow-l border-2 rounded-xl px-20'>
                     <div className='flex flex-col flex-wrap w-full justify-center items-center'>
-
-                        <div className='flex flex-row flex-wrap h-1/2'>
+                        {
+                            mainDatasetList.length === 0 ? (
+                                <p className='font-black text-m'>해당 서비스의 데이터셋은 아직 준비중입니다.</p>
+                            ) :
+                            (
+                                <>
+                                <div className='flex flex-row flex-wrap h-1/2'>
                             {mainDatasetList.slice(0, Math.floor(mainDatasetList.length / 2)).map((child, idx) => {
                                 return (
                                     <button
@@ -84,7 +89,10 @@ const SystemInfoAndDataset = ({systemInfoData, mainDatasetList, onDatasetClick})
                                     </button>
                                 );
                             })}
-                        </div>
+                        </div></>
+                            )
+                        }
+                        
                     </div>
                 </div>
             </div>

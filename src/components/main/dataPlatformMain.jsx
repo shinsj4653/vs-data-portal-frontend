@@ -27,7 +27,7 @@ const DataPlatformMain = () => {
 	const navigate = useNavigate();
 
 	// 데이터 활용 페이지 임시 대체용 사이트 링크
-	const url = "https://tableauwiki.com/";
+	const url = "https://tableauwiki.com/category/blog/tableau-tips/";
 
 	const updateValue = (value) => {
 		setSearchValue(value);
@@ -204,7 +204,7 @@ const DataPlatformMain = () => {
 							</div>
 						</Link>
 
-						<div className="card" onClick={()=>{window.open(url)}}>
+						<Link className="card" onClick={()=>{window.open(url)}}>
 							<div className="card border-2 border-slate-600 bg-base-100 shadow-xl transition duration-150 ease-out hover:bg-slate-200">
 								<figure className="px-10 pt-10">
 									<img
@@ -214,10 +214,10 @@ const DataPlatformMain = () => {
 									/>
 								</figure>
 								<div className="card-body items-center text-center">
-									<h2 className="card-title">데이터 활용 (개발 예정)</h2>
+									<h2 className="card-title">데이터 활용</h2>
 								</div>
 							</div>
-						</div>
+						</Link>
 					</div>
 				</div> : 
 

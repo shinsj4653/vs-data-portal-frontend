@@ -14,6 +14,10 @@ const Header = () => {
 	//   document.querySelector("html").setAttribute("data-theme", theme);
 	// }, [theme]);
 
+	// 데이터 활용 페이지 임시 대체용 사이트 링크
+	const url = "https://tableauwiki.com/category/blog/tableau-tips/";
+
+
 	return (
 		<div className="bg-base-100">
 			<div className="flex items-center gap-4 px-2 sm:px-4 lg:px-6">
@@ -55,6 +59,9 @@ const Header = () => {
 								<Link to="/SystemInfo">시스템 정보</Link>
 							</li>
 
+							<li className="hover:font-extrabold hover:text-slate-950">
+								<Link onClick={()=>{window.open(url)}}>데이터 활용</Link>
+							</li>
 						</ul>
 					</nav>
 
@@ -115,6 +122,10 @@ const Header = () => {
 
 								<li className="hover:font-extrabold hover:text-slate-950">
 									<Link to="/SystemInfo">시스템 정보</Link>
+								</li>
+
+								<li className="hover:font-extrabold hover:text-slate-950">
+									<Link onClick={()=>{window.open(url)}}>데이터 활용</Link>
 								</li>
 							</ul>
 						</div>

@@ -57,13 +57,6 @@ const MetaDataInfo = () => {
 		console.log("total ", totalPages);
 		console.log("현재 페이지 ", pageNumber);
 	};
-
-	useEffect(() => {
-
-		fetchResultData();
-		
-
-	}, [searchPageNo, searchAmountPerPage]);
 	
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const endIndex = startIndex + itemsPerPage;
@@ -118,8 +111,10 @@ const MetaDataInfo = () => {
 	const handleSearch = (value) => {
 		console.log(value.toLowerCase());
 		setCurrentSearch(value.toLowerCase());
+		setSearchResult([]);
 
 		if(searchValue == "") {
+			setSearchResult([]);
 			alert("검색어를 입력해주세요.");
 			return;
 		} else 
@@ -134,7 +129,6 @@ const MetaDataInfo = () => {
 		// console.log(result.data.data);
 		if(!result.isLoading) {
 			if (result.data.data.length == 0 ) {
-				setSearchResult([]);
 				alert("검색 결과가 없습니다.");
 				return;
 			}
@@ -231,7 +225,7 @@ const MetaDataInfo = () => {
 
 	useEffect(() => {
 		fetchResultData();
-	}, [searchPageNo, currentSearch])
+	}, [searchPageNo, searchAmountPerPage, currentSearch])
 
     const handleMainDatasetColorChange = (child) => {
 		location.state = null;
@@ -271,8 +265,8 @@ const MetaDataInfo = () => {
 
 	const handleSearchStandardColorChange = (child) => {
 		setSearchStandard(child);
-		setSearchValue("");
-		setCurrentSearch(null);
+		// setSearchValue("");
+		// setCurrentSearch(null);
 		setSearchResult([]);
 
 		if(child === "테이블ID & 테이블명") {

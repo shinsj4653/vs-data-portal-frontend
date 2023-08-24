@@ -5,7 +5,8 @@ import { useOrgChartMain } from '../hooks/useOrgChart';
 import { useSercviceSystemInfo } from '../hooks/useSysInfo';
 import { useMetadataMainDataSet } from '../hooks/useMetaData';
 import systemInfo_background from '../assets/backgrounds/systemInfo_background.jpg';
-import service_pionada_log from '../assets/logos/service_pionada_logo.jpg';
+import service_pionada_logo from '../assets/logos/service_pionada_logo.jpg';
+import service_onlyone_logo from '../assets/logos/service_onlyone_logo.png';
 import Loading from '../components/loading';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -29,33 +30,42 @@ const SystemInfo = () => {
 	
 	const [isSearch, setIsSearch] = useState(false);
   
-	const colors = ['#A8D8EA', '#AA96DA', '#FCBAD3', '#FFFFD2'];
-	// json Data에 Depth 속성 추가
-	const transformData = (data, depth = 0) => {
+	const transformData = (data) => {
 		if (data.children) {
 			return {
 				...data,
-				depth,
-				color: colors[depth % colors.length], // depth를 colors 배열의 인덱스로 사용하여 색상 할당
-				children: data.children.map((child) => transformData(child, depth + 1)),
+				children: data.children.map((child) => transformData(child)),
 			};
 		}
 		return {
 			...data,
-			depth,
-			color: colors[depth % colors.length], // depth를 colors 배열의 인덱스로 사용하여 색상 할당
 		};
 	};
 
 	const handleNodeClick = (nodeId, nodeName, nodeDepth) => {
 		location.state = null;
 		setIsSearch(false);
-
 		setClickedNodeId(nodeId);
-
+		
 		if (nodeDepth === 2) {
 			console.log(nodeName);
 			setServiceName(nodeName);
+			
+			setServiceDesc(prevServiceDesc => {
+
+				if (nodeName === "온리원초등") {
+					return "메타인지 기반 완전 학습 시스템";
+				}
+				else if (nodeName === "온리원키즈") {
+					return "우리 아이의 창의력과 기초 학습력을 키웁니다";
+				}
+				else if (nodeName === "피어나다") {
+					return "심리 상담부터 학습 코칭까지 하나로 결합한";
+				}
+				return prevServiceDesc;
+			})
+		} else {
+			// setServiceName(nodeName);
 		}
 	
 	};
@@ -125,9 +135,11 @@ const SystemInfo = () => {
 						setIsSearch={setIsSearch}
 					/>
 					
-					{serviceName === "피어나다" ?
-						(<div className='flex w-full items-center '>
-                            <LogoCard logo_url={service_pionada_log} serviceDesc={serviceDesc} serviceName={serviceName}/>
+					{serviceName === "피어나다" || serviceName === "온리원키즈" || serviceName === "온리원초등" ?
+						(<div className='flex w-full h-screen justify-center items-center '>
+                            <LogoCard logo_url={
+								(serviceName === "피어나다" ? service_pionada_logo : serviceName === "온리원키즈" || serviceName === "온리원초등" ? service_onlyone_logo : '')
+								} serviceDesc={serviceDesc} serviceName={serviceName}/>
                             <SystemInfoAndDataset systemInfoData={systemInfoData} mainDatasetList={mainDatasetList} onDatasetClick={handleDatasetClick}/>
 						</div>)
 					 : (

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange, isSearchPage }) => {
+const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange, isSearchPage, isDetail }) => {
   const totalPages = isSearchPage ? Math.ceil(tableInfoList[0]?.total_num / itemsPerPage) : Math.ceil(tableInfoList.length / itemsPerPage);
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
   const pagesToShow = 10; // 한번에 보여줄 페이지 개수
@@ -21,7 +21,11 @@ const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange, is
             onClick={() => {
               onPageChange(tableInfoList, currentPage -1, isSearchPage);
             }}
-            className='bg-[#f2f5f8] text-black-500 hover:bg-gray-100 relative inline-flex items-center px-4 py-2 border-r border-gray-300 text-sm font-medium boxshadow-none'
+            className={
+              `${
+                isDetail ? 'bg-white' : 'bg-[#f2f5f8]'
+              } text-black-500 hover:bg-gray-100 relative inline-flex items-center px-4 py-2 border-r border-gray-300 text-sm font-medium boxshadow-none`
+            }
           >
             ◀
           </button>
@@ -49,7 +53,11 @@ const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange, is
             onClick={() => {
               onPageChange(tableInfoList, currentPage + 1, isSearchPage);
             }}
-            className='text-black-500 hover:bg-gray-100 relative inline-flex items-center px-4 py-2 border-l border-gray-300 text-sm font-medium boxshadow-none bg-[#f2f5f8]'
+            className={
+              `${
+                isDetail ? 'bg-white' : 'bg-[#f2f5f8]'
+              } text-black-500 hover:bg-gray-100 relative inline-flex items-center px-4 py-2 border-l border-gray-300 text-sm font-medium boxshadow-none`
+            }
           >
             ▶
           </button>

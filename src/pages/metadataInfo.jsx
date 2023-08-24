@@ -301,17 +301,17 @@ const MetaDataInfo = () => {
 		const regex = new RegExp(currentSearch, 'gi');
     	const matches = tableText.match(regex);
 
-    	if (!matches) return <span className="text-gray-400 font-bold text-sm">{tableText}</span>;
+    	if (!matches) return <span className="text-[#404040] font-bold text-sm">{tableText}</span>;
 
     	const parts = tableText.split(regex);
     	const highlightedParts = [];
 
     	parts.forEach((part, index) => {
-    	    highlightedParts.push(<span className="text-gray-400 font-bold text-sm" key={index}>{part}</span>);
+    	    highlightedParts.push(<span className="text-[#404040] font-bold text-sm" key={index}>{part}</span>);
 
     	    if (index < parts.length - 1) {
     	        highlightedParts.push(
-    	            <span key={`highlight-${index}`} className="inline-block px-1 py-0.5 text-gray-400 bg-yellow-300 font-extrabold text-sm">
+    	            <span key={`highlight-${index}`} className="inline-block px-1 py-0.5 text-[#404040] bg-yellow-300 font-extrabold text-sm">
     					{matches[index]}
 					</span>
     	        );
@@ -433,28 +433,28 @@ const MetaDataInfo = () => {
 										{
 											Array.isArray(visibleItems) && visibleItems.map((tableInfo) => (
 												<div>
-													<div className='flex flex-row w-full pt-5 pb-5 text-center items-center hover:bg-gray-200 cursor-pointer'
+													<div className='flex flex-row w-full pt-5 pb-5 text-center items-center hover:bg-white hover:shadow-xl cursor-pointer'
 														onClick={() => {
 															handleTableClick(tableInfo.table_id, tableInfo.table_name, tableInfo.table_comment, tableInfo.small_clsf_name);
 														}}
 													>
-														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
-														    <p className="text-gray-400 font-bold text-sm">
+														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center overflow-hidden">
+															<p className="text-[#404040] font-bold text-sm overflow-hidden whitespace-nowrap truncate">
 														        {tableInfo.table_id}
 														    </p>
 														</div>
 														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">	
-															 <p className="text-gray-400 font-bold text-sm">
+															<p className="text-[#404040] font-bold text-sm">
 														        {tableInfo.table_name}
 														    </p>
 														</div>
 														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">		
-															<p className="text-gray-400 font-bold text-sm">
+															<p className="text-[#404040] font-bold text-sm">
 														        {tableInfo.table_comment}
 														    </p>
 														</div>
 														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">			
-															<p className="text-gray-400 font-bold text-sm">
+															<p className="text-[#404040] font-bold text-sm">
 														        {tableInfo.small_clsf_name}
 														    </p>
 														</div>
@@ -477,7 +477,7 @@ const MetaDataInfo = () => {
 						
 					) : (
 						<div className="flex flex-col items-center justify-top p-5 w-3/4 mt-10">
-							<h3>해당 브랜드의 메타 데이터는 아직 준비중입니다.</h3>
+							<h3 className='text-[#404040]'>해당 브랜드의 메타 데이터는 아직 준비중입니다.</h3>
 						</div>
 					)) : (
 						<div className="flex flex-col justify-top p-5 w-3/4">
@@ -534,30 +534,28 @@ const MetaDataInfo = () => {
 												
 
 												return (
-													<div
-													
-													>
-														<div className='flex flex-row w-full pt-5 pb-5 text-center items-center hover:bg-gray-200 cursor-pointer'
+													<div>
+														<div className='flex flex-row w-full pt-5 pb-5 text-center items-center hover:bg-white hover:shadow-xl cursor-pointer'
 														onClick={() => {
 															handleTableClick(tableInfo.table_id, tableInfo.table_name, tableInfo.table_comment, tableInfo.small_clsf_name);
 														}}>
 															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
-																<span className="text-gray-400 font-bold text-sm">
+																<span className="text-[#404040] font-bold text-sm">
 																	{searchCondition === "table_id_or_name" ? highlightLetters(tableInfo.table_id, currentSearch) : tableInfo.table_id}
 																</span>
 															</div>
 															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
-																<span className="text-gray-400 font-bold text-sm">
+																<span className="text-[#404040] font-bold text-sm">
 																	{searchCondition === "table_id_or_name" ? highlightLetters(tableInfo.table_name, currentSearch) : tableInfo.table_name}
 																</span>
 															</div>
 															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
-															    <span className="text-gray-400 font-bold text-sm">
+															    <span className="text-[#404040] font-bold text-sm">
 															        {tableInfo.table_comment}
 															    </span>
 															</div>
 															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
-															    <span className="text-gray-400 font-bold text-sm">
+															    <span className="text-[#404040] font-bold text-sm">
 															        {searchCondition === "small_clsf_name" ? highlightLetters(tableInfo.small_clsf_name, currentSearch) : tableInfo.small_clsf_name}
 															    </span>
 															</div>
@@ -569,7 +567,7 @@ const MetaDataInfo = () => {
 											<div className='flex flex-row w-full pt-5 pb-5 text-center justify-center items-center'>
 											{/* <div className="w-1/8 border-r border-gray-300 flex items-center overflow-hidden border-[#E5E7EB]"> */}
 												<div className="w-1/8 flex items-center overflow-hidden">
-												    <p className="text-gray-400 text-sm">
+												    <p className="text-[#404040] text-sm">
 												        검색 결과가 없습니다. 
 												    </p>
 												</div>

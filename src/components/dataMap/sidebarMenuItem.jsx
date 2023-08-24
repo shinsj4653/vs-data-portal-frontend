@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 const SidebarMenuItem = ({ item, onMenuClick, serviceName, isMap }) => {
 	const [isOpen, setIsOpen] = useState(isMap ? item.depth === 0 : true);
+	
 	const handleItemClick = (itemId, itemName, itemDepth) => {
 		isMap && setIsOpen(item.depth === 0);
 		onMenuClick(itemId, itemName, itemDepth);

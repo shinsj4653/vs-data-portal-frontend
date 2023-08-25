@@ -112,13 +112,9 @@ const MetaDataInfo = () => {
 		console.log(value.toLowerCase());
 		setCurrentSearch(value.toLowerCase());
 		setSearchResult([]);
+		
 
-		if(searchValue == "") {
-			setSearchResult([]);
-			alert("검색어를 입력해주세요.");
-			return;
-		} else 
-			fetchResultData(); 
+		fetchResultData(); 
 
 		
 	}
@@ -127,11 +123,11 @@ const MetaDataInfo = () => {
 		
 		const result = await searchQuery.refetch();
 		// console.log(result.data.data);
-		if(!result.isLoading) {
-			if (result.data.data.length == 0 ) {
-				alert("검색 결과가 없습니다.");
-				return;
-			}
+		if(!result.isLoading && result.data.data) {
+			// if(result.data.data.length === 0) {
+			// 	alert("검색 결과가 없습니다.");
+			// 	return;
+			// }
 			setSearchResult(result.data.data);
 		}
 
@@ -267,7 +263,7 @@ const MetaDataInfo = () => {
 		setSearchStandard(child);
 		// setSearchValue("");
 		// setCurrentSearch(null);
-		setSearchResult([]);
+		//setSearchResult([]);
 
 		if(child === "테이블ID & 테이블명") {
 			setSearchCondition("table_id_or_name");

@@ -8,6 +8,9 @@ import systemInfo_background from '../assets/backgrounds/systemInfo_background.j
 import service_pionada_logo from '../assets/logos/service_pionada_logo.jpg';
 import service_onlyone_logo from '../assets/logos/service_onlyone_logo.png';
 import service_mathpluslearning_logo from '../assets/logos/service_mathpluslearning_logo.png';
+import service_allvia_logo from '../assets/logos/service_allvia_logo.png';
+import service_wings_logo from '../assets/logos/service_wings_logo.png';
+import service_englisheye_logo from '../assets/logos/service_englisheye_logo.png';
 import service_not_ready from '../assets/logos/service_not_ready.png';
 import Loading from '../components/loading';
 import { useLocation } from 'react-router-dom';
@@ -97,6 +100,12 @@ const SystemInfo = () => {
 				return service_onlyone_logo;
 			case "수학플러스러닝":
 				return service_mathpluslearning_logo;
+			case "올비아":
+				return service_allvia_logo;
+			case "윙스":
+				return service_wings_logo;
+			case "잉글리시 아이": 
+				return service_englisheye_logo;
 			default:
 				return service_not_ready;
 		}

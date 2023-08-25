@@ -34,6 +34,7 @@ const Sidebar = ({ data, onNodeClick, serviceName, isMap, isSearch, setIsSearch,
         </svg>
         <p onClick={() => {
           setIsSearch(true)
+          setSearchResult([])
         }}
         className="cursor-pointer">검색하기</p>
         </div>) : (
@@ -49,7 +50,6 @@ const Sidebar = ({ data, onNodeClick, serviceName, isMap, isSearch, setIsSearch,
             setIsSearch(false)
             setSearchResult([])
             setSearchValue("")
-
           }}
           className="cursor-pointer">뒤로가기</p>
         </div>

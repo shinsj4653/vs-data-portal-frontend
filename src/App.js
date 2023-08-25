@@ -7,6 +7,7 @@ import SystemInfo from './pages/systemInfo';
 import { QueryClientProvider } from 'react-query';
 import { MainProvider } from './context/MainContext';
 import TableInfo from './pages/tableInfo';
+import AIStatusMap from './pages/aiStatusMap';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
               <Route path="/" element={<Main />} />
               <Route path="/DataMap" element={<DataMap />} />
               <Route path="/Orgchart" element={<Orgchart />} />
+              <Route path="/AiStatusMap" element={<AIStatusMap />} />
               <Route path="/MetaDataInfo" element={<MetaDataInfo />} />
               <Route path="/TableInfo" element={<TableInfo />} />
               <Route path="/SystemInfo" element={<SystemInfo />} />

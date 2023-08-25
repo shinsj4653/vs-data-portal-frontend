@@ -148,7 +148,10 @@ const DataPlatformMain = () => {
 							</div>
 						</Link>
 
-						<div>
+						<Link
+							className='card'
+							to="/AiStatusMap"
+						>
 							<div className="card border-2 border-slate-600 bg-base-100 shadow-xl transition duration-150 ease-out hover:bg-slate-200">
 								<figure className="px-10 pt-10">
 									<img
@@ -159,12 +162,12 @@ const DataPlatformMain = () => {
 								</figure>
 								<div className="card-body items-center text-center">
 									<h2 className="card-title">
-										AI 현황맵 (개발 예정)
+										AI 현황맵
 									</h2>
 									{/* <p>비상교육의 학(學),습(習) 데이터를 볼 수 있는 서비스</p> */}
 								</div>
 							</div>
-						</div>
+						</Link>
 					</div>
 					<div className="grid grid-cols-1 gap-5 sm:grid-cols-3 my-4 bg-indigo-100 p-3 rounded-2xl justify-between">
 						<Link

@@ -52,6 +52,10 @@ const Header = () => {
 							</li>
 
 							<li className="hover:font-extrabold hover:text-slate-950">
+								<Link to="/AiStatusMap">AI 현황맵</Link>
+							</li>
+
+							<li className="hover:font-extrabold hover:text-slate-950">
 								<Link to="/MetaDataInfo">메타 데이터 정보</Link>
 							</li>
 
@@ -114,6 +118,10 @@ const Header = () => {
 
 								<li className="hover:font-extrabold hover:text-slate-950">
 									<Link to="/Orgchart">데이터 기반 조직도</Link>
+								</li>
+
+								<li className="hover:font-extrabold hover:text-slate-950">
+									<Link to="/AiStatusMap">AI 현황맵</Link>
 								</li>
 
 								<li className="hover:font-extrabold hover:text-slate-950">

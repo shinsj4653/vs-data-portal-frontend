@@ -2,11 +2,16 @@ import React, { useEffect, useState } from 'react';
 import Sidebar from '../components/dataMap/sidebar';
 import Layout from '../components/layout';
 import { useOrgChartMain } from '../hooks/useOrgChart';
-import { useSercviceSystemInfo } from '../hooks/useSysInfo';
+import { useServiceSystemInfo } from '../hooks/useSysInfo';
 import { useMetadataMainDataSet } from '../hooks/useMetaData';
 import systemInfo_background from '../assets/backgrounds/systemInfo_background.jpg';
 import service_pionada_logo from '../assets/logos/service_pionada_logo.jpg';
 import service_onlyone_logo from '../assets/logos/service_onlyone_logo.png';
+import service_mathpluslearning_logo from '../assets/logos/service_mathpluslearning_logo.png';
+import service_allvia_logo from '../assets/logos/service_allvia_logo.png';
+import service_wings_logo from '../assets/logos/service_wings_logo.png';
+import service_englisheye_logo from '../assets/logos/service_englisheye_logo.png';
+import service_not_ready from '../assets/logos/service_not_ready.png';
 import Loading from '../components/loading';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -25,7 +30,7 @@ const SystemInfo = () => {
 	
 	const [clickedNodeId, setClickedNodeId] = useState(null);
 	const [serviceName, setServiceName] = useState(location.state?.serviceName ?? '피어나다');
-    const [serviceDesc, setServiceDesc] = useState('심리 상담부터 학습 코칭까지 하나로 결합한');
+    const [serviceDesc, setServiceDesc] = useState("");
     const [systemInfoData, setSystemInfoData] = useState({});
 	
 	const [isSearch, setIsSearch] = useState(false);
@@ -50,20 +55,7 @@ const SystemInfo = () => {
 		if (nodeDepth === 2) {
 			console.log(nodeName);
 			setServiceName(nodeName);
-			
-			setServiceDesc(prevServiceDesc => {
-
-				if (nodeName === "온리원초등") {
-					return "메타인지 기반 완전 학습 시스템";
-				}
-				else if (nodeName === "온리원키즈") {
-					return "우리 아이의 창의력과 기초 학습력을 키웁니다";
-				}
-				else if (nodeName === "피어나다") {
-					return "심리 상담부터 학습 코칭까지 하나로 결합한";
-				}
-				return prevServiceDesc;
-			})
+			fetchData();
 		} else {
 			// setServiceName(nodeName);
 		}
@@ -72,7 +64,7 @@ const SystemInfo = () => {
 	
 	const orgDataQuery = useOrgChartMain();
     const mainDatasetDataQuery = useMetadataMainDataSet(location.state?.serviceName ?? serviceName);
-	const serviceSystemInfoQuery = useSercviceSystemInfo(location.state?.serviceName ?? serviceName);
+	const serviceSystemInfoQuery = useServiceSystemInfo(location.state?.serviceName ?? serviceName);
 
 	const fetchData = async () => { 
 	    const [orgData, mainDataset, systemInfoData] = await Promise.all([
@@ -85,6 +77,7 @@ const SystemInfo = () => {
 	    	setOrgData(transformedData);
 	    	setMainDatasetList(mainDataset.data.data);
             setSystemInfoData(systemInfoData.data.data);
+			setServiceDesc(systemInfoData.data.data.service_description);
         }
     };
 
@@ -96,6 +89,27 @@ const SystemInfo = () => {
             }
           })
     }
+
+	const getLogoUrl = (serviceName) => {
+		switch (serviceName) {
+			case "피어나다":
+				return service_pionada_logo;
+			case "온리원키즈":
+				return service_onlyone_logo;
+			case "온리원초등":
+				return service_onlyone_logo;
+			case "수학플러스러닝":
+				return service_mathpluslearning_logo;
+			case "올비아":
+				return service_allvia_logo;
+			case "윙스":
+				return service_wings_logo;
+			case "잉글리시 아이": 
+				return service_englisheye_logo;
+			default:
+				return service_not_ready;
+		}
+	}
 	
     useEffect(() => {
         fetchData();
@@ -135,19 +149,13 @@ const SystemInfo = () => {
 						setIsSearch={setIsSearch}
 					/>
 					
-					{serviceName === "피어나다" || serviceName === "온리원키즈" || serviceName === "온리원초등" ?
-						(<div className='flex w-full h-screen justify-center items-center '>
-                            <LogoCard logo_url={
-								(serviceName === "피어나다" ? service_pionada_logo : serviceName === "온리원키즈" || serviceName === "온리원초등" ? service_onlyone_logo : '')
-								} serviceDesc={serviceDesc} serviceName={serviceName}/>
-                            <SystemInfoAndDataset systemInfoData={systemInfoData} mainDatasetList={mainDatasetList} onDatasetClick={handleDatasetClick}/>
-						</div>)
-					 : (
-						<div className="flex flex-col items-center justify-top p-5 w-3/4 mt-10">
-							<h3>해당 브랜드의 시스템 정보는 아직 준비중입니다.</h3>
-						</div>
-					)
-					}
+					
+					<div className='flex w-full h-screen justify-center items-center '>
+                        <LogoCard logo_url={getLogoUrl(serviceName)} serviceDesc={serviceDesc} serviceName={serviceName}/>
+                        <SystemInfoAndDataset systemInfoData={systemInfoData} mainDatasetList={mainDatasetList} onDatasetClick={handleDatasetClick}/>
+					</div>
+					 
+					
 				</div>
 			</Layout>
 		</>

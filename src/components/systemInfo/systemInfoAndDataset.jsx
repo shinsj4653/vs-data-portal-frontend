@@ -52,39 +52,44 @@ const SystemInfoAndDataset = ({systemInfoData, mainDatasetList, onDatasetClick})
                 <p className='font-black text-m mb-5'>주요 데이터셋</p>
                 <div className='flex justify-center items-center h-32 w-full bg-white drop-shadow-l border-2 rounded-xl px-20'>
                     <div className='flex flex-col flex-wrap w-full justify-center items-center'>
-
-                        <div className='flex flex-row flex-wrap h-1/2'>
-                            {mainDatasetList.slice(0, Math.floor(mainDatasetList.length / 2)).map((child, idx) => {
-                                return (
-                                    <button
-                                        className='flex justify-center items-center min-w-[7.5rem] flex-grow overflow-wrap break-word bg-white border border-[#C0C0C0]
-                                        text-[#404040] text-sm mx-2 p-3 shadow-md m-2 px-4 py-2 hover:bg-blue-500 hover:border-blue-500 hover:text-white hover:shadow-l transition duration-300'
-                                        key={child}
-                                        onClick={() => {
-                                            onDatasetClick(child);
-                                        }}
-                                    >
-                                        {child}
-                                    </button>
-                                );
-                            })}
-                        </div>
-                        <div className='flex flex-row-reverse flex-wrap h-1/2'>
-                            {mainDatasetList.slice(Math.floor(mainDatasetList.length / 2)).map((child, idx) => {
-                                return (
-                                    <button
-                                        className='flex justify-center items-center min-w-[7.5rem] flex-grow overflow-wrap break-word bg-white border border-[#C0C0C0]
-                                        text-[#404040] text-sm mx-2 p-3 shadow-md m-2 px-4 py-2 hover:bg-blue-500 hover:border-blue-500 hover:text-white hover:shadow-l transition duration-300'
-                                        key={child}
-                                        onClick={() => {
-                                            onDatasetClick(child);
-                                        }}
-                                    >
-                                        {child}
-                                    </button>
-                                );
-                            })}
-                        </div>
+                        {
+                            mainDatasetList.length === 0 ? (
+                                <p className='font-black text-m'>해당 서비스의 데이터셋은 아직 준비중입니다.</p>
+                            ) :
+                            (<>
+                                <div className='flex flex-row flex-wrap h-1/2'>
+                                {mainDatasetList.slice(0, Math.floor(mainDatasetList.length / 2)).map((child, idx) => {
+                                    return (
+                                        <button
+                                            className='flex justify-center items-center min-w-[7.5rem] flex-grow overflow-wrap break-word bg-white border border-[#C0C0C0]
+                                            text-[#404040] text-sm mx-2 p-3 shadow-md m-2 px-4 py-2 hover:bg-blue-500 hover:border-blue-500 hover:text-white hover:shadow-l transition duration-300'
+                                            key={child}
+                                            onClick={() => {
+                                                onDatasetClick(child);
+                                            }}
+                                        >
+                                            {child}
+                                        </button>
+                                    );
+                                })}
+                                </div>
+                                <div className='flex flex-row-reverse flex-wrap h-1/2'>
+                                    {mainDatasetList.slice(Math.floor(mainDatasetList.length / 2)).map((child, idx) => {
+                                        return (
+                                            <button
+                                                className='flex justify-center items-center min-w-[7.5rem] flex-grow overflow-wrap break-word bg-white border border-[#C0C0C0]
+                                                text-[#404040] text-sm mx-2 p-3 shadow-md m-2 px-4 py-2 hover:bg-blue-500 hover:border-blue-500 hover:text-white hover:shadow-l transition duration-300'
+                                                key={child}
+                                                onClick={() => {
+                                                    onDatasetClick(child);
+                                                }}
+                                            >
+                                                {child}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            </>)}
                     </div>
                 </div>
             </div>

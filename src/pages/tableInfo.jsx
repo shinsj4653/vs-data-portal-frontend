@@ -81,7 +81,7 @@ const TableInfo = (props) => {
                 <div className="flex flex-col w-full px-28 mt-5">
                     <p className="font-black text-2xl">데이터 상세</p>
                     <div className="flex flex-col justify-center border border-gray-300 mt-5 p-5 h-28">
-                        <p className="font-black text-xl mb-2">{metaState.tableName === "nan" ? metaState.tableId : metaState.tableName}</p>
+                        <p className="font-black text-xl mb-2">{metaState.tableId}</p>
                         <p>{metaState.tableCmnt}입니다.</p>
                     </div>
 
@@ -108,17 +108,12 @@ const TableInfo = (props) => {
 													<p className="text-center font-black text-lg">{'No.'}</p>
 												</div>
 											</div>
-                                            <div className='flex items-center justify-center w-2/12 h-full border-r border-color-[#E5E7EB]'>
+                                            <div className='flex items-center justify-center w-4/12 h-full border-r border-color-[#E5E7EB]'>
 												<div className='p-2 text-center'>
 													<p className="text-center font-black text-lg">{'컬럼 ID'}</p>
 												</div>
 											</div>
                                             <div className='flex items-center justify-center w-2/12 h-full border-r border-color-[#E5E7EB]'>
-												<div className='p-2 text-center'>
-													<p className="text-center font-black text-lg">{'컬럼명 (한글명)'}</p>
-												</div>
-											</div>
-                                            <div className='flex items-center justify-center w-1/12 h-full border-r border-color-[#E5E7EB]'>
 												<div className='p-2 text-center'>
 													<p className="text-center font-black text-lg">{'데이터 타입'}</p>
 												</div>
@@ -141,17 +136,12 @@ const TableInfo = (props) => {
 																	<p className="text-center font-black font-bold text-sm">{index + 1 + (currentPage - 1) * itemsPerPage}</p>
 																</div>
 															</div>
-															<div className="flex items-center justify-center w-2/12 h-full border-r border-color-[#E5E7EB] overflow-hidden whitespace-nowrap truncate">
+															<div className="flex items-center justify-center w-4/12 h-full border-r border-color-[#E5E7EB] overflow-hidden whitespace-nowrap truncate">
 																<div className='py-4 text-center'>
 																	<p className="text-center font-black font-bold text-sm">{colInfo.table_col_id}</p>
 																</div>
 															</div>
 															<div className="flex items-center justify-center w-2/12 h-full border-r border-color-[#E5E7EB] overflow-hidden whitespace-nowrap truncate">
-																<div className='py-4 text-center'>
-																	<p className="text-center font-black font-bold text-sm">{colInfo.table_col_name}</p>
-																</div>
-															</div>
-															<div className="flex items-center justify-center w-1/12 h-full border-r border-color-[#E5E7EB] overflow-hidden whitespace-nowrap truncate">
 																<div className='py-4 text-center'>
 																	<p className="text-center font-black font-bold text-sm">{colInfo.table_col_datatype}</p>
 																</div>

@@ -109,6 +109,9 @@ const MetaDataInfo = () => {
 	}
 
 	const handleSearch = (value) => {
+
+		
+
 		console.log(value.toLowerCase());
 		setCurrentSearch(value.toLowerCase());
 		setSearchResult([]);
@@ -124,10 +127,10 @@ const MetaDataInfo = () => {
 		const result = await searchQuery.refetch();
 		// console.log(result.data.data);
 		if(!result.isLoading && result.data.data) {
-			// if(result.data.data.length === 0) {
-			// 	alert("검색 결과가 없습니다.");
-			// 	return;
-			// }
+			if(result.data.data.length === 0) {
+				alert("검색 결과가 없습니다.");
+				return;
+			}
 			setSearchResult(result.data.data);
 		}
 

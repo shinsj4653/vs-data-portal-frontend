@@ -112,7 +112,7 @@ const MetaDataInfo = () => {
 		console.log(value.toLowerCase());
 		setCurrentSearch(value.toLowerCase());
 		setSearchResult([]);
-		
+	
 
 		fetchResultData(); 
 
@@ -133,7 +133,7 @@ const MetaDataInfo = () => {
 
 
 	}
-	const fetchData = async (param) => { 
+	const fetchData = async (param) => {
 		setSearchResult([]);
 		if (param === "init") {
 			const [orgData, mainDataset, subDataset, tableInfoData] = await Promise.all([

@@ -39,8 +39,8 @@ const MetaDataInfo = () => {
 	
 	const [scrollPosition, setScrollPosition] = useState(0);
 	
-	const [searchStandard, setSearchStandard] = useState('테이블ID & 테이블명');
-	const [searchCondition, setSearchCondition] = useState('table_id_or_name'); // [테이블ID & 이름, 기타
+	const [searchStandard, setSearchStandard] = useState('테이블ID');
+	const [searchCondition, setSearchCondition] = useState('table_id'); // [테이블ID & 이름, 기타
 	const [isSearch, setIsSearch] = useState(false);
 	const [searchValue , setSearchValue] = useState("");
 	const [searchResult, setSearchResult] = useState([]);
@@ -264,9 +264,12 @@ const MetaDataInfo = () => {
 		// setCurrentSearch(null);
 		//setSearchResult([]);
 
-		if(child === "테이블ID & 테이블명") {
-			setSearchCondition("table_id_or_name");
-		} else if(child === "하위 주제") {
+		if(child === "테이블ID") {
+			setSearchCondition("table_id");
+		} else if(child === "테이블 설명") {
+			setSearchCondition("table_comment");
+		}
+		else if(child === "하위 주제") {
 			setSearchCondition("small_clsf_name");
 		}
 	}
@@ -408,14 +411,17 @@ const MetaDataInfo = () => {
 									</div>
 									<div><hr className="h-1 bg-[#E5E7EB]"></hr></div>
 									<div className="flex flex-row p-3 bg-[#F2F5F8]">
-										{["테이블ID", "테이블 설명", "하위 주제"].map((label) => (
-
-											<div className='w-1/3' key={label}>
-												<div className='p-2 text-center border-r border-color-[#E5E7EB]'>
-													<p className="text-center text-gray-400 font-extrabold text-lg">{label}</p>
+											<div className='flex flex-row w-full items-center'>
+												<div className='w-1/4 p-2 text-center border-r border-color-[#E5E7EB]'>
+													<p className="text-center text-gray-400 font-extrabold text-lg">테이블ID</p>
 												</div>
-											</div>
-										))}
+												<div className='w-1/2 p-2 text-center border-r border-color-[#E5E7EB]'>
+													<p className="text-center text-gray-400 font-extrabold text-lg">테이블 설명</p>
+												</div>
+												<div className='w-1/4 p-2 text-center border-r border-color-[#E5E7EB]'>
+													<p className="text-center text-gray-400 font-extrabold text-lg">하위 주제</p>
+												</div>
+											</div>				
 									</div>
 									<div><hr className="h-1 bg-[#E5E7EB]"></hr></div>
 									<div className="flex flex-col pt-0 p-3 bg-[#F2F5F8]">
@@ -427,17 +433,17 @@ const MetaDataInfo = () => {
 															handleTableClick(tableInfo.table_id, tableInfo.table_name, tableInfo.table_comment, tableInfo.small_clsf_name);
 														}}
 													>
-														<div className="w-1/3 border-r border-color-[#E5E7EB] flex justify-center overflow-hidden">
+														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center overflow-hidden">
 															<p className="text-[#404040] font-bold text-sm overflow-hidden whitespace-nowrap truncate">
 														        {tableInfo.table_id}
 														    </p>
 														</div>
-														<div className="w-1/3 border-r border-color-[#E5E7EB] flex justify-center">		
+														<div className="w-1/2 border-r border-color-[#E5E7EB] flex justify-center">		
 															<p className="text-[#404040] font-bold text-sm">
 														        {tableInfo.table_comment}
 														    </p>
 														</div>
-														<div className="w-1/3 border-r border-color-[#E5E7EB] flex justify-center">			
+														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">			
 															<p className="text-[#404040] font-bold text-sm">
 														        {tableInfo.small_clsf_name}
 														    </p>
@@ -473,7 +479,7 @@ const MetaDataInfo = () => {
 											<div className="flex flex-row items-center w-50%">
 
 												<div className="flex flex-row overflow-x-auto scroll-smooth">
-													{["테이블ID & 테이블명", "하위 주제"].map((child) => (
+													{["테이블ID", "테이블 설명", "하위 주제"].map((child) => (
 														<button
 														className={`${
 															searchStandard === child ? 'bg-blue-500 text-white border-blue-500' : 'bg-white text-gray-400 border-gray-300'
@@ -502,9 +508,9 @@ const MetaDataInfo = () => {
 									
 									<div><hr className="h-1 bg-[#E5E7EB]"></hr></div>
 									<div className="flex flex-row p-3 bg-[#F2F5F8]">
-										{["테이블ID", "테이블명", "테이블 설명", "하위 주제"].map((label) => (
+										{["테이블ID", "테이블 설명", "하위 주제"].map((label) => (
 
-											<div className='w-1/4' key={label}>
+											<div className='w-1/3' key={label}>
 												<div className='p-2 text-center border-r border-color-[#E5E7EB]'>
 													<p className="text-center text-gray-400 font-extrabold text-lg">{label}</p>
 												</div>
@@ -523,22 +529,17 @@ const MetaDataInfo = () => {
 														onClick={() => {
 															handleTableClick(tableInfo.table_id, tableInfo.table_name, tableInfo.table_comment, tableInfo.small_clsf_name);
 														}}>
-															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
+															<div className="w-1/3 border-r border-color-[#E5E7EB] flex justify-center">
 																<span className="text-[#404040] font-bold text-sm">
-																	{searchCondition === "table_id_or_name" ? highlightLetters(tableInfo.table_id, currentSearch) : tableInfo.table_id}
+																	{searchCondition === "table_id" ? highlightLetters(tableInfo.table_id, currentSearch) : tableInfo.table_id}
 																</span>
 															</div>
-															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
+															<div className="w-1/3 border-r border-color-[#E5E7EB] flex justify-center">
 																<span className="text-[#404040] font-bold text-sm">
-																	{searchCondition === "table_id_or_name" ? highlightLetters(tableInfo.table_name, currentSearch) : tableInfo.table_name}
+																	{searchCondition === "table_comment" ? highlightLetters(tableInfo.table_comment, currentSearch) : tableInfo.table_comment}
 																</span>
 															</div>
-															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
-															    <span className="text-[#404040] font-bold text-sm">
-															        {tableInfo.table_comment}
-															    </span>
-															</div>
-															<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">
+															<div className="w-1/3 border-r border-color-[#E5E7EB] flex justify-center">
 															    <span className="text-[#404040] font-bold text-sm">
 															        {searchCondition === "small_clsf_name" ? highlightLetters(tableInfo.small_clsf_name, currentSearch) : tableInfo.small_clsf_name}
 															    </span>

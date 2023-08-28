@@ -81,7 +81,7 @@ const TableInfo = (props) => {
                 <div className="flex flex-col w-full px-28 mt-5">
                     <p className="font-black text-2xl">데이터 상세</p>
                     <div className="flex flex-col justify-center border border-gray-300 mt-5 p-5 h-28">
-                        <p className="font-black text-xl mb-2">{metaState.tableName === "nan" ? metaState.tableId : metaState.tableName}</p>
+                        <p className="font-black text-xl mb-2">{metaState.tableId}</p>
                         <p>{metaState.tableCmnt}입니다.</p>
                     </div>
 

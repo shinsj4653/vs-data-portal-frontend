@@ -21,7 +21,7 @@ const findNodeById = (node, targetId) => {
 };
 
 // Zoomable Circle Pack 차트 개발
-const DataMapChart = ({ data, clickedNodeId, onNodeClick }) => {
+const DataMapChart = ({ data, clickedNodeId, filterCategory, onNodeClick }) => {
   const [zoomedId, setZoomedId] = useState(null);
   const [labelIdx, setLabelIdx] = useState(0);
   const [nodeColor, setNodeColor] = useState(false);
@@ -48,7 +48,7 @@ const DataMapChart = ({ data, clickedNodeId, onNodeClick }) => {
   // Node 클릭 시 Zoom 및 label 레벨 설정
   const handleNodeClick = (node) => {    
 
-    if(node.depth === 3) {
+    if(node.depth === 3 && filterCategory === true) {
       navigate('/metadataInfo', {
         state: {
           serviceName: node.data.parentList[2],
@@ -56,6 +56,7 @@ const DataMapChart = ({ data, clickedNodeId, onNodeClick }) => {
         }
       })
     } else if (node.depth === 4){
+      // 데이터 맵 → 중분류 데이터 셋 보여줄 때는 최단까지 줌인 되도록
       navigate('/metadataInfo', {
         state: {
           serviceName: node.data.parentList[2],

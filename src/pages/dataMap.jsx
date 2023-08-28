@@ -175,6 +175,7 @@ const DataMap = () => {
 						<DataMapChart
 							data={data}
 							clickedNodeId={clickedNodeId}
+							filterCategory={filterCategory}
 							onNodeClick={handleNodeClick}
 						/>
 					</div>

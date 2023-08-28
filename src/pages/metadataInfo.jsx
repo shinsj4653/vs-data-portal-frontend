@@ -178,7 +178,6 @@ const MetaDataInfo = () => {
 				const tableInfoDataRefetch = await tableInfoDataQuery.refetch();
 					if (!tableInfoDataRefetch.isLoading)
 						setTableInfoList(tableInfoDataRefetch.data.data);
-
 			}
 			
 		} else if(param === "mainCategoryChange") {
@@ -409,9 +408,9 @@ const MetaDataInfo = () => {
 									</div>
 									<div><hr className="h-1 bg-[#E5E7EB]"></hr></div>
 									<div className="flex flex-row p-3 bg-[#F2F5F8]">
-										{["테이블ID", "테이블명", "테이블 설명", "하위 주제"].map((label) => (
+										{["테이블ID", "테이블 설명", "하위 주제"].map((label) => (
 
-											<div className='w-1/4' key={label}>
+											<div className='w-1/3' key={label}>
 												<div className='p-2 text-center border-r border-color-[#E5E7EB]'>
 													<p className="text-center text-gray-400 font-extrabold text-lg">{label}</p>
 												</div>
@@ -428,22 +427,17 @@ const MetaDataInfo = () => {
 															handleTableClick(tableInfo.table_id, tableInfo.table_name, tableInfo.table_comment, tableInfo.small_clsf_name);
 														}}
 													>
-														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center overflow-hidden">
+														<div className="w-1/3 border-r border-color-[#E5E7EB] flex justify-center overflow-hidden">
 															<p className="text-[#404040] font-bold text-sm overflow-hidden whitespace-nowrap truncate">
 														        {tableInfo.table_id}
 														    </p>
 														</div>
-														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">	
-															<p className="text-[#404040] font-bold text-sm">
-														        {tableInfo.table_name}
-														    </p>
-														</div>
-														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">		
+														<div className="w-1/3 border-r border-color-[#E5E7EB] flex justify-center">		
 															<p className="text-[#404040] font-bold text-sm">
 														        {tableInfo.table_comment}
 														    </p>
 														</div>
-														<div className="w-1/4 border-r border-color-[#E5E7EB] flex justify-center">			
+														<div className="w-1/3 border-r border-color-[#E5E7EB] flex justify-center">			
 															<p className="text-[#404040] font-bold text-sm">
 														        {tableInfo.small_clsf_name}
 														    </p>

@@ -44,7 +44,7 @@ const DataDrivenOrgChart = (props) => {
 
 	useEffect(() => {
 		servicesByTarget.length > 0 && setServicesByTarget([]);
-		fetchSearchResult();
+		props.currentSearch !== "" && fetchSearchResult();
 
 	}, [props.currentSearch])
 

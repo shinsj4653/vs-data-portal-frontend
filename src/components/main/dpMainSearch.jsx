@@ -56,7 +56,7 @@ const DpMainSearch = ({ setIsSearch, currentSearch, setSearchValue, searchResult
 								
 
 					<div className="flex flex-row p-3 bg-[#FFF]">
-										{["서비스명", "데이터셋"].map((label) => (
+										{["서비스명", "대분류 데이터셋", "중분류 데이터셋"].map((label) => (
 
 											<div className='w-1/2' key={label}>
 												<div className='p-2 text-center border-r border-[#E5E7EB]'>
@@ -75,17 +75,21 @@ const DpMainSearch = ({ setIsSearch, currentSearch, setSearchValue, searchResult
 									navigate('/metadataInfo', {
 										state: {
 										  serviceName: tableInfo.service_name,
-										  selectedMainDataset : tableInfo.dataset_name,
+										  selectedMainDataset : tableInfo.main_category_name,
+										  selectedSubDataset : tableInfo.sub_category_name,
 										}
 									  })
 								}}
 							>
 								<div className='flex flex-row w-full pt-5 pb-5 text-center items-center'>
-									<div className="w-1/2 border-r border-color-[#E5E7EB] text-[#000] flex justify-center">
+									<div className="w-1/3 border-r border-color-[#E5E7EB] text-[#000] flex justify-center">
 										{highlightLetters(tableInfo.service_name, currentSearch)}
 									</div>
-									<div className="w-1/2 border-r border-color-[#E5E7EB] text-[#000] flex justify-center">
-										{highlightLetters(tableInfo.dataset_name, currentSearch)}
+									<div className="w-1/3 border-r border-color-[#E5E7EB] text-[#000] flex justify-center">
+										{highlightLetters(tableInfo.main_category_name, currentSearch)}
+									</div>
+									<div className="w-1/3 border-r border-color-[#E5E7EB] text-[#000] flex justify-center">
+										{highlightLetters(tableInfo.sub_category_name, currentSearch)}
 									</div>
 								</div>
 								<div><hr className='bg-[#E5E7EB] h-[1px]'></hr></div>

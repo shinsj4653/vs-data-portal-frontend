@@ -533,17 +533,17 @@ const MetaDataInfo = () => {
 														}}>
 															<div className="w-1/3 border-r border-color-[#E5E7EB] flex justify-center">
 																<span className="text-[#404040] font-bold text-sm">
-																	{searchCondition === "table_id" ? highlightLetters(tableInfo.table_id, currentSearch) : tableInfo.table_id}
+																	{searchCondition === "total" || searchCondition === "table_id" ? highlightLetters(tableInfo.table_id, currentSearch) : tableInfo.table_id}
 																</span>
 															</div>
 															<div className="w-1/3 border-r border-color-[#E5E7EB] flex justify-center">
 																<span className="text-[#404040] font-bold text-sm">
-																	{searchCondition === "table_comment" ? highlightLetters(tableInfo.table_comment, currentSearch) : tableInfo.table_comment}
+																	{searchCondition === "total" || searchCondition === "table_comment" ? highlightLetters(tableInfo.table_comment, currentSearch) : tableInfo.table_comment}
 																</span>
 															</div>
 															<div className="w-1/3 border-r border-color-[#E5E7EB] flex justify-center">
 															    <span className="text-[#404040] font-bold text-sm">
-															        {searchCondition === "small_clsf_name" ? highlightLetters(tableInfo.small_clsf_name, currentSearch) : tableInfo.small_clsf_name}
+															        {searchCondition === "total" || searchCondition === "small_clsf_name" ? highlightLetters(tableInfo.small_clsf_name, currentSearch) : tableInfo.small_clsf_name}
 															    </span>
 															</div>
 														</div>

@@ -84,6 +84,7 @@ const MetaDataInfo = () => {
 	};
 
 	const handleNodeClick = (nodeId, nodeName, nodeDepth) => {
+		// ci cd - node ver. test
 		location.state = null;
 		setIsSearch(false);
 		setSearchResult([]);

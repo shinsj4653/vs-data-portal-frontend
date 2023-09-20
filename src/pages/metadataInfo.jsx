@@ -12,6 +12,7 @@ import MainSearchBar from '../components/main/mainSearchBar';
 
 const MetaDataInfo = () => {
 	
+	// ci/cd, node랑 sudo node version 불일치 문제 해결
 	const location = useLocation();
 	const navigate = useNavigate();
 	console.log(location.state);
@@ -84,7 +85,6 @@ const MetaDataInfo = () => {
 	};
 
 	const handleNodeClick = (nodeId, nodeName, nodeDepth) => {
-		// ci cd - node ver. test
 		location.state = null;
 		setIsSearch(false);
 		setSearchResult([]);

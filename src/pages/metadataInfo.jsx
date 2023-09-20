@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import Sidebar from '../components/dataMap/sidebar';
 import Layout from '../components/layout';
 import { useOrgChartMain } from '../hooks/useOrgChart';
-import { useMetadataMainDataSet, useMetadataSubDataSet, useMetadataTableInfo, useMetadataTableSearch } from '../hooks/useMetaData';
+import { useMetadataMainDataSet, useMetadataSubDataSet, useMetadataTableInfo, useMetadataTableSearch, useMetaDataTotalSearch } from '../hooks/useMetaData';
 import metadata_background from '../assets/backgrounds/metadata_background.jpg';
 import Pagination from '../components/metaDataInfo/pagination';
 import Loading from '../components/loading';
@@ -39,8 +39,8 @@ const MetaDataInfo = () => {
 	
 	const [scrollPosition, setScrollPosition] = useState(0);
 	
-	const [searchStandard, setSearchStandard] = useState('테이블ID');
-	const [searchCondition, setSearchCondition] = useState('table_id'); // [테이블ID & 이름, 기타
+	const [searchStandard, setSearchStandard] = useState('통합 검색'); // [통합 검색, 테이블ID, 테이블 설명, 하위 주제]
+	const [searchCondition, setSearchCondition] = useState('total'); // [total, table_id, table_comment, small_clsf_name]
 	const [isSearch, setIsSearch] = useState(false);
 	const [searchValue , setSearchValue] = useState("");
 	const [searchResult, setSearchResult] = useState([]);
@@ -50,6 +50,7 @@ const MetaDataInfo = () => {
 	const [searchAmountPerPage, setSearchAmountPerPage] = useState(15); // 검색 결과 페이지 당 개수
 
 	const searchQuery = useMetadataTableSearch(serviceName, searchCondition, currentSearch, searchPageNo, searchAmountPerPage);
+	const totalSearchQuery = useMetaDataTotalSearch(currentSearch);
 
 	const handlePageChange = (list, pageNumber, isSearchPage) => {
 		isSearchPage ? setSearchPageNo(pageNumber) : setCurrentPage(pageNumber);
@@ -110,21 +111,17 @@ const MetaDataInfo = () => {
 
 	const handleSearch = (value) => {
 
-		
-
 		console.log(value.toLowerCase());
 		setCurrentSearch(value.toLowerCase());
 		setSearchResult([]);
-	
 
-		fetchResultData(); 
-
+		fetchResultData(); // 검색 결과 데이터 불러오기
 		
 	}
 
 	const fetchResultData = async () => {
 		
-		const result = await searchQuery.refetch();
+		const result = searchCondition === "total" ? await totalSearchQuery.refetch() : await searchQuery.refetch()
 		// console.log(result.data.data);
 		if(!result.isLoading && result.data.data) {
 			// if(result.data.data.length === 0) {
@@ -271,10 +268,12 @@ const MetaDataInfo = () => {
 			setSearchCondition("table_id");
 		} else if(child === "테이블 설명") {
 			setSearchCondition("table_comment");
-		}
-		else if(child === "하위 주제") {
+		} else if(child === "하위 주제") {
 			setSearchCondition("small_clsf_name");
+		} else if(child === "통합 검색"){
+			setSearchCondition("total");
 		}
+	
 	}
 
 	const handleTableClick = (tableId, tableName, tableCmnt, smallClsfName) => {
@@ -482,7 +481,7 @@ const MetaDataInfo = () => {
 											<div className="flex flex-row items-center w-50%">
 
 												<div className="flex flex-row overflow-x-auto scroll-smooth">
-													{["테이블ID", "테이블 설명", "하위 주제"].map((child) => (
+													{["통합 검색","테이블ID", "테이블 설명", "하위 주제"].map((child) => (
 														<button
 														className={`${
 															searchStandard === child ? 'bg-blue-500 text-white border-blue-500' : 'bg-white text-gray-400 border-gray-300'

@@ -54,3 +54,9 @@ export const fetchMetaTableColumnInfo = async (tableId) => {
     console.log(response.data)
     return response.data;
 }
+
+export const fetchMetaDataTotalSearch = async (keyword) => {
+    const response = await axios.get(`metadata/search/total?keyword=${keyword}`);
+    console.log(response.data);
+    return response.data;
+}

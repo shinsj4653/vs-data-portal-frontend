@@ -45,7 +45,7 @@ const MetaDataInfo = () => {
 	const [isSearch, setIsSearch] = useState(false);
 	const [searchValue , setSearchValue] = useState("");
 	const [searchResult, setSearchResult] = useState([]);
-	const [currentSearch, setCurrentSearch] = useState(null); // 현재 검색어
+	const [currentSearch, setCurrentSearch] = useState(""); // 현재 검색어
 
 	const [searchPageNo, setSearchPageNo] = useState(1); // 검색 결과 페이지 번호
 	const [searchAmountPerPage, setSearchAmountPerPage] = useState(15); // 검색 결과 페이지 당 개수
@@ -125,10 +125,10 @@ const MetaDataInfo = () => {
 		const result = searchCondition === "total" ? await totalSearchQuery.refetch() : await searchQuery.refetch()
 		// console.log(result.data.data);
 		if(!result.isLoading && result.data.data) {
-			// if(result.data.data.length === 0) {
-			// 	alert("검색 결과가 없습니다.");
-			// 	return;
-			// }
+			if(result.data.data.length === 0) {
+				alert("검색 결과가 없습니다.");
+				return;
+			}
 			setSearchResult(result.data.data);
 		}
 

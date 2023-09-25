@@ -34,5 +34,6 @@ export const useMetadataTableColumnInfo = (tableId) => {
 export const useMetaDataTotalSearch = (keyword) => {
 	return useQuery(['metaDataTotalSearch', keyword], () => fetchMetaDataTotalSearch(keyword), {
 		staleTime: 1000 * 60 * 60 * 24, // 24시간 동안 유효
+		enabled: keyword !== '' || keyword !== null || keyword !== "null" || keyword !== undefined ? true : false
 	});
 };	

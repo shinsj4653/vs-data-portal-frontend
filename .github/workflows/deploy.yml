@@ -20,7 +20,7 @@ jobs:
       - name: Check Node v 
         run: node -v
       - name: Install Dependencies 
-        run: npm install --frozen-lockfile --legacy-peer-deps
+        run: npm install --frozen-lockfile @babel/plugin-proposal-private-property-in-object --legacy-peer-deps
       - name: Build 
         run: npm run build
       - name: zip create

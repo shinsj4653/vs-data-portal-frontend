@@ -23,6 +23,8 @@ jobs:
         run: npm install --frozen-lockfile @babel/plugin-proposal-private-property-in-object --legacy-peer-deps
       - name: Build 
         run: npm run build
+        env: 
+          CI: false
       - name: zip create
         run: zip -qq -r ./vs_dp_web_build.zip . 
         shell: bash

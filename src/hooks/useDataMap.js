@@ -12,4 +12,4 @@ export const useDataMapSub = () => {
 export const useDataMapAllDataset = () => {
 	return useQuery('dataMapAllDataset', fetchDataMapAllDataset);
 };
-
+ 

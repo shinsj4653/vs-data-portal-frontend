@@ -425,7 +425,7 @@ const MetaDataInfo = () => {
 									<div><hr className="h-1 bg-[#E5E7EB]"></hr></div>
 									<div className="flex flex-col pt-0 p-3 bg-[#F2F5F8]">
 										{
-											Array.isArray(tableInfoList) && tableInfoList.map((tableInfo) => (
+											Array.isArray(tableInfoList) && tableInfoList?.map((tableInfo) => (
 												<div>
 													<div className='flex flex-row w-full pt-5 pb-5 text-center items-center hover:bg-white hover:shadow-xl cursor-pointer'
 														onClick={() => {
@@ -519,7 +519,7 @@ const MetaDataInfo = () => {
 									<div><hr className="h-1 bg-[#E5E7EB]"></hr></div>
 									<div className="flex flex-col pt-0 p-3 bg-[#F2F5F8]">
 										{
-											searchResult.length > 0 ? Array.isArray(searchResult) && searchResult.map((tableInfo) => {
+											searchResult.length > 0 ? Array.isArray(searchResult) && searchResult?.map((tableInfo) => {
 												
 
 												return (

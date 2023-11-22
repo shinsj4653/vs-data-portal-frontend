@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import Sidebar from '../components/dataMap/sidebar';
 import Layout from '../components/layout';
 import { useOrgChartMain } from '../hooks/useOrgChart';
-import { useMetadataMainDataSet, useMetadataSubDataSet, useMetadataTableInfo, useMetadataTableSearch, useMetaDataTotalSearch } from '../hooks/useMetaData';
+import { useMetadataMainDataSet, useMetadataSubDataSet, useMetadataTableInfo, useMetadataTableSearch } from '../hooks/useMetaData';
 import metadata_background from '../assets/backgrounds/metadata_background.jpg';
 import Pagination from '../components/metaDataInfo/pagination';
 import Loading from '../components/loading';
@@ -36,7 +36,6 @@ const MetaDataInfo = () => {
 	
 	const itemsPerPage = 15;
 	const [currentPage, setCurrentPage] = useState(1);
-	const [totalPages, setTotalPages] = useState(0);
 	
 	const [scrollPosition, setScrollPosition] = useState(0);
 	
@@ -47,17 +46,10 @@ const MetaDataInfo = () => {
 	const [searchResult, setSearchResult] = useState([]);
 	const [currentSearch, setCurrentSearch] = useState(""); // 현재 검색어
 
-	const [searchPageNo, setSearchPageNo] = useState(1); // 검색 결과 페이지 번호
-	const [searchAmountPerPage, setSearchAmountPerPage] = useState(15); // 검색 결과 페이지 당 개수
+	const searchQuery = useMetadataTableSearch(serviceName, searchCondition, currentSearch, currentPage, itemsPerPage);
 
-	const searchQuery = useMetadataTableSearch(serviceName, searchCondition, currentSearch, searchPageNo, searchAmountPerPage);
-	const totalSearchQuery = useMetaDataTotalSearch(currentSearch);
-
-	const handlePageChange = (list, pageNumber, isSearchPage) => {
-		isSearchPage ? setSearchPageNo(pageNumber) : setCurrentPage(pageNumber);
-		console.log("길이 ", list.length);
-		console.log("total ", totalPages);
-		console.log("현재 페이지 ", pageNumber);
+	const handlePageChange = (pageNumber) => {
+		setCurrentPage(pageNumber);
 	};
 	
 	const startIndex = (currentPage - 1) * itemsPerPage;
@@ -103,7 +95,7 @@ const MetaDataInfo = () => {
 	const orgDataQuery = useOrgChartMain();
     const mainDatasetDataQuery = useMetadataMainDataSet(location.state?.serviceName ?? serviceName);
     const subDatasetDataQuery = useMetadataSubDataSet(location.state?.serviceName ?? serviceName, location.state?.selectedMainDataset ?? selectedMainDataset);
-	const tableInfoDataQuery = useMetadataTableInfo(location.state?.serviceName ?? serviceName, location.state?.selectedMainDataset ?? selectedMainDataset, location.state?.selectedSubDataset ?? selectedSubDataset);
+	const tableInfoDataQuery = useMetadataTableInfo(location.state?.serviceName ?? serviceName, location.state?.selectedMainDataset ?? selectedMainDataset, location.state?.selectedSubDataset ?? selectedSubDataset, currentPage, itemsPerPage);
 	
 
 	const updateValue = (value) => {
@@ -116,13 +108,13 @@ const MetaDataInfo = () => {
 		setCurrentSearch(value.toLowerCase());
 		setSearchResult([]);
 
-		fetchResultData(); // 검색 결과 데이터 불러오기
+		fetchSearchResult(); // 검색 결과 데이터 불러오기
 		
 	}
 
-	const fetchResultData = async () => {
+	const fetchSearchResult = async () => {
 		
-		const result = searchCondition === "total" ? await totalSearchQuery.refetch() : await searchQuery.refetch()
+		const result = await searchQuery.refetch()
 		// console.log(result.data.data);
 		if(!result.isLoading && result.data.data) {
 			if(result.data.data.length === 0) {
@@ -209,19 +201,22 @@ const MetaDataInfo = () => {
 
 	useEffect(() => {
 		fetchData("serviceChange");
+		setCurrentPage(1);
 	}, [serviceName]);
 
 	useEffect(() => {
 		fetchData("mainCategoryChange");
+		setCurrentPage(1);
 	}, [selectedMainDataset]);
 
 	useEffect(() => {
 		fetchData("subCategoryChange");
+		setCurrentPage(1);
 	}, [selectedSubDataset]);
 
 	useEffect(() => {
-		fetchResultData();
-	}, [searchPageNo, searchAmountPerPage, currentSearch])
+		isSearch ? fetchSearchResult() : fetchData("tableInfoChange");
+	}, [currentPage])
 
     const handleMainDatasetColorChange = (child) => {
 		location.state = null;
@@ -267,12 +262,19 @@ const MetaDataInfo = () => {
 
 		if(child === "테이블ID") {
 			setSearchCondition("table_id");
-		} else if(child === "테이블 설명") {
+			return;
+		} 
+		if(child === "테이블 설명") {
 			setSearchCondition("table_comment");
-		} else if(child === "하위 주제") {
+			return;
+		} 
+		if(child === "하위 주제") {
 			setSearchCondition("small_clsf_name");
-		} else if(child === "통합 검색"){
+			return;
+		} 
+		if(child === "통합 검색"){
 			setSearchCondition("total");
+			return;
 		}
 	
 	}
@@ -563,8 +565,8 @@ const MetaDataInfo = () => {
 
 										}
 										<Pagination
-											currentPage={searchPageNo}
-											itemsPerPage={searchAmountPerPage}
+											currentPage={currentPage}
+											itemsPerPage={itemsPerPage}
 											tableInfoList={searchResult}
 											onPageChange={handlePageChange}
 											isSearchPage={true}

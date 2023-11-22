@@ -25,21 +25,22 @@ export const fetchMetaDataSubDataset = async (serviceName, mainCategoryName) => 
     return response.data;
 }
 
-export const fetchMetaDataTableInfo = async (serviceName, mainCategoryName, subCategoryName) => {
+export const fetchMetaDataTableInfo = async (serviceName, mainCategoryName, subCategoryName, pageNo, amountPerPage) => {
     const response = await axios.post(`metadata/tableinfo`, {
         "service_name" : serviceName,
         "main_category_name" : mainCategoryName,
-        "sub_category_name" : subCategoryName
+        "sub_category_name" : subCategoryName,
+        "page_no" : pageNo,
+        "amount_per_page" : amountPerPage
     });
     console.log(response.data)
     return response.data;
 }
 
-export const fetchMetaDataTableSearch = async (serviceName, searchCondition, tableKeyword, pageNo, amountPerPage) => {
-    const response = await axios.post(`metadata/search/tableinfo`, {
-        "service_name" : serviceName,
+export const fetchMetaDataTableSearch = async (searchCondition, keyword, pageNo, amountPerPage) => {
+    const response = await axios.post(`metadata/search/keyword`, {
         "search_condition" : searchCondition,
-        "table_keyword" : tableKeyword,
+        "keyword" : keyword,
         "page_no" : pageNo,
         "amount_per_page" : amountPerPage
     });
@@ -55,8 +56,8 @@ export const fetchMetaTableColumnInfo = async (tableId) => {
     return response.data;
 }
 
-export const fetchMetaDataTotalSearch = async (keyword) => {
-    const response = await axios.get(`metadata/search/total?keyword=${keyword}`);
-    console.log(response.data);
-    return response.data;
-}
+// export const fetchMetaDataTotalSearch = async (keyword) => {
+//     const response = await axios.get(`metadata/search/total?keyword=${keyword}`);
+//     console.log(response.data);
+//     return response.data;
+// }

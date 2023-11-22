@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange, isSearchPage, isDetail }) => {
-  const totalPages = isSearchPage ? Math.ceil(tableInfoList[0]?.total_num / itemsPerPage) : Math.ceil(tableInfoList.length / itemsPerPage);
+  const totalPages = isSearchPage ? Math.ceil(tableInfoList[0]?.total_num / itemsPerPage) : Math.ceil(tableInfoList[0]?.total_num / itemsPerPage);
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
   const pagesToShow = 10; // 한번에 보여줄 페이지 개수
 
@@ -19,7 +19,7 @@ const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange, is
         {currentPage > 1 && (
           <button
             onClick={() => {
-              onPageChange(tableInfoList, currentPage -1, isSearchPage);
+              onPageChange(currentPage - 1);
             }}
             className={
               `${
@@ -35,7 +35,7 @@ const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange, is
           <button
             key={pageNumber}
             onClick={() => {
-              onPageChange(tableInfoList, pageNumber, isSearchPage);
+              onPageChange(pageNumber);
               window.scrollTo(0, 130);
             }}
             className={`${
@@ -51,7 +51,7 @@ const Pagination = ({ currentPage, itemsPerPage, tableInfoList, onPageChange, is
         {currentPage < totalPages && (
           <button
             onClick={() => {
-              onPageChange(tableInfoList, currentPage + 1, isSearchPage);
+              onPageChange(currentPage + 1);
             }}
             className={
               `${

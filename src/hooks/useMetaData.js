@@ -13,14 +13,14 @@ export const useMetadataSubDataSet = (serviceName, mainCategoryName) => {
 	});
 };
 
-export const useMetadataTableInfo = (serviceName, mainCategoryName, subCategoryName) => {
-	return useQuery(['metaDataTableInfo', subCategoryName], () => fetchMetaDataTableInfo(serviceName, mainCategoryName, subCategoryName), {
+export const useMetadataTableInfo = (serviceName, mainCategoryName, subCategoryName, pageNo, amountPerPage) => {
+	return useQuery(['metaDataTableInfo', subCategoryName], () => fetchMetaDataTableInfo(serviceName, mainCategoryName, subCategoryName, pageNo, amountPerPage), {
 		staleTime: 1000 * 60 * 60 * 24, // 24시간 동안 유효
 	});
 };
 
-export const useMetadataTableSearch = (serviceName, searchCondition, tableKeyword, pageNo, amountPerPage) => {
-	return useQuery(['metaDataTableSearch', tableKeyword], () => fetchMetaDataTableSearch(serviceName, searchCondition, tableKeyword, pageNo, amountPerPage), {
+export const useMetadataTableSearch = (searchCondition, keyword, pageNo, amountPerPage) => {
+	return useQuery(['metaDataTableSearch', keyword], () => fetchMetaDataTableSearch(searchCondition, keyword, pageNo, amountPerPage), {
 		staleTime: 1000 * 60 * 60 * 24, // 24시간 동안 유효
 	});
 };	
@@ -28,12 +28,5 @@ export const useMetadataTableSearch = (serviceName, searchCondition, tableKeywor
 export const useMetadataTableColumnInfo = (tableId) => {
 	return useQuery(['metaDataTableColumn', tableId], () => fetchMetaTableColumnInfo(tableId), {
 		staleTime: 1000 * 60 * 60 * 24, // 24시간 동안 유효
-	});
-};	
-
-export const useMetaDataTotalSearch = (keyword) => {
-	return useQuery(['metaDataTotalSearch', keyword], () => fetchMetaDataTotalSearch(keyword), {
-		staleTime: 1000 * 60 * 60 * 24, // 24시간 동안 유효
-		enabled: keyword !== '' || keyword !== null || keyword !== "null" || keyword !== undefined ? true : false
 	});
 };	

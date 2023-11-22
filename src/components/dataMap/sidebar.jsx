@@ -16,7 +16,7 @@ const transformData = (data, depth = 0) => {
   };
 };
 
-const Sidebar = ({ data, onNodeClick, serviceName, isMap, isSearch, setIsSearch, setSearchValue, setSearchResult }) => {
+const Sidebar = ({ data, onNodeClick, serviceName, isMap, isSearch, setIsSearch, setSearchValue, setSearchResult, setCurrentPage }) => {
   const transformedData = transformData(data);
 
 
@@ -35,6 +35,7 @@ const Sidebar = ({ data, onNodeClick, serviceName, isMap, isSearch, setIsSearch,
         <p onClick={() => {
           setIsSearch(true)
           setSearchResult([])
+          setCurrentPage(1)
         }}
         className="cursor-pointer">검색하기</p>
         </div>) : (
@@ -50,6 +51,7 @@ const Sidebar = ({ data, onNodeClick, serviceName, isMap, isSearch, setIsSearch,
             setIsSearch(false)
             setSearchResult([])
             setSearchValue("")
+            setCurrentPage(1)
           }}
           className="cursor-pointer">뒤로가기</p>
         </div>

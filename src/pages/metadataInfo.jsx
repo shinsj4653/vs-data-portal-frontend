@@ -78,7 +78,7 @@ const MetaDataInfo = () => {
 			console.log(nodeName);
 			setServiceName(nodeName);
 		}
-		
+		setCurrentPage(0)
 	};
 	
 	const orgDataQuery = useOrgChartMain();
@@ -345,6 +345,7 @@ const MetaDataInfo = () => {
 						setIsSearch={setIsSearch}
 						setSearchValue={setSearchValue}
 						setSearchResult={setSearchResult}
+						setCurrentPage={setCurrentPage}
 					/>
 					
 					{!isSearch ? (Array.isArray(mainDatasetList) && mainDatasetList.length > 0 ? (

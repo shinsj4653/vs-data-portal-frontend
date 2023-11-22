@@ -45,13 +45,6 @@ const MetaDataInfo = () => {
 	const [searchValue , setSearchValue] = useState("");
 	const [searchResult, setSearchResult] = useState([]);
 	const [currentSearch, setCurrentSearch] = useState(""); // 현재 검색어
-
-	
-	
-	const startIndex = (currentPage - 1) * itemsPerPage;
-	const endIndex = startIndex + itemsPerPage;
-	// const visibleItems = tableInfoList.slice(startIndex, endIndex);
-	
 	// const handleDatasetColorChange
 	
 	const colors = ['#A8D8EA', '#AA96DA', '#FCBAD3', '#FFFFD2'];
@@ -190,7 +183,7 @@ const MetaDataInfo = () => {
 			} 
 		} else {
 			const tableInfoData = await tableInfoDataQuery.refetch();
-			if(!tableInfoData.isLoading)
+			if(!tableInfoData.isLoading && tableInfoData.data.data)
 				setTableInfoList(tableInfoData.data.data);
 		}	
 

@@ -182,9 +182,8 @@ const MetaDataInfo = () => {
 				
 			} 
 		} else {
-			const tableInfoData = await tableInfoDataQuery.refetch();
-			if(!tableInfoData.isLoading && tableInfoData.data.data)
-				setTableInfoList(tableInfoData.data.data);
+			const { isLoading, isError, data } = await tableInfoDataQuery.refetch();
+			setTableInfoList(data.data);
 		}	
 
     };
@@ -209,9 +208,9 @@ const MetaDataInfo = () => {
 		setCurrentPage(1);
 	}, [selectedSubDataset]);
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		isSearch ? fetchSearchResult() : fetchData("tableInfoChange");
-	}, [currentPage])
+	}, [tableInfoList, currentPage, searchResult])
 
     const handleMainDatasetColorChange = (child) => {
 		location.state = null;
@@ -425,7 +424,7 @@ const MetaDataInfo = () => {
 									<div><hr className="h-1 bg-[#E5E7EB]"></hr></div>
 									<div className="flex flex-col pt-0 p-3 bg-[#F2F5F8]">
 										{
-											Array.isArray(tableInfoList) && tableInfoList?.map((tableInfo) => (
+											tableInfoList?.map((tableInfo) => (
 												<div>
 													<div className='flex flex-row w-full pt-5 pb-5 text-center items-center hover:bg-white hover:shadow-xl cursor-pointer'
 														onClick={() => {

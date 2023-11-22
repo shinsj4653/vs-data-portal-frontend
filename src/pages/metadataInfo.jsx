@@ -46,18 +46,14 @@ const MetaDataInfo = () => {
 	const [searchResult, setSearchResult] = useState([]);
 	const [currentSearch, setCurrentSearch] = useState(""); // 현재 검색어
 
-	const searchQuery = useMetadataTableSearch(serviceName, searchCondition, currentSearch, currentPage, itemsPerPage);
-
-	const handlePageChange = (pageNumber) => {
-		setCurrentPage(pageNumber);
-	};
+	
 	
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const endIndex = startIndex + itemsPerPage;
 	const visibleItems = tableInfoList.slice(startIndex, endIndex);
-
+	
 	// const handleDatasetColorChange
-  
+	
 	const colors = ['#A8D8EA', '#AA96DA', '#FCBAD3', '#FFFFD2'];
 	// json Data에 Depth 속성 추가
 	const transformData = (data, depth = 0) => {
@@ -75,33 +71,39 @@ const MetaDataInfo = () => {
 			color: colors[depth % colors.length], // depth를 colors 배열의 인덱스로 사용하여 색상 할당
 		};
 	};
-
+	
 	const handleNodeClick = (nodeId, nodeName, nodeDepth) => {
 		location.state = null;
 		setIsSearch(false);
 		setSearchResult([]);
 		setSearchValue("");
-
+		
 		setClickedNodeId(nodeId);
 		setCurrentPage(1);
-
+		
 		if (nodeDepth === 2) {
 			console.log(nodeName);
 			setServiceName(nodeName);
 		}
-	
+		
 	};
 	
 	const orgDataQuery = useOrgChartMain();
     const mainDatasetDataQuery = useMetadataMainDataSet(location.state?.serviceName ?? serviceName);
     const subDatasetDataQuery = useMetadataSubDataSet(location.state?.serviceName ?? serviceName, location.state?.selectedMainDataset ?? selectedMainDataset);
 	const tableInfoDataQuery = useMetadataTableInfo(location.state?.serviceName ?? serviceName, location.state?.selectedMainDataset ?? selectedMainDataset, location.state?.selectedSubDataset ?? selectedSubDataset, currentPage, itemsPerPage);
+	const searchQuery = useMetadataTableSearch(serviceName, searchCondition, currentSearch, currentPage, itemsPerPage);
 	
-
+	
 	const updateValue = (value) => {
 		setSearchValue(value);
 	}
 
+	const handlePageChange = (pageNumber) => {
+		setCurrentPage(pageNumber);
+		isSearch ? fetchSearchResult() : fetchData("tableInfoChange");
+	};
+	
 	const handleSearch = (value) => {
 
 		console.log(value.toLowerCase());
@@ -214,9 +216,9 @@ const MetaDataInfo = () => {
 		setCurrentPage(1);
 	}, [selectedSubDataset]);
 
-	useEffect(() => {
-		isSearch ? fetchSearchResult() : fetchData("tableInfoChange");
-	}, [currentPage])
+	// useEffect(() => {
+		
+	// }, [currentPage])
 
     const handleMainDatasetColorChange = (child) => {
 		location.state = null;

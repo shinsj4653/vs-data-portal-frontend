@@ -209,9 +209,9 @@ const MetaDataInfo = () => {
 		setCurrentPage(1);
 	}, [selectedSubDataset]);
 
-	// useEffect(() => {
-		
-	// }, [currentPage])
+	useLayoutEffect(() => {
+		isSearch ? fetchSearchResult() : fetchData("tableInfoChange");
+	}, [currentPage])
 
     const handleMainDatasetColorChange = (child) => {
 		location.state = null;

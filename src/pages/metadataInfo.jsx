@@ -50,7 +50,7 @@ const MetaDataInfo = () => {
 	
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const endIndex = startIndex + itemsPerPage;
-	const visibleItems = tableInfoList.slice(startIndex, endIndex);
+	// const visibleItems = tableInfoList.slice(startIndex, endIndex);
 	
 	// const handleDatasetColorChange
 	
@@ -432,7 +432,7 @@ const MetaDataInfo = () => {
 									<div><hr className="h-1 bg-[#E5E7EB]"></hr></div>
 									<div className="flex flex-col pt-0 p-3 bg-[#F2F5F8]">
 										{
-											Array.isArray(visibleItems) && visibleItems.map((tableInfo) => (
+											Array.isArray(tableInfoList) && tableInfoList.map((tableInfo) => (
 												<div>
 													<div className='flex flex-row w-full pt-5 pb-5 text-center items-center hover:bg-white hover:shadow-xl cursor-pointer'
 														onClick={() => {

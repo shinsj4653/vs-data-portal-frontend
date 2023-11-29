@@ -11,8 +11,8 @@ axios.defaults.withCredentials = true; // withCredentials 전역 설정
 export const fetchDatasetSearchResult = async (keyword, pageNo, amountPerPage) => {
     const response = await axios.post(`dpmain/search/service-dataset`, {
         "keyword" : keyword,
-        "pageNo" : pageNo,
-        "amountPerPage" : amountPerPage,
+        "page_no" : pageNo,
+        "amount_per_page" : amountPerPage,
     });
     console.log(response.data)
     return response.data;

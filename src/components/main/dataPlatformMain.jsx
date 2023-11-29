@@ -26,7 +26,7 @@ const DataPlatformMain = () => {
 
 	const searchCondition = "total";
 	const [currentSearch, setCurrentSearch] = useState("");
-	const currentPage = 1;
+	const [currentPage, setCurrentPage] = useState(1);
 	const itemsPerPage = 100;
 
 	// 데이터 활용 페이지 임시 대체용 사이트 링크

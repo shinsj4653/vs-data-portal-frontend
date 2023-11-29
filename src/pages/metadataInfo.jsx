@@ -70,6 +70,7 @@ const MetaDataInfo = () => {
 		setIsSearch(false);
 		setSearchResult([]);
 		setSearchValue("");
+		setCurrentSearch("");
 		
 		setClickedNodeId(nodeId);
 		setCurrentPage(1);
@@ -210,7 +211,7 @@ const MetaDataInfo = () => {
 
 	useEffect(() => {
 		isSearch ? fetchSearchResult() : fetchData("tableInfoChange");
-	}, [currentPage, searchCondition, currentSearch])
+	}, [currentPage, searchCondition, currentSearch, searchStandard, searchValue, isSearch, searchResult])
 
     const handleMainDatasetColorChange = (child) => {
 		location.state = null;

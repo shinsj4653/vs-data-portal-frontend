@@ -250,8 +250,8 @@ const MetaDataInfo = () => {
 
 	const handleSearchStandardColorChange = (child) => {
 		setSearchStandard(child);
-		// setSearchValue("");
-		// setCurrentSearch(null);
+		setSearchValue("");
+		setCurrentSearch("");
 		//setSearchResult([]);
 
 		if(child === "테이블ID") {

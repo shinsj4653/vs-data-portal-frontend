@@ -13,7 +13,6 @@ import { useDataMapAllDataset } from '../../hooks/useDataMap';
 import { useDatasetSearch } from '../../hooks/useDpMain';
 import { useNavigate } from 'react-router-dom';
 import { useMain } from '../../context/MainContext';
-import { useMetadataTableSearch } from '../hooks/useMetaData';
 
 const DataPlatformMain = () => {
 
@@ -53,7 +52,7 @@ const DataPlatformMain = () => {
 	}
 
 	const dataSetQuery = useDataMapAllDataset();
-	const dataSetSearchQuery = useMetadataTableSearch(searchCondition, currentSearch, currentPage, itemsPerPage);
+	const dataSetSearchQuery = useDatasetSearch(searchValue, currentPage, itemsPerPage);
 	
 	
 

@@ -85,7 +85,7 @@ const MetaDataInfo = () => {
     const mainDatasetDataQuery = useMetadataMainDataSet(location.state?.serviceName ?? serviceName);
     const subDatasetDataQuery = useMetadataSubDataSet(location.state?.serviceName ?? serviceName, location.state?.selectedMainDataset ?? selectedMainDataset);
 	const tableInfoDataQuery = useMetadataTableInfo(location.state?.serviceName ?? serviceName, location.state?.selectedMainDataset ?? selectedMainDataset, location.state?.selectedSubDataset ?? selectedSubDataset, currentPage, itemsPerPage);
-	const searchQuery = useMetadataTableSearch(searchCondition, currentSearch, currentPage, itemsPerPage);
+	const searchQuery = useMetadataTableSearch(searchCondition, searchValue, currentPage, itemsPerPage);
 	
 	
 	const updateValue = (value) => {

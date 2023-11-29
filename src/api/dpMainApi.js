@@ -8,9 +8,11 @@ axios.defaults.baseURL = "http://vs-dpc-alb-01-487593038.ap-northeast-2.elb.amaz
 
 axios.defaults.withCredentials = true; // withCredentials 전역 설정
 
-export const fetchDatasetSearchResult = async (datasetName) => {
+export const fetchDatasetSearchResult = async (keyword, pageNo, amountPerPage) => {
     const response = await axios.post(`dpmain/search/service-dataset`, {
-        "keyword" : datasetName
+        "keyword" : keyword,
+        "pageNo" : pageNo,
+        "amountPerPage" : amountPerPage,
     });
     console.log(response.data)
     return response.data;

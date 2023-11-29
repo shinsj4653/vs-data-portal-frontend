@@ -252,7 +252,7 @@ const MetaDataInfo = () => {
 		setSearchStandard(child);
 		setSearchValue("");
 		setCurrentSearch("");
-		//setSearchResult([]);
+		setSearchResult([]);
 
 		if(child === "테이블ID") {
 			setSearchCondition("table_id");

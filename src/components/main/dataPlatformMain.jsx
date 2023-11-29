@@ -52,7 +52,7 @@ const DataPlatformMain = () => {
 	}
 
 	const dataSetQuery = useDataMapAllDataset();
-	const dataSetSearchQuery = useDatasetSearch(searchValue, currentPage, itemsPerPage);
+	const dataSetSearchQuery = useDatasetSearch(currentSearch, currentPage, itemsPerPage);
 	
 	
 

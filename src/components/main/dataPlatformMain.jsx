@@ -13,6 +13,7 @@ import { useDataMapAllDataset } from '../../hooks/useDataMap';
 import { useDatasetSearch } from '../../hooks/useDpMain';
 import { useNavigate } from 'react-router-dom';
 import { useMain } from '../../context/MainContext';
+import { useMetadataTableSearch } from '../hooks/useMetaData';
 
 const DataPlatformMain = () => {
 
@@ -22,9 +23,12 @@ const DataPlatformMain = () => {
 	const [searchValue , setSearchValue] = useState("");
 	const [searchResult, setSearchResult] = useState(null);
 
-	const [currentSearch, setCurrentSearch] = useState("");
-
 	const navigate = useNavigate();
+
+	const searchCondition = "total";
+	const [currentSearch, setCurrentSearch] = useState("");
+	const [currentPage, setCurrentPage] = useState(1);
+	const [itemsPerPage, setItemsPerPage] = useState(100);
 
 	// 데이터 활용 페이지 임시 대체용 사이트 링크
 	const url = "https://tableauwiki.com/category/blog/tableau-tips/";
@@ -49,7 +53,7 @@ const DataPlatformMain = () => {
 	}
 
 	const dataSetQuery = useDataMapAllDataset();
-	const dataSetSearchQuery = useDatasetSearch(searchValue);
+	const dataSetSearchQuery = useMetadataTableSearch(searchCondition, currentSearch, currentPage, itemsPerPage);
 	
 	
 
@@ -58,7 +62,6 @@ const DataPlatformMain = () => {
 		const fetchData = async () => {
 			// 여기서 사용할 API 호출들을 배열로 묶어서 Promise.all로 처리
 			const dataSetResult = await dataSetQuery.refetch();
-		
 
 			// 각 API 호출이 성공하면 데이터 처리
 			if (dataSetResult) {

@@ -16,12 +16,14 @@ export const useMetadataSubDataSet = (serviceName, mainCategoryName) => {
 export const useMetadataTableInfo = (serviceName, mainCategoryName, subCategoryName, pageNo, amountPerPage) => {
 	return useQuery(['metaDataTableInfo', subCategoryName], () => fetchMetaDataTableInfo(serviceName, mainCategoryName, subCategoryName, pageNo, amountPerPage), {
 		staleTime: 1000 * 60 * 60 * 24, // 24시간 동안 유효
+		suspense: true,
 	});
 };
 
 export const useMetadataTableSearch = (searchCondition, keyword, pageNo, amountPerPage) => {
 	return useQuery(['metaDataTableSearch', keyword], () => fetchMetaDataTableSearch(searchCondition, keyword, pageNo, amountPerPage), {
 		staleTime: 1000 * 60 * 60 * 24, // 24시간 동안 유효
+		suspense: true,
 	});
 };	
 

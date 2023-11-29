@@ -210,7 +210,7 @@ const MetaDataInfo = () => {
 
 	useEffect(() => {
 		isSearch ? fetchSearchResult() : fetchData("tableInfoChange");
-	}, [tableInfoList, currentPage, searchResult])
+	}, [currentPage])
 
     const handleMainDatasetColorChange = (child) => {
 		location.state = null;
@@ -451,6 +451,9 @@ const MetaDataInfo = () => {
 													<div><hr className="h-0.3 bg-[#E5E7EB]"></hr></div>
 												</div>
 											))
+
+										
+											
 										}
 										<Pagination
 											currentPage={currentPage}
@@ -519,7 +522,7 @@ const MetaDataInfo = () => {
 									<div><hr className="h-1 bg-[#E5E7EB]"></hr></div>
 									<div className="flex flex-col pt-0 p-3 bg-[#F2F5F8]">
 										{
-											searchResult.length > 0 ? Array.isArray(searchResult) && searchResult?.map((tableInfo) => {
+											searchResult.length > 0 ? searchResult?.map((tableInfo) => {
 												
 
 												return (

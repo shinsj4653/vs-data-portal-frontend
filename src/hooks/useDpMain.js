@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import { fetchDatasetSearchResult } from '../api/dpMainApi';
 
-export const useDatasetSearch = (datasetName) => {
-	return useQuery(['datasetSearch', datasetName], () => fetchDatasetSearchResult(datasetName));
+export const useDatasetSearch = (keyword, pageNo, amountPerPage) => {
+	return useQuery(['datasetSearch', keyword], () => fetchDatasetSearchResult(keyword, pageNo, amountPerPage));
 };

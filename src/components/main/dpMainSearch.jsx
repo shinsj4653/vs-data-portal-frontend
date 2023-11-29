@@ -8,25 +8,24 @@ const DpMainSearch = ({ setIsSearch, currentSearch, setSearchValue, searchResult
     const navigate = useNavigate();
 
 	const highlightLetters = (tableText, currentSearch) => {
-		const regex = new RegExp(currentSearch, 'gi');
-    	const matches = tableText.match(regex);
+		const highlightedParts = [];
 
-    	if (!matches) return <span className="text-[#000] font-bold text-m">{tableText}</span>;
+    	for (let i = 0; i < tableText.length; i++) {
+        	const char = tableText[i];
+        	const isMatched = currentSearch.toLowerCase().includes(char.toLowerCase());
 
-    	const parts = tableText.split(regex);
-    	const highlightedParts = [];
-
-    	parts.forEach((part, index) => {
-    	    highlightedParts.push(<span className="text-[#000] font-bold text-m" key={index}>{part}</span>);
-
-    	    if (index < parts.length - 1) {
-    	        highlightedParts.push(
-    	            <span key={`highlight-${index}`} className="inline-block px-1 py-0.5 text-[#000] bg-yellow-300 font-extrabold text-m">
-    					{matches[index]}
-					</span>
-    	        );
-    	    }
-    	});
+        	highlightedParts.push(
+            	isMatched ? (
+                <span key={i} className="inline-block text-[#404040] bg-yellow-300 font-bold text-sm">
+                    {char}
+                </span>
+            ) : (
+                <span key={i} className="text-[#404040] font-bold text-sm">
+                    {char}
+                </span>
+            )
+        );
+    	}
 
     	return <span>{highlightedParts}</span>;
 	}

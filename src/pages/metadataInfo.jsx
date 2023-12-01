@@ -228,7 +228,7 @@ const MetaDataInfo = () => {
 
 	useEffect(() => {
 		isSearch ? fetchSearchResult() : fetchData("tableInfoChange");
-	}, [currentPage, searchCondition, currentSearch, searchStandard, searchValue, isSearch, searchResult])
+	}, [currentPage, currentSearch, searchStandard, isSearch])
 
     const handleMainDatasetColorChange = (child) => {
 		location.state = null;

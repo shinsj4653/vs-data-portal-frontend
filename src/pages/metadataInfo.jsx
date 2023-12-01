@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import Sidebar from '../components/dataMap/sidebar';
 import Layout from '../components/layout';
 import { useOrgChartMain } from '../hooks/useOrgChart';
-import { useMetadataMainDataSet, useMetadataSubDataSet, useMetadataTableInfo, useMetadataTableSearch } from '../hooks/useMetaData';
+import { useMetadataMainDataSet, useMetadataSubDataSet, useMetadataTableInfo, useMetadataTableSearch, useMetadataAutoSearch } from '../hooks/useMetaData';
 import metadata_background from '../assets/backgrounds/metadata_background.jpg';
 import Pagination from '../components/metaDataInfo/pagination';
 import Loading from '../components/loading';
@@ -42,10 +42,15 @@ const MetaDataInfo = () => {
 	const [searchStandard, setSearchStandard] = useState('통합 검색'); // [통합 검색, 테이블ID, 테이블 설명, 하위 주제]
 	const [searchCondition, setSearchCondition] = useState('total'); // [total, table_id, table_comment, small_clsf_name]
 	const [isSearch, setIsSearch] = useState(false);
-	const [searchValue , setSearchValue] = useState("");
+	const [searchValue , setSearchValue] = useState(""); // 검색어 입력 시, 계속해서 업데이트
 	const [searchResult, setSearchResult] = useState([]);
 	const [currentSearch, setCurrentSearch] = useState(""); // 현재 검색어
 	// const handleDatasetColorChange
+
+	// 검색어 자동완성에 필요한 변수들
+	const [esIndex, setEsIndex] = useState('tb_table_meta_info');
+	const [autoSearchCondition, setAutoSearchCondition] = useState('small_clsf_name');
+	const [autoSearchResult, setAutoSearchResult] = useState([]); // 검색어 입력 시, 계속해서 업데이트
 	
 	const colors = ['#A8D8EA', '#AA96DA', '#FCBAD3', '#FFFFD2'];
 	// json Data에 Depth 속성 추가
@@ -87,10 +92,22 @@ const MetaDataInfo = () => {
     const subDatasetDataQuery = useMetadataSubDataSet(location.state?.serviceName ?? serviceName, location.state?.selectedMainDataset ?? selectedMainDataset);
 	const tableInfoDataQuery = useMetadataTableInfo(location.state?.serviceName ?? serviceName, location.state?.selectedMainDataset ?? selectedMainDataset, location.state?.selectedSubDataset ?? selectedSubDataset, currentPage, itemsPerPage);
 	const searchQuery = useMetadataTableSearch(searchCondition, currentSearch, currentPage, itemsPerPage);
+	const autoSearchQuery = useMetadataAutoSearch(esIndex, autoSearchCondition, searchValue);
 	
 	
 	const updateValue = (value) => {
 		setSearchValue(value);
+
+		// 검색어 키워드 입력할 때 마다 자동완성 결과 불러오기
+		fetchAutoSearchResult();
+	}
+
+	const fetchAutoSearchResult = async () => {
+		const result = await autoSearchQuery.refetch();
+		if(!result.isLoading && result.data.data) {
+			console.log(result.data.data);
+			setAutoSearchResult(result.data.data);
+		}
 	}
 
 	const handlePageChange = (pageNumber) => {

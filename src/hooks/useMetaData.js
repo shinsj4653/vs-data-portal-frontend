@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { fetchMetaDataMainDataset, fetchMetaDataSubDataset, fetchMetaDataTableInfo, fetchMetaDataTableSearch, fetchMetaTableColumnInfo, fetchMetaDataTotalSearch } from '../api/metaDataApi';
+import { fetchMetaDataMainDataset, fetchMetaDataSubDataset, fetchMetaDataTableInfo, fetchMetaDataTableSearch, fetchMetaTableColumnInfo, fetchMetaDataTotalSearch, fetchAutoCompleteSearchWords } from '../api/metaDataApi';
 
 export const useMetadataMainDataSet = (serviceName) => {
 	return useQuery(['metaDataMainDataSet', serviceName], () => fetchMetaDataMainDataset(serviceName), {
@@ -32,3 +32,9 @@ export const useMetadataTableColumnInfo = (tableId) => {
 		staleTime: 1000 * 60 * 60 * 24, // 24시간 동안 유효
 	});
 };	
+
+export const useMetadataAutoSearch = (index, searchCondition, keyword) => {
+	return useQuery(['metaDataAutoSearch', keyword], () => fetchAutoCompleteSearchWords(index, searchCondition, keyword), {
+		staleTime: 1000 * 60 * 60 * 24, // 24시간 동안 유효
+	});
+}

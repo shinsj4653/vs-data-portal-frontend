@@ -13,6 +13,7 @@ import { useDataMapAllDataset } from '../../hooks/useDataMap';
 import { useDatasetSearch } from '../../hooks/useDpMain';
 import { useNavigate } from 'react-router-dom';
 import { useMain } from '../../context/MainContext';
+import { useMetadataAutoSearch } from '../../hooks/useMetaData';
 
 const DataPlatformMain = () => {
 
@@ -24,16 +25,48 @@ const DataPlatformMain = () => {
 
 	const navigate = useNavigate();
 
-	const searchCondition = "total";
 	const [currentSearch, setCurrentSearch] = useState("");
 	const [currentPage, setCurrentPage] = useState(1);
 	const itemsPerPage = 100;
+
+	// 검색어 자동완성에 필요한 변수들
+	const [esIndex, setEsIndex] = useState("tb_table_main_search");
+	let autoSearchCondition = "service_name";
+	const [autoSearchResult, setAutoSearchResult] = useState([]); // 검색어 입력 시, 계속해서 업데이트
+	const [isSearchBarFocus, setIsSearchBarFocus] = useState(false);
+
+	const autoSearchQuery = useMetadataAutoSearch(esIndex, autoSearchCondition, searchValue);
 
 	// 데이터 활용 페이지 임시 대체용 사이트 링크
 	const url = "https://tableauwiki.com/category/blog/tableau-tips/";
 
 	const updateValue = (value) => {
 		setSearchValue(value);
+
+		// 검색어 키워드 입력할 때 마다 자동완성 결과 불러오기
+		fetchAutoSearchResult();
+	}
+
+	const fetchAutoSearchResult = async () => {
+		
+		setAutoSearchResult([]);
+
+		const set = new Set();
+
+		for(let i=0; i<3; i++) {
+			if (i == 0) {
+				autoSearchCondition = "service_name"
+			} else if(i == 1){
+				autoSearchCondition = "main_category_name"
+			} else {
+				autoSearchCondition = "sub_category_name"
+			}
+			const result = await autoSearchQuery.refetch();
+			if(!result.isLoading && result.data.data) {
+				setAutoSearchResult(autoSearchResult.concat(result.data.data));
+			}
+		}
+		
 	}
 
 	const handleSearch = (value) => {
@@ -85,6 +118,10 @@ const DataPlatformMain = () => {
 			}
 		}
 	}
+
+	useEffect(() => {
+		fetchAutoSearchResult();
+	}, [searchValue]);
 	
 	
 	return (
@@ -106,7 +143,7 @@ const DataPlatformMain = () => {
 								Data Platform Cell에서 제공하는 <br />
 								비상교육 통합 데이터 서비스 입니다.
 							</p>
-							<MainSearchBar searchValue={searchValue} updateValue={updateValue} handleSearch={handleSearch} isMain={true} isOrg={false}/>
+							<MainSearchBar searchValue={searchValue} updateValue={updateValue} handleSearch={handleSearch} autoSearchResult={autoSearchResult} isSearchBarFocus={isSearchBarFocus} setIsSearchBarFocus={setIsSearchBarFocus} isMain={true} isOrg={false}/>
 						</div>
 					</div>
 				</div>

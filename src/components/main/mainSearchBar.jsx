@@ -27,8 +27,8 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, autoSearchResul
           "w-full rounded-md border-base-100 py-2.5 px-2 pe-10 shadow-sm sm:text-sm text-base-content bg-slate-100"
           : 'w-full rounded-md border-base-100 py-2.5 px-5 pe-10 shadow-sm sm:text-sm text-base-content bg-slate-100'}
           onKeyDown={(e) => activeEnter(e)}
-          onFocus={() => setIsSearchBarFocus(true)}
-          onBlur={() => setIsSearchBarFocus(false)}
+          onFocus={isOrg ? null : () => setIsSearchBarFocus(true)}
+          onBlur={isOrg ? null : () => setIsSearchBarFocus(false)}
         />
 
         <span className="absolute inset-y-0 end-0 grid my-2 mx-2 place-content-center">
@@ -57,13 +57,14 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, autoSearchResul
       {
         searchValue !== "" && isSearchBarFocus && 
           
-          <div className="absolute z-10 w-full bg-white rounded-md shadow-lg py-1 text-base-content ml-3">
+          <div className={!isOrg && !isMain ? "absolute z-10 w-full bg-white rounded-md shadow-lg py-1 text-base-content ml-3" : 
+              (isMain ? "absolute z-10 w-1/2 bg-white rounded-md shadow-lg py-1 text-base-content" : null)}>
             
             {autoSearchResult && autoSearchResult.length > 0  ?
               autoSearchResult.map((item, index) => {
                 return (
-                  <div key={index} className="px-4 py-2 hover:bg-gray-100 cursor-pointer" 
-                  onMouseDown={(event) => {event.preventDefault(); handleSearch(item); updateValue(item)}}
+                  <div key={index} className={"px-4 py-2 hover:bg-gray-100 cursor-pointer"} 
+                  onMouseDown={isOrg ? null : (event) => {event.preventDefault(); handleSearch(item); updateValue(item)}}
                   >
                     {item}
                   </div>

@@ -51,7 +51,8 @@ const MetaDataInfo = () => {
 	const [esIndex, setEsIndex] = useState('tb_table_meta_info');
 	const [autoSearchCondition, setAutoSearchCondition] = useState('small_clsf_name');
 	const [autoSearchResult, setAutoSearchResult] = useState([]); // 검색어 입력 시, 계속해서 업데이트
-	
+	const [autoSearchKeywordIndex, setAutoSearchKeywordIndex] = useState(0); // 자동완성 검색어 선택된 인덱스
+
 	const colors = ['#A8D8EA', '#AA96DA', '#FCBAD3', '#FFFFD2'];
 	// json Data에 Depth 속성 추가
 	const transformData = (data, depth = 0) => {
@@ -492,13 +493,13 @@ const MetaDataInfo = () => {
 					)) : (
 						<div className="flex flex-col justify-top p-5 w-3/4">
 									<div className="flex flex-row bg-white rounded-2xl pt-1 p-3">
-										<div className='flex flex-col items-center w-1/6 pt-3'>
+										<div className='flex justify-center items-center w-1/6'>
 											<p className="text-center text-gray-400 font-extrabold text-lg">검색 기준</p>
 										</div>
 										<div className="flex flex-col w-5/6">
-											<div className="flex flex-row items-center w-50%">
+											<div className="flex flex-row items-center">
 
-												<div className="flex flex-row overflow-x-auto scroll-smooth">
+												<div className="flex flex-row overflow-x-auto scroll-smooth w-1/2">
 													{["통합 검색","테이블ID", "테이블 설명", "하위 주제"].map((child) => (
 														<button
 														className={`${
@@ -520,6 +521,7 @@ const MetaDataInfo = () => {
 													searchValue={searchValue}
 													updateValue={updateValue}
 													handleSearch={handleSearch}
+													autoSearchResult={autoSearchResult}
 													isMain={false}
 													isOrg={false}/>
 											</div>

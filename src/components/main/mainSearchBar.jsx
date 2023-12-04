@@ -1,6 +1,6 @@
 import React from "react";
 
-const MainSearchBar = ({ searchValue, updateValue, handleSearch, isMain, isOrg }) => {
+const MainSearchBar = ({ searchValue, updateValue, handleSearch, autoSearchResult, isMain, isOrg }) => {
   
   const activeEnter = (e) => {
     if (e.key === "Enter") {
@@ -10,12 +10,11 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, isMain, isOrg }
   }
 
   return (
-    <>
-      <div className={isMain || isOrg ? "relative" : "relative w-1/2 ml-3"}>
+    <div className={isMain || isOrg ? "w-full" : "w-1/2"}>
+      <div className={isMain || isOrg ? "relative" : "relative ml-3"}>
         <label htmlFor="Search" className="sr-only">
           Search
         </label>
-
         <input
           type="text"
           id="Search"
@@ -53,7 +52,19 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, isMain, isOrg }
           </button>
         </span>
       </div>
-    </>
+      {
+        searchValue !== "" &&
+        <button
+          type="button"
+          onClick={() => {
+            updateValue("");
+          }}
+          className="text-sm text-base-content hover:text-base-100"
+        >
+          Clear
+        </button>
+      }
+    </div>
   );
 };
 

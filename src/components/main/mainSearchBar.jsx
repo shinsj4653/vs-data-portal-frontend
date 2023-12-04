@@ -58,7 +58,7 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, autoSearchResul
         searchValue !== "" && isSearchBarFocus && 
           
           <div className={!isOrg && !isMain ? "absolute z-10 w-full bg-white rounded-md shadow-lg py-1 text-base-content ml-3" : 
-              (isMain ? "absolute w-full z-10 bg-white rounded-md shadow-lg py-1 text-base-content" : null)}>
+              (isMain ? "absolute w-full bg-white rounded-md shadow-lg py-1 text-base-content" : null)}>
             
             {autoSearchResult && autoSearchResult.length > 0  ?
               autoSearchResult.map((item, index) => {

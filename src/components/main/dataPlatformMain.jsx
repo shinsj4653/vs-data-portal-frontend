@@ -120,7 +120,7 @@ const DataPlatformMain = () => {
 					}}
 				>
 					<div className="hero-overlay bg-primary-content bg-opacity-70"></div>
-					<div className="hero-content text-center text-neutral-100">
+					<div className="z-20 hero-content text-center text-neutral-100">
 						<div className="">
 							<h1 className="my-5 text-5xl font-bold">
 								비상교육 데이터 서비스
@@ -134,7 +134,7 @@ const DataPlatformMain = () => {
 					</div>
 				</div>
 				{!isSearch ? <div className="px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16 bg-sky-100">
-					<div className="grid grid-cols-1 gap-5 sm:grid-cols-3 bg-sky-200 p-3 rounded-2xl justify- auto-cols-max">
+					<div className="z-10 grid grid-cols-1 gap-5 sm:grid-cols-3 bg-sky-200 p-3 rounded-2xl auto-cols-max">
 						<Link
 							className="card"
 							to="/DataMap"

@@ -29,6 +29,7 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, autoSearchResul
           onKeyDown={(e) => activeEnter(e)}
           onFocus={isOrg ? null : () => setIsSearchBarFocus(true)}
           onBlur={isOrg ? null : () => setIsSearchBarFocus(false)}
+          autoComplete="off"
         />
 
         <span className="absolute inset-y-0 end-0 grid my-2 mx-2 place-content-center">

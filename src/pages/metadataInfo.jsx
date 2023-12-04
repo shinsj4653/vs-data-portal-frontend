@@ -231,6 +231,10 @@ const MetaDataInfo = () => {
 		isSearch ? fetchSearchResult() : fetchData("tableInfoChange");
 	}, [currentPage, currentSearch])
 
+	useEffect(() => {
+		fetchAutoSearchResult();
+	}, [searchValue])
+
     const handleMainDatasetColorChange = (child) => {
 		location.state = null;
     	

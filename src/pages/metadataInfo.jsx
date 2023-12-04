@@ -51,7 +51,7 @@ const MetaDataInfo = () => {
 	const [esIndex, setEsIndex] = useState('tb_table_meta_info');
 	const [autoSearchCondition, setAutoSearchCondition] = useState('small_clsf_name');
 	const [autoSearchResult, setAutoSearchResult] = useState([]); // 검색어 입력 시, 계속해서 업데이트
-	const [autoSearchKeywordIndex, setAutoSearchKeywordIndex] = useState(0); // 자동완성 검색어 선택된 인덱스
+	const [isSearchBarFocus, setIsSearchBarFocus] = useState(false);
 
 	const colors = ['#A8D8EA', '#AA96DA', '#FCBAD3', '#FFFFD2'];
 	// json Data에 Depth 속성 추가
@@ -229,7 +229,7 @@ const MetaDataInfo = () => {
 
 	useEffect(() => {
 		isSearch ? fetchSearchResult() : fetchData("tableInfoChange");
-	}, [currentPage])
+	}, [currentPage, currentSearch])
 
     const handleMainDatasetColorChange = (child) => {
 		location.state = null;
@@ -522,8 +522,14 @@ const MetaDataInfo = () => {
 													updateValue={updateValue}
 													handleSearch={handleSearch}
 													autoSearchResult={autoSearchResult}
+													isSearchBarFocus={isSearchBarFocus}
+													setIsSearchBarFocus={setIsSearchBarFocus}
 													isMain={false}
-													isOrg={false}/>
+													isOrg={false}
+													onMouseLeave={() => {
+														setIsSearchBarFocus(false);
+													}}
+													/>
 											</div>
 										</div>
 									</div>

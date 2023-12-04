@@ -1,6 +1,6 @@
 import React from "react";
 
-const MainSearchBar = ({ searchValue, updateValue, handleSearch, autoSearchResult, isMain, isOrg }) => {
+const MainSearchBar = ({ searchValue, updateValue, handleSearch, autoSearchResult, isSearchBarFocus, setIsSearchBarFocus, isMain, isOrg }) => {
   
   const activeEnter = (e) => {
     if (e.key === "Enter") {
@@ -27,6 +27,8 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, autoSearchResul
           "w-full rounded-md border-base-100 py-2.5 px-2 pe-10 shadow-sm sm:text-sm text-base-content bg-slate-100"
           : 'w-full rounded-md border-base-100 py-2.5 px-5 pe-10 shadow-sm sm:text-sm text-base-content bg-slate-100'}
           onKeyDown={(e) => activeEnter(e)}
+          onFocus={() => setIsSearchBarFocus(true)}
+          onBlur={() => setIsSearchBarFocus(false)}
         />
 
         <span className="absolute inset-y-0 end-0 grid my-2 mx-2 place-content-center">
@@ -53,16 +55,25 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, autoSearchResul
         </span>
       </div>
       {
-        searchValue !== "" &&
-        <button
-          type="button"
-          onClick={() => {
-            updateValue("");
-          }}
-          className="text-sm text-base-content hover:text-base-100"
-        >
-          Clear
-        </button>
+        searchValue !== "" && isSearchBarFocus && 
+          
+          <div className="absolute z-10 w-full bg-white rounded-md shadow-lg py-1 text-base-content ml-3">
+            
+            {autoSearchResult && autoSearchResult.length > 0  ?
+              autoSearchResult.map((item, index) => {
+                return (
+                  <div key={index} className="px-4 py-2 hover:bg-gray-100 cursor-pointer" 
+                  onMouseDown={(event) => {event.preventDefault(); handleSearch(item); updateValue(item)}}
+                  >
+                    {item}
+                  </div>
+                )
+              }) : <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+              {"검색 결과가 없습니다."}
+              </div>
+            }
+          </div>
+          
       }
     </div>
   );

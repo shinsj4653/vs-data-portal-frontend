@@ -49,7 +49,7 @@ const MetaDataInfo = () => {
 
 	// 검색어 자동완성에 필요한 변수들
 	const [esIndex, setEsIndex] = useState('tb_table_meta_info');
-	const [autoSearchCondition, setAutoSearchCondition] = useState('small_clsf_name');
+	const autoSearchConditionArr = ['small_clsf_name'];
 	const [autoSearchResult, setAutoSearchResult] = useState([]); // 검색어 입력 시, 계속해서 업데이트
 	const [isSearchBarFocus, setIsSearchBarFocus] = useState(false);
 
@@ -93,7 +93,7 @@ const MetaDataInfo = () => {
     const subDatasetDataQuery = useMetadataSubDataSet(location.state?.serviceName ?? serviceName, location.state?.selectedMainDataset ?? selectedMainDataset);
 	const tableInfoDataQuery = useMetadataTableInfo(location.state?.serviceName ?? serviceName, location.state?.selectedMainDataset ?? selectedMainDataset, location.state?.selectedSubDataset ?? selectedSubDataset, currentPage, itemsPerPage);
 	const searchQuery = useMetadataTableSearch(searchCondition, currentSearch, currentPage, itemsPerPage);
-	const autoSearchQuery = useMetadataAutoSearch(esIndex, autoSearchCondition, searchValue);
+	const autoSearchQuery = useMetadataAutoSearch(esIndex, autoSearchConditionArr, searchValue);
 	
 	
 	const updateValue = (value) => {

@@ -33,8 +33,8 @@ export const useMetadataTableColumnInfo = (tableId) => {
 	});
 };	
 
-export const useMetadataAutoSearch = (index, searchCondition, keyword) => {
-	return useQuery(['metaDataAutoSearch', keyword], () => fetchAutoCompleteSearchWords(index, searchCondition, keyword), {
+export const useMetadataAutoSearch = (index, searchConditions, keyword) => {
+	return useQuery(['metaDataAutoSearch', keyword], () => fetchAutoCompleteSearchWords(index, searchConditions, keyword), {
 		staleTime: 1000 * 60 * 60 * 24, // 24시간 동안 유효
 	});
 }

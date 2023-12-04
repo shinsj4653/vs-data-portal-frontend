@@ -31,11 +31,11 @@ const DataPlatformMain = () => {
 
 	// 검색어 자동완성에 필요한 변수들
 	const [esIndex, setEsIndex] = useState("tb_table_main_search");
-	let autoSearchCondition = "service_name";
+	const autoSearchConditionArr = ["service_name", "main_category_name", "sub_category_name"];
 	const [autoSearchResult, setAutoSearchResult] = useState([]); // 검색어 입력 시, 계속해서 업데이트
 	const [isSearchBarFocus, setIsSearchBarFocus] = useState(false);
-
-	const autoSearchQuery = useMetadataAutoSearch(esIndex, autoSearchCondition, searchValue);
+	
+	const autoSearchQuery = useMetadataAutoSearch(esIndex, autoSearchConditionArr, searchValue);
 
 	// 데이터 활용 페이지 임시 대체용 사이트 링크
 	const url = "https://tableauwiki.com/category/blog/tableau-tips/";
@@ -48,25 +48,11 @@ const DataPlatformMain = () => {
 	}
 
 	const fetchAutoSearchResult = async () => {
-		
-		setAutoSearchResult([]);
-
-		const set = new Set();
-
-		for(let i=0; i<3; i++) {
-			if (i == 0) {
-				autoSearchCondition = "service_name"
-			} else if(i == 1){
-				autoSearchCondition = "main_category_name"
-			} else {
-				autoSearchCondition = "sub_category_name"
-			}
-			const result = await autoSearchQuery.refetch();
-			if(!result.isLoading && result.data.data) {
-				setAutoSearchResult(autoSearchResult.concat(result.data.data));
-			}
+		const result = await autoSearchQuery.refetch();
+		if(!result.isLoading && result.data.data) {
+			console.log(result.data.data);
+			setAutoSearchResult(result.data.data);
 		}
-		
 	}
 
 	const handleSearch = (value) => {

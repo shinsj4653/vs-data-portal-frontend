@@ -17,3 +17,9 @@ export const fetchDatasetSearchResult = async (keyword, pageNo, amountPerPage) =
     console.log(response.data)
     return response.data;
 }
+
+export const fetchSearchRank = async () => {
+    const response = await axios.get(`dpmain/search/rank`);
+    console.log(response.data)
+    return response.data;
+}

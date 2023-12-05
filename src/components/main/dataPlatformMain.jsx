@@ -10,7 +10,7 @@ import system_info_icon from '../../assets/icons/system_info_icon.png';
 import data_analytics_icon from '../../assets/icons/data_analytics_icon.png';
 import { Link } from 'react-router-dom';
 import { useDataMapAllDataset } from '../../hooks/useDataMap';
-import { useDatasetSearch } from '../../hooks/useDpMain';
+import { useDatasetSearch, useSearchRank } from '../../hooks/useDpMain';
 import { useNavigate } from 'react-router-dom';
 import { useMain } from '../../context/MainContext';
 import { useMetadataAutoSearch } from '../../hooks/useMetaData';
@@ -36,6 +36,7 @@ const DataPlatformMain = () => {
 	const [isSearchBarFocus, setIsSearchBarFocus] = useState(false);
 	
 	const autoSearchQuery = useMetadataAutoSearch(esIndex, autoSearchConditionArr, searchValue);
+	const searchRankQuery = useSearchRank();
 
 	// 데이터 활용 페이지 임시 대체용 사이트 링크
 	const url = "https://tableauwiki.com/category/blog/tableau-tips/";
@@ -102,6 +103,12 @@ const DataPlatformMain = () => {
 			} else {
 				setSearchResult(searchResult);
 			}
+		}
+
+		const searchRankResult = await searchRankQuery.refetch();
+		if (searchRankResult) {
+			const searchRank = searchRankResult.data.data;
+			console.log(searchRank);
 		}
 	}
 

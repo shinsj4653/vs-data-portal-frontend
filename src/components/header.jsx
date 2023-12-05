@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logos/visang_logo.png';
 import { useMain } from '../context/MainContext';
+import { useSearchRank } from '../hooks/useDpMain';
+import SearchRankBar from './main/searchRankBar';
+
 
 const Header = () => {
 	const { setIsSearch } = useMain();
@@ -17,6 +20,39 @@ const Header = () => {
 	// 데이터 활용 페이지 임시 대체용 사이트 링크
 	const url = "https://tableauwiki.com/category/blog/tableau-tips/";
 
+	// 실시간 검색어 순위 api에 필요한 변수들
+	const apiType = "search";
+
+	const currentDate = new Date();
+	currentDate.setHours(currentDate.getHours() + 9); // 한국 시간으로 변경
+
+	// 시작시간 gte : 현재시간 - 10분 -> "2023-12-05T15:50:00"
+	// 끝 시간 lte : 현재시간 -> "2023-12-05T16:00:00"
+	const [searchRankGte, setSearchRankGte] = useState(new Date(currentDate.getTime() - 10 * 60000).toISOString().slice(0, 19));
+	const [searchRankLte, setSearchRankLte] = useState(currentDate.toISOString().slice(0, 19));
+	const [searchRankResult, setSearchRankResult] = useState([]); // 실시간 검색어 순위 데이터 [
+
+	const searchRankQuery = useSearchRank(apiType, searchRankGte, searchRankLte);
+
+	useEffect(() => {
+		
+
+		const fetchRankData = async () => {
+
+			console.log(searchRankGte)
+			console.log(searchRankLte)
+			
+			const searchRankResult = await searchRankQuery.refetch(apiType, searchRankGte, searchRankLte);
+
+			const searchRanks = searchRankResult.data.data;
+			console.log(searchRanks);
+			setSearchRankResult([...searchRanks]);
+			
+		};
+
+		fetchRankData();
+
+	}, [ searchRankGte, searchRankLte ]);
 
 	return (
 		<div className="bg-base-100">
@@ -68,7 +104,7 @@ const Header = () => {
 							</li>
 						</ul>
 					</nav>
-
+			  		<SearchRankBar searchRankResult={searchRankResult}/>
 					{/* <div className="flex items-center gap-4">
             <div className="md:flex md:gap-4">
               <input

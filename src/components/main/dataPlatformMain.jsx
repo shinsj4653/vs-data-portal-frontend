@@ -18,7 +18,6 @@ import { useMetadataAutoSearch } from '../../hooks/useMetaData';
 const DataPlatformMain = () => {
 
 	const { isSearch, setIsSearch } = useMain();
-	const [dataSet, setDataSet] = useState(null);
 	
 	const [searchValue , setSearchValue] = useState("");
 	const [searchResult, setSearchResult] = useState(null);
@@ -36,7 +35,7 @@ const DataPlatformMain = () => {
 	const [isSearchBarFocus, setIsSearchBarFocus] = useState(false);
 	
 	const autoSearchQuery = useMetadataAutoSearch(esIndex, autoSearchConditionArr, searchValue);
-	const searchRankQuery = useSearchRank();
+
 
 	// 데이터 활용 페이지 임시 대체용 사이트 링크
 	const url = "https://tableauwiki.com/category/blog/tableau-tips/";
@@ -71,26 +70,25 @@ const DataPlatformMain = () => {
 		
 	}
 
-	const dataSetQuery = useDataMapAllDataset();
 	const dataSetSearchQuery = useDatasetSearch(currentSearch, currentPage, itemsPerPage);
 	
 	
 
 	// useEffect를 사용하여 데이터를 동기적으로 처리
-	useEffect(() => {
-		const fetchData = async () => {
-			// 여기서 사용할 API 호출들을 배열로 묶어서 Promise.all로 처리
-			const dataSetResult = await dataSetQuery.refetch();
+	// useEffect(() => {
+	// 	const fetchData = async () => {
+	// 		// 여기서 사용할 API 호출들을 배열로 묶어서 Promise.all로 처리
+	// 		const dataSetResult = await dataSetQuery.refetch();
 
-			// 각 API 호출이 성공하면 데이터 처리
-			if (dataSetResult) {
-				const datasets = dataSetResult.data.data;
-				setDataSet(datasets);
-			}
-		};
+	// 		// 각 API 호출이 성공하면 데이터 처리
+	// 		if (dataSetResult) {
+	// 			const datasets = dataSetResult.data.data;
+	// 			setDataSet(datasets);
+	// 		}
+	// 	};
 
-		fetchData();
-	}, []);
+	// 	fetchData();
+	// }, []);
 
 	const fetchSearchData = async () => {
 		const datasetSearchResult = await dataSetSearchQuery.refetch();
@@ -103,12 +101,6 @@ const DataPlatformMain = () => {
 			} else {
 				setSearchResult(searchResult);
 			}
-		}
-
-		const searchRankResult = await searchRankQuery.refetch();
-		if (searchRankResult) {
-			const searchRank = searchRankResult.data.data;
-			console.log(searchRank);
 		}
 	}
 

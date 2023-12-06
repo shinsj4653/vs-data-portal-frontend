@@ -130,10 +130,10 @@ const MetaDataInfo = () => {
 		const result = await searchQuery.refetch()
 		// console.log(result.data.data);
 		if(!result.isLoading && result.data.data) {
-			if(result.data.data.length === 0) {
-				alert("검색 결과가 없습니다.");
-				return;
-			}
+			// if(result.data.data.length === 0) {
+			// 	alert("검색 결과가 없습니다.");
+			// 	return;
+			// }
 			setSearchResult(result.data.data);
 		}
 
@@ -173,7 +173,8 @@ const MetaDataInfo = () => {
 				// 피어나다와 온리원초등 사이에서 이동할 때 중분류 명 및 메타 테이블 정보가 한 번에 안 불러와지는 오류가 존재하여, 
 				// 한 번더 렌더링 시켜줌
 				console.log(mainDataset.data.data);
-				if (mainDataset.data.data.length > 0) { 
+				if (mainDataset.data.data.includes(location.state?.selectedMainDataset ?? mainDataset.data.data[0])) {
+					
 					const subDatasetDataRefetch = await subDatasetDataQuery.refetch();
 					if (!subDatasetDataRefetch.isLoading) {
 						setSubDatasetList(subDatasetDataRefetch.data.data);
@@ -191,6 +192,10 @@ const MetaDataInfo = () => {
 			}
 			
 		} else if(param === "mainCategoryChange") {
+
+			console.log('mainCategory : ', selectedMainDataset);
+
+			if(selectedMainDataset != null) {
 			const [subDataset, tableInfoData]  = await Promise.all([
 				subDatasetDataQuery.refetch(),
 				tableInfoDataQuery.refetch()
@@ -203,12 +208,12 @@ const MetaDataInfo = () => {
 				setTableInfoList(tableInfoData.data.data);
 				
 			} 
+		}
 		} else {
-			if (mainDatasetList.length === 0 || subDatasetList.length === 0) {
-				return;
-			}
 			const { isLoading, isError, data } = await tableInfoDataQuery.refetch();
-			setTableInfoList(data.data);
+			setTableInfoList([...data.data]);
+			
+			
 		}	
 
     };

@@ -85,7 +85,6 @@ const MetaDataInfo = () => {
 			console.log(nodeName);
 			setServiceName(nodeName);
 		}
-		setCurrentPage(0)
 	};
 	
 	const orgDataQuery = useOrgChartMain();
@@ -165,26 +164,26 @@ const MetaDataInfo = () => {
 
 		} else if (param === "serviceChange") {
 			
-			const [mainDataset, subDataset, tableInfoData]  = await Promise.all([
-				mainDatasetDataQuery.refetch(),
-				subDatasetDataQuery.refetch(),
-				tableInfoDataQuery.refetch()
-			]);
+			const mainDataset  = await mainDatasetDataQuery.refetch()
 
-			if (!mainDataset.isLoading && !subDataset.isLoading && !tableInfoData.isLoading) { 
+			if (!mainDataset.isLoading) { 
 				setMainDatasetList(mainDataset.data.data);
 				setSelectedMainDataset(location.state?.selectedMainDataset ?? mainDataset.data.data[0]);
 
 				// 피어나다와 온리원초등 사이에서 이동할 때 중분류 명 및 메타 테이블 정보가 한 번에 안 불러와지는 오류가 존재하여, 
 				// 한 번더 렌더링 시켜줌
-				const subDatasetDataRefetch = await subDatasetDataQuery.refetch();
-				if (!subDatasetDataRefetch.isLoading) {
-					setSubDatasetList(subDatasetDataRefetch.data.data);
-					setSelectedSubDataset(location.state?.selectedSubDataset ?? subDatasetDataRefetch.data.data[0]);
+				console.log(mainDataset.data.data);
+				if (mainDataset.data.data.length > 0) { 
+					const subDatasetDataRefetch = await subDatasetDataQuery.refetch();
+					if (!subDatasetDataRefetch.isLoading) {
+						setSubDatasetList(subDatasetDataRefetch.data.data);
+						setSelectedSubDataset(location.state?.selectedSubDataset ?? subDatasetDataRefetch.data.data[0]);
+					}
+					const tableInfoDataRefetch = await tableInfoDataQuery.refetch();
+						if (!tableInfoDataRefetch.isLoading)
+							setTableInfoList(tableInfoDataRefetch.data.data);
+
 				}
-				const tableInfoDataRefetch = await tableInfoDataQuery.refetch();
-					if (!tableInfoDataRefetch.isLoading)
-						setTableInfoList(tableInfoDataRefetch.data.data);
 			}
 			
 		} else if(param === "mainCategoryChange") {
@@ -201,6 +200,9 @@ const MetaDataInfo = () => {
 				
 			} 
 		} else {
+			if (mainDatasetList.length === 0 || subDatasetList.length === 0) {
+				return;
+			}
 			const { isLoading, isError, data } = await tableInfoDataQuery.refetch();
 			setTableInfoList(data.data);
 		}	
@@ -228,8 +230,12 @@ const MetaDataInfo = () => {
 	}, [selectedSubDataset]);
 
 	useEffect(() => {
-		isSearch ? fetchSearchResult() : fetchData("tableInfoChange");
-	}, [currentPage, currentSearch])
+		fetchSearchResult()
+	}, [currentSearch])
+
+	// useEffect(() => {
+	// 	fetchData("tableInfoChange");
+	// }, [currentPage])
 
 	useEffect(() => {
 		fetchAutoSearchResult();

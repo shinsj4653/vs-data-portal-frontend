@@ -179,9 +179,13 @@ const MetaDataInfo = () => {
 						setSubDatasetList(subDatasetDataRefetch.data.data);
 						setSelectedSubDataset(location.state?.selectedSubDataset ?? subDatasetDataRefetch.data.data[0]);
 					}
-					const tableInfoDataRefetch = await tableInfoDataQuery.refetch();
+
+					if(subDatasetDataRefetch.data.data.length > 0) {
+						const tableInfoDataRefetch = await tableInfoDataQuery.refetch();
 						if (!tableInfoDataRefetch.isLoading)
 							setTableInfoList(tableInfoDataRefetch.data.data);
+					}
+					
 
 				}
 			}

@@ -20,7 +20,7 @@ const DataPlatformMain = () => {
 	const { isSearch, setIsSearch } = useMain();
 	
 	const [searchValue , setSearchValue] = useState("");
-	const [searchResult, setSearchResult] = useState(null);
+	const [searchResult, setSearchResult] = useState([]);
 
 	const navigate = useNavigate();
 
@@ -94,13 +94,13 @@ const DataPlatformMain = () => {
 		const datasetSearchResult = await dataSetSearchQuery.refetch();
 		if (datasetSearchResult) {
 			const searchResult = datasetSearchResult.data.data;
-			if (searchResult.length === 0){
-				setSearchResult([]);
-				alert("검색 결과가 없습니다.");
-				return;
-			} else {
+			// if (searchResult.length === 0){
+			// 	setSearchResult([]);
+			// 	alert("검색 결과가 없습니다.");
+			// 	return;
+			// } else {
 				setSearchResult(searchResult);
-			}
+			//}
 		}
 	}
 

@@ -52,6 +52,7 @@ const MetaDataInfo = () => {
 	const autoSearchConditionArr = ['small_clsf_name'];
 	const [autoSearchResult, setAutoSearchResult] = useState([]); // 검색어 입력 시, 계속해서 업데이트
 	const [isSearchBarFocus, setIsSearchBarFocus] = useState(false);
+	
 
 	const colors = ['#A8D8EA', '#AA96DA', '#FCBAD3', '#FFFFD2'];
 	// json Data에 Depth 속성 추가

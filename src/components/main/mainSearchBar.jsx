@@ -1,12 +1,32 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 
 const MainSearchBar = ({ searchValue, updateValue, handleSearch, autoSearchResult, isSearchBarFocus, setIsSearchBarFocus, isMain, isOrg }) => {
-  
-  const activeEnter = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      searchValue !== "" && handleSearch(searchValue);
+
+  const [dropDownItemIndex, setDropDownItemIndex] = useState(-1);
+
+  const handleDropDownKey = (e) => {
+
+    // input에 값이 있을 때만 작동
+    // 아래키 누르면 다음 항목으로 이동
+    // 위키 누르면 이전 항목으로 이동
+    // 엔터 누르면 해당 항목으로 검색
+
+    if (searchValue !== "") {
+      if (
+        e.key === 'ArrowDown' &&
+        autoSearchResult.length - 1 > dropDownItemIndex
+      ) {
+        setDropDownItemIndex(dropDownItemIndex + 1)
+      }
+      if (e.key === 'ArrowUp' && dropDownItemIndex > 0)
+        setDropDownItemIndex(dropDownItemIndex - 1)
+      if (e.key === 'Enter' && dropDownItemIndex >= 0) {
+        handleSearch(autoSearchResult[dropDownItemIndex])
+        updateValue(autoSearchResult[dropDownItemIndex])
+        setDropDownItemIndex(-1)
+      }
     }
+
   }
 
   return (
@@ -26,7 +46,7 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, autoSearchResul
           className={isMain || isOrg ? 
           "w-full rounded-md border-base-100 py-2.5 px-2 pe-10 shadow-sm sm:text-sm text-base-content bg-slate-100"
           : 'w-full rounded-md border-base-100 py-2.5 px-5 pe-10 shadow-sm sm:text-sm text-base-content bg-slate-100'}
-          onKeyDown={(e) => activeEnter(e)}
+          onKeyUp={handleDropDownKey}
           onFocus={isOrg ? null : () => setIsSearchBarFocus(true)}
           onBlur={isOrg ? null : () => setIsSearchBarFocus(false)}
           autoComplete="off"
@@ -64,8 +84,8 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, autoSearchResul
             {autoSearchResult && autoSearchResult.length > 0  ?
               autoSearchResult.map((item, index) => {
                 return (
-                  <div key={index} className={"px-4 py-2 hover:bg-gray-100 cursor-pointer"} 
-                  onMouseDown={isOrg ? null : (event) => {event.preventDefault(); handleSearch(item); updateValue(item)}}
+                  <div key={index} className={index === dropDownItemIndex ? "px-4 py-2 bg-gray-100 hover:bg-gray-100 cursor-pointer" : "px-4 py-2 hover:bg-gray-100 cursor-pointer"} 
+                  onMouseDown={isOrg ? null : (event) => {event.preventDefault(); handleSearch(item); updateValue(item); setDropDownItemIndex(-1);}}
                   >
                     {item}
                   </div>

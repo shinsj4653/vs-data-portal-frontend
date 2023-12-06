@@ -230,12 +230,8 @@ const MetaDataInfo = () => {
 	}, [selectedSubDataset]);
 
 	useEffect(() => {
-		fetchSearchResult()
-	}, [currentSearch])
-
-	// useEffect(() => {
-	// 	fetchData("tableInfoChange");
-	// }, [currentPage])
+		isSearch ? fetchSearchResult() : fetchData("tableInfoChange");
+	}, [currentSearch, currentPage])
 
 	useEffect(() => {
 		fetchAutoSearchResult();

@@ -30,7 +30,7 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, autoSearchResul
   }
 
   return (
-    <div className={isMain || isOrg ? "relative w-full" : "w-1/2"}>
+    <div className={isMain || isOrg ? "relative" : "relative w-1/2"}>
       <div className={isMain || isOrg ? "relative" : "relative ml-3"}>
         <label htmlFor="Search" className="sr-only">
           Search
@@ -78,7 +78,7 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, autoSearchResul
       {
         searchValue !== "" && isSearchBarFocus && 
           
-          <div className={!isOrg && !isMain ? "absolute z-10 w-full bg-white rounded-md shadow-lg py-1 text-base-content ml-3" : 
+          <div className={!isOrg && !isMain ? "absolute w-full bg-white rounded-md shadow-lg py-1 text-base-content ml-3" : 
               (isMain ? "absolute w-full bg-white rounded-md shadow-lg py-1 text-base-content" : null)}>
             
             {autoSearchResult && autoSearchResult.length > 0  ?

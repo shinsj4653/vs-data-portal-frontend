@@ -57,12 +57,12 @@ const DataPlatformMain = () => {
 
 	const handleSearch = (value) => {
 
-		if (searchValue === "") {
+		if (value === "") {
 			alert("검색어를 입력해주세요.");
 			return;
 		} 
 		
-		setCurrentSearch(searchValue);
+		setCurrentSearch(value);
 		setIsSearch(true);
 		fetchSearchData();
 		

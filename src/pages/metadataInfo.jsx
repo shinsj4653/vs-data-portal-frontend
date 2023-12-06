@@ -118,8 +118,8 @@ const MetaDataInfo = () => {
 	
 	const handleSearch = (value) => {
 
-		console.log(value.toLowerCase());
-		setCurrentSearch(value.toLowerCase());
+		console.log(value);
+		setCurrentSearch(value);
 		setSearchResult([]);
 
 		fetchSearchResult(); // 검색 결과 데이터 불러오기

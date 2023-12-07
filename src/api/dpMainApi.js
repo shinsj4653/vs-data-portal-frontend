@@ -18,10 +18,10 @@ export const fetchDatasetSearchResult = async (keyword, pageNo, amountPerPage) =
     return response.data;
 }
 
-export const fetchSearchRank = async (esIndex, apiType, gte, lte) => {
+export const fetchSearchRank = async (requestURI, logType, gte, lte) => {
     const response = await axios.post(`dpmain/search/rank`, {
-        "index" : esIndex,
-        "apiType" : apiType,
+        "requestURI" : requestURI,
+        "logType" : logType,
         "gte" : gte,
         "lte": lte
     });

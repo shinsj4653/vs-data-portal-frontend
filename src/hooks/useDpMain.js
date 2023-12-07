@@ -5,6 +5,6 @@ export const useDatasetSearch = (keyword, pageNo, amountPerPage) => {
 	return useQuery(['datasetSearch', keyword], () => fetchDatasetSearchResult(keyword, pageNo, amountPerPage));
 };
 
-export const useSearchRank = (apiType, gte, lte) => {
-	return useQuery(['searchRank', apiType], () => fetchSearchRank(apiType, gte, lte));
+export const useSearchRank = (requestURI, logType, gte, lte) => {
+	return useQuery(['searchRank', requestURI], () => fetchSearchRank(requestURI, logType, gte, lte));
 };

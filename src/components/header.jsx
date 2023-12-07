@@ -23,15 +23,15 @@ const Header = () => {
 	const url = "https://tableauwiki.com/category/blog/tableau-tips/";
 
 	// 실시간 검색어 순위 api에 필요한 변수들
-	const apiType = "search";
+	const logType = "search";
+	const [requestURI, setRequestURI] = useState("/dpmain/search/keyword");
 
 	const currentDate = new Date();
 	currentDate.setHours(currentDate.getHours() + 9); // 한국 시간으로 변경
 
 	const sevenDaysAgo = new Date(currentDate);
 	sevenDaysAgo.setDate(currentDate.getDate() - 7);
-
-	const [esIndex, setEsIndex] = useState("dpmain_search_logs");
+	
 
 	// 시작시간 gte : 현재시간 - 7일 -> "2023-11-29T16:00:00"
 	// 끝 시간 lte : 현재시간 -> "2023-12-05T16:00:00"
@@ -39,16 +39,16 @@ const Header = () => {
 	const [searchRankLte, setSearchRankLte] = useState(currentDate.toISOString().slice(0, 19));
 	const [searchRankResult, setSearchRankResult] = useState([]); // 실시간 검색어 순위 데이터 [
 
-	const searchRankQuery = useSearchRank(esIndex, apiType, searchRankGte, searchRankLte);
+	const searchRankQuery = useSearchRank(requestURI, logType, searchRankGte, searchRankLte);
 
 	useEffect(() => {
 
 		console.log(location.pathname)
 		// 경로명에 따라 실시간 검색어 순위 보여줄 esIndex 변경
 		if (location.pathname === "/") {
-			setEsIndex("dpmain_search_logs");
+			setRequestURI("/dpmain/search/keyword");
 		} else if (location.pathname === "/MetaDataInfo") {
-			setEsIndex("metadata_search_logs");
+			setRequestURI("/metadata/search/keyword");
 		} 
 
 	}, [location.pathname])
@@ -61,7 +61,7 @@ const Header = () => {
 			console.log(searchRankGte)
 			console.log(searchRankLte)
 			
-			const searchRankResult = await searchRankQuery.refetch(apiType, searchRankGte, searchRankLte);
+			const searchRankResult = await searchRankQuery.refetch(requestURI, logType, searchRankGte, searchRankLte);
 
 			const searchRanks = searchRankResult.data.data;
 			console.log(searchRanks);
@@ -71,7 +71,7 @@ const Header = () => {
 
 		fetchRankData();
 
-	}, [ searchRankGte, searchRankLte ]);
+	}, [ searchRankGte, searchRankLte, location.pathname ]);
 
 	return (
 		<div className="bg-base-100">

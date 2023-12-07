@@ -71,11 +71,12 @@ const DpMainSearch = ({ setIsSearch, currentSearch, setSearchValue, searchResult
 						
 							<div className='cursor-pointer hover:bg-gray-100 overflow-hidden whitespace-nowrap truncate'
 								onClick={() => {
-									navigate('/metadataInfo', {
+									navigate('/MetaDataInfo', {
 										state: {
 										  serviceName: tableInfo.service_name,
 										  selectedMainDataset : tableInfo.main_category_name,
 										  selectedSubDataset : tableInfo.sub_category_name,
+										  searchValue : null,
 										}
 									  })
 								}}

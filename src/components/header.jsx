@@ -4,7 +4,7 @@ import logo from '../assets/logos/visang_logo.png';
 import { useMain } from '../context/MainContext';
 import { useSearchRank } from '../hooks/useDpMain';
 import SearchRankBar from './main/searchRankBar';
-
+import { useLocation } from 'react-router-dom';
 
 const Header = () => {
 	const { setIsSearch } = useMain();
@@ -16,6 +16,8 @@ const Header = () => {
 	// useEffect(() => {
 	//   document.querySelector("html").setAttribute("data-theme", theme);
 	// }, [theme]);
+
+	const location = useLocation();
 
 	// 데이터 활용 페이지 임시 대체용 사이트 링크
 	const url = "https://tableauwiki.com/category/blog/tableau-tips/";
@@ -29,13 +31,27 @@ const Header = () => {
 	const sevenDaysAgo = new Date(currentDate);
 	sevenDaysAgo.setDate(currentDate.getDate() - 7);
 
+	const [esIndex, setEsIndex] = useState("dpmain_search_logs");
+
 	// 시작시간 gte : 현재시간 - 7일 -> "2023-11-29T16:00:00"
 	// 끝 시간 lte : 현재시간 -> "2023-12-05T16:00:00"
 	const [searchRankGte, setSearchRankGte] = useState(sevenDaysAgo.toISOString().slice(0, 19));
 	const [searchRankLte, setSearchRankLte] = useState(currentDate.toISOString().slice(0, 19));
 	const [searchRankResult, setSearchRankResult] = useState([]); // 실시간 검색어 순위 데이터 [
 
-	const searchRankQuery = useSearchRank(apiType, searchRankGte, searchRankLte);
+	const searchRankQuery = useSearchRank(esIndex, apiType, searchRankGte, searchRankLte);
+
+	useEffect(() => {
+
+		console.log(location.pathname)
+		// 경로명에 따라 실시간 검색어 순위 보여줄 esIndex 변경
+		if (location.pathname === "/") {
+			setEsIndex("dpmain_search_logs");
+		} else if (location.pathname === "/MetaDataInfo") {
+			setEsIndex("metadata_search_logs");
+		} 
+
+	}, [location.pathname])
 
 	useEffect(() => {
 		

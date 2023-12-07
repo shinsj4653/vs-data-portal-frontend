@@ -41,11 +41,12 @@ const MetaDataInfo = () => {
 	
 	const [searchStandard, setSearchStandard] = useState('통합 검색'); // [통합 검색, 테이블ID, 테이블 설명, 하위 주제]
 	const [searchCondition, setSearchCondition] = useState('total'); // [total, table_id, table_comment, small_clsf_name]
-	const [isSearch, setIsSearch] = useState(location.state?.searchValue !== null ? true : false);
+	const [isSearch, setIsSearch] = useState(location.state?.searchValue === null | location.state?.searchValue === undefined ? false : true);
 	const [searchValue , setSearchValue] = useState(location.state?.searchValue ?? ""); // 검색어 입력 시, 계속해서 업데이트
 	const [searchResult, setSearchResult] = useState([]);
 	const [currentSearch, setCurrentSearch] = useState(location.state?.searchValue ?? ""); // 현재 검색어
 	// const handleDatasetColorChange
+	console.log(location.state?.searchValue)
 
 	// 검색어 자동완성에 필요한 변수들
 	const [esIndex, setEsIndex] = useState('tb_table_meta_info');

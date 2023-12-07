@@ -64,9 +64,8 @@ const DataPlatformMain = () => {
 		
 		setCurrentSearch(value);
 		setIsSearch(true);
+		setSearchResult([]);
 		fetchSearchData();
-		
-
 		
 	}
 
@@ -92,8 +91,8 @@ const DataPlatformMain = () => {
 
 	const fetchSearchData = async () => {
 		const datasetSearchResult = await dataSetSearchQuery.refetch();
-		if (datasetSearchResult) {
-			const searchResult = datasetSearchResult.data.data;
+		if (!datasetSearchResult.isLoading && datasetSearchResult.data.data) {
+			const searchResult = datasetSearchResult?.data.data;
 			// if (searchResult.length === 0){
 			// 	setSearchResult([]);
 			// 	alert("검색 결과가 없습니다.");

@@ -41,10 +41,10 @@ const MetaDataInfo = () => {
 	
 	const [searchStandard, setSearchStandard] = useState('통합 검색'); // [통합 검색, 테이블ID, 테이블 설명, 하위 주제]
 	const [searchCondition, setSearchCondition] = useState('total'); // [total, table_id, table_comment, small_clsf_name]
-	const [isSearch, setIsSearch] = useState(false);
-	const [searchValue , setSearchValue] = useState(""); // 검색어 입력 시, 계속해서 업데이트
+	const [isSearch, setIsSearch] = useState(location.state?.searchValue !== null ? true : false);
+	const [searchValue , setSearchValue] = useState(location.state?.searchValue ?? ""); // 검색어 입력 시, 계속해서 업데이트
 	const [searchResult, setSearchResult] = useState([]);
-	const [currentSearch, setCurrentSearch] = useState(""); // 현재 검색어
+	const [currentSearch, setCurrentSearch] = useState(location.state?.searchValue ?? ""); // 현재 검색어
 	// const handleDatasetColorChange
 
 	// 검색어 자동완성에 필요한 변수들
@@ -52,7 +52,6 @@ const MetaDataInfo = () => {
 	const autoSearchConditionArr = ['small_clsf_name'];
 	const [autoSearchResult, setAutoSearchResult] = useState([]); // 검색어 입력 시, 계속해서 업데이트
 	const [isSearchBarFocus, setIsSearchBarFocus] = useState(false);
-	
 
 	const colors = ['#A8D8EA', '#AA96DA', '#FCBAD3', '#FFFFD2'];
 	// json Data에 Depth 속성 추가
@@ -239,9 +238,21 @@ const MetaDataInfo = () => {
 		setCurrentPage(1);
 	}, [selectedSubDataset]);
 
+
 	useEffect(() => {
 		isSearch ? fetchSearchResult() : fetchData("tableInfoChange");
-	}, [currentSearch, currentPage])
+	}, [isSearch, currentSearch, currentPage])
+
+	useEffect(() => {
+		if(location.state?.searchValue) {
+			setIsSearch(true);
+			setSearchValue(location.state?.searchValue);
+			setCurrentSearch(location.state?.searchValue);
+			setSearchResult([]);
+			fetchSearchResult();
+		}
+	}, [location.state?.searchValue])
+
 
 	useEffect(() => {
 		fetchAutoSearchResult();

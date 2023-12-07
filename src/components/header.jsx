@@ -26,9 +26,12 @@ const Header = () => {
 	const currentDate = new Date();
 	currentDate.setHours(currentDate.getHours() + 9); // 한국 시간으로 변경
 
-	// 시작시간 gte : 현재시간 - 10분 -> "2023-12-05T15:50:00"
+	const sevenDaysAgo = new Date(currentDate);
+	sevenDaysAgo.setDate(currentDate.getDate() - 7);
+
+	// 시작시간 gte : 현재시간 - 7일 -> "2023-11-29T16:00:00"
 	// 끝 시간 lte : 현재시간 -> "2023-12-05T16:00:00"
-	const [searchRankGte, setSearchRankGte] = useState(new Date(currentDate.getTime() - 10 * 60000).toISOString().slice(0, 19));
+	const [searchRankGte, setSearchRankGte] = useState(sevenDaysAgo.toISOString().slice(0, 19));
 	const [searchRankLte, setSearchRankLte] = useState(currentDate.toISOString().slice(0, 19));
 	const [searchRankResult, setSearchRankResult] = useState([]); // 실시간 검색어 순위 데이터 [
 

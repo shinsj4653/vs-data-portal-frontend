@@ -21,9 +21,12 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, autoSearchResul
       if (e.key === 'ArrowUp' && dropDownItemIndex > 0)
         setDropDownItemIndex(dropDownItemIndex - 1)
       if (e.key === 'Enter' && dropDownItemIndex >= 0) {
-        handleSearch(autoSearchResult[dropDownItemIndex])
         updateValue(autoSearchResult[dropDownItemIndex])
+        handleSearch(autoSearchResult[dropDownItemIndex])
         setDropDownItemIndex(-1)
+      }
+      else if (e.key === 'Enter' && dropDownItemIndex === -1) {
+        handleSearch(searchValue)
       }
     }
 
@@ -46,7 +49,7 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, autoSearchResul
           className={isMain || isOrg ? 
           "w-full rounded-md border-base-100 py-2.5 px-2 pe-10 shadow-sm sm:text-sm text-base-content bg-slate-100"
           : 'w-full rounded-md border-base-100 py-2.5 px-5 pe-10 shadow-sm sm:text-sm text-base-content bg-slate-100'}
-          onKeyUp={handleDropDownKey}
+          onKeyUp={(e) => {handleDropDownKey(e);}}
           onFocus={isOrg ? null : () => setIsSearchBarFocus(true)}
           onBlur={isOrg ? null : () => setIsSearchBarFocus(false)}
           autoComplete="off"

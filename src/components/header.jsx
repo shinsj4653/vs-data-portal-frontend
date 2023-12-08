@@ -39,7 +39,7 @@ const Header = () => {
 	const [searchRankLte, setSearchRankLte] = useState(currentDate.toISOString().slice(0, 19));
 	const [searchRankResult, setSearchRankResult] = useState([]); // 실시간 검색어 순위 데이터 [
 
-	const searchRankQuery = useSearchRank(requestURI, logType, searchRankGte, searchRankLte);
+	//const searchRankQuery = useSearchRank(requestURI, logType, searchRankGte, searchRankLte);
 
 	useEffect(() => {
 
@@ -61,17 +61,17 @@ const Header = () => {
 			console.log(searchRankGte)
 			console.log(searchRankLte)
 			
-			const searchRankResult = await searchRankQuery.refetch(requestURI, logType, searchRankGte, searchRankLte);
+			//const searchRankResult = await searchRankQuery.refetch(requestURI, logType, searchRankGte, searchRankLte);
 
-			const searchRanks = searchRankResult.data.data;
-			console.log(searchRanks);
-			setSearchRankResult([...searchRanks]);
+			//const searchRanks = searchRankResult.data.data;
+			//console.log(searchRanks);
+			//setSearchRankResult([...searchRanks]);
 			
 		};
 
 		fetchRankData();
 
-	}, [ searchRankGte, searchRankLte, location.pathname ]);
+	}, [ searchRankGte, searchRankLte, requestURI, logType, location.pathname ]);
 
 	return (
 		<div className="bg-base-100">

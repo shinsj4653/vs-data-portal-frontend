@@ -53,12 +53,20 @@ const SearchRankBar = ({ searchRankResult }) => {
               onClick={() => {
                 console.log(URL)
                 console.log(item.keyword)
+                if(URL.includes("MetaDataInfo")){
+                  navigate('/MetaDataInfo', {
+                    state: {
+                      searchValue: item.keyword
+                    }
+                  })
+                } else {
+                  navigate('/', {
+                    state: {
+                      searchValue: item.keyword
+                    }
+                  })
+                }
                 
-                navigate('/MetaDataInfo', {
-                  state: {
-                    searchValue: item.keyword
-                  }
-                })
               }}
               >
               <span className="font-bold text-[#00B2E2]">{index + 1}.</span>

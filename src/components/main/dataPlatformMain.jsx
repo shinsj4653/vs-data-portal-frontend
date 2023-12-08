@@ -11,7 +11,7 @@ import data_analytics_icon from '../../assets/icons/data_analytics_icon.png';
 import { Link } from 'react-router-dom';
 import { useDataMapAllDataset } from '../../hooks/useDataMap';
 import { useDatasetSearch, useSearchRank } from '../../hooks/useDpMain';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useMain } from '../../context/MainContext';
 import { useMetadataAutoSearch } from '../../hooks/useMetaData';
 
@@ -23,6 +23,7 @@ const DataPlatformMain = () => {
 	const [searchResult, setSearchResult] = useState([]);
 
 	const navigate = useNavigate();
+	const location = useLocation();
 
 	const [currentSearch, setCurrentSearch] = useState("");
 	const [currentPage, setCurrentPage] = useState(1);
@@ -106,6 +107,26 @@ const DataPlatformMain = () => {
 	useEffect(() => {
 		fetchAutoSearchResult();
 	}, [searchValue]);
+
+	useEffect(() => {
+
+		if(location.state?.searchValue) {
+			setSearchValue(location.state.searchValue);
+			setCurrentSearch(location.state.searchValue);
+			setIsSearch(true);
+			setSearchResult([]);
+			fetchSearchData();
+		}
+
+	}, [location.state])
+
+	useEffect(() => {
+
+		if (isSearch) {
+			fetchSearchData();
+		}
+
+	}, [isSearch, searchResult, autoSearchResult, isSearchBarFocus])
 	
 	
 	return (

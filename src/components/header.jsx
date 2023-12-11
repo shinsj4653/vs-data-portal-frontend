@@ -91,7 +91,7 @@ const Header = () => {
 					/>
 				</Link>
 
-				<div className="flex flex-1 items-center justify-end lg:justify-between">
+				<div className="flex flex-1 items-center justify-end lg:justify-between z-30">
 					<nav className="hidden lg:block">
 						<ul className="flex items-center gap-6 text-slate-500 font-bold">
 							{/* <li>

@@ -26,20 +26,9 @@ const Header = () => {
 	const logType = "search";
 	const [requestURI, setRequestURI] = useState("/dpmain/search/keyword");
 
-	const currentDate = new Date();
-	currentDate.setHours(currentDate.getHours() + 9); // 한국 시간으로 변경
-
-	const sevenDaysAgo = new Date(currentDate);
-	sevenDaysAgo.setDate(currentDate.getDate() - 7);
-	
-
-	// 시작시간 gte : 현재시간 - 7일 -> "2023-11-29T16:00:00"
-	// 끝 시간 lte : 현재시간 -> "2023-12-05T16:00:00"
-	const [searchRankGte, setSearchRankGte] = useState(sevenDaysAgo.toISOString().slice(0, 19));
-	const [searchRankLte, setSearchRankLte] = useState(currentDate.toISOString().slice(0, 19));
 	const [searchRankResult, setSearchRankResult] = useState([]); // 실시간 검색어 순위 데이터 [
 
-	//const searchRankQuery = useSearchRank(requestURI, logType, searchRankGte, searchRankLte);
+	const searchRankQuery = useSearchRank(requestURI, logType);
 
 	useEffect(() => {
 
@@ -57,21 +46,18 @@ const Header = () => {
 		
 
 		const fetchRankData = async () => {
-
-			console.log(searchRankGte)
-			console.log(searchRankLte)
 			
-			//const searchRankResult = await searchRankQuery.refetch(requestURI, logType, searchRankGte, searchRankLte);
+			const searchRankResult = await searchRankQuery.refetch(requestURI, logType);
 
-			//const searchRanks = searchRankResult.data.data;
-			//console.log(searchRanks);
-			//setSearchRankResult([...searchRanks]);
+			const searchRanks = searchRankResult.data.data;
+			console.log(searchRanks);
+			setSearchRankResult([...searchRanks]);
 			
 		};
 
 		fetchRankData();
 
-	}, [ searchRankGte, searchRankLte, requestURI, logType, location.pathname ]);
+	}, [ requestURI, logType, location.pathname ]);
 
 	return (
 		<div className="bg-base-100">

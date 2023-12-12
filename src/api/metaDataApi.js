@@ -59,7 +59,7 @@ export const fetchMetaTableColumnInfo = async (tableId) => {
 export const fetchAutoCompleteSearchWords = async (index, searchConditions, keyword) => {
     const response = await axios.post(`metadata/search/autocomplete`, {
         "index" : index,
-        "searchConditions" : searchConditions,
+        "search_conditions" : searchConditions,
         "keyword" : keyword
     });
     console.log(response.data)

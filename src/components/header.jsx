@@ -48,10 +48,13 @@ const Header = () => {
 		const fetchRankData = async () => {
 			
 			const searchRankResult = await searchRankQuery.refetch(requestURI, logType);
-
-			const searchRanks = searchRankResult.data.data;
-			console.log(searchRanks);
-			setSearchRankResult([...searchRanks]);
+			
+			if(searchRankResult.data !== undefined) {
+				const searchRanks = searchRankResult.data.data;
+				console.log(searchRanks);
+				setSearchRankResult([...searchRanks]);
+			}
+			
 			
 		};
 

@@ -49,7 +49,7 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, autoSearchResul
           className={isMain || isOrg ? 
           "w-full rounded-md border-base-100 py-2.5 px-2 pe-10 shadow-sm sm:text-sm text-base-content bg-slate-100"
           : 'w-full rounded-md border-base-100 py-2.5 px-5 pe-10 shadow-sm sm:text-sm text-base-content bg-slate-100'}
-          onKeyUp={(e) => {handleDropDownKey(e);}}
+          onKeyDown={(e) => {handleDropDownKey(e);}}
           onFocus={isOrg ? null : () => setIsSearchBarFocus(true)}
           onBlur={isOrg ? null : () => setIsSearchBarFocus(false)}
           autoComplete="off"

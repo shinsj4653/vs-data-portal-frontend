@@ -118,6 +118,7 @@ const MetaDataInfo = () => {
 	
 	const handleSearch = (value) => {
 
+		setCurrentPage(1);		
 		console.log(value);
 		setCurrentSearch(value);
 		setSearchResult([]);

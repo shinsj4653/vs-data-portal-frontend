@@ -63,6 +63,7 @@ const DataPlatformMain = () => {
 			return;
 		} 
 		
+		setCurrentPage(1);
 		setCurrentSearch(value);
 		setIsSearch(true);
 		setSearchResult([]);

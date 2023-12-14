@@ -21,12 +21,12 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, autoSearchResul
       if (e.key === 'ArrowUp' && dropDownItemIndex > 0)
         setDropDownItemIndex(dropDownItemIndex - 1)
       if (e.key === 'Enter' && dropDownItemIndex >= 0) {
-        updateValue(autoSearchResult[dropDownItemIndex])
-        handleSearch(autoSearchResult[dropDownItemIndex])
+        updateValue(autoSearchResult[dropDownItemIndex].keyword)
+        handleSearch(autoSearchResult[dropDownItemIndex].keyword)
         setDropDownItemIndex(-1)
       }
       else if (e.key === 'Enter' && dropDownItemIndex === -1) {
-        handleSearch(searchValue)
+        handleSearch(e.target.value)
       }
     }
 
@@ -86,6 +86,7 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, autoSearchResul
             
             {autoSearchResult && autoSearchResult.length > 0  ?
               autoSearchResult.map((item, index) => {
+                console.log(item.keyword)
                 return (
                   <div key={index} className={index === dropDownItemIndex ? "px-4 py-2 bg-gray-100 hover:bg-gray-100 cursor-pointer" : "px-4 py-2 hover:bg-gray-100 cursor-pointer"} 
                   onMouseDown={isOrg ? null : (event) => {event.preventDefault(); handleSearch(item.keyword); updateValue(item.keyword); setDropDownItemIndex(-1);}}

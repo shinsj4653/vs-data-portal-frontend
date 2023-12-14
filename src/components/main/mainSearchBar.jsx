@@ -88,9 +88,9 @@ const MainSearchBar = ({ searchValue, updateValue, handleSearch, autoSearchResul
               autoSearchResult.map((item, index) => {
                 return (
                   <div key={index} className={index === dropDownItemIndex ? "px-4 py-2 bg-gray-100 hover:bg-gray-100 cursor-pointer" : "px-4 py-2 hover:bg-gray-100 cursor-pointer"} 
-                  onMouseDown={isOrg ? null : (event) => {event.preventDefault(); handleSearch(item); updateValue(item); setDropDownItemIndex(-1);}}
+                  onMouseDown={isOrg ? null : (event) => {event.preventDefault(); handleSearch(item.keyword); updateValue(item.keyword); setDropDownItemIndex(-1);}}
                   >
-                    {item}
+                    {item.keyword}
                   </div>
                 )
               }) : <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
